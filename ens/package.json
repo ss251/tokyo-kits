@@ -1,0 +1,25 @@
+{
+  "name": "@tokyo-kits/ens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "python3 scripts/serial.py bun scripts/build.ts",
+    "test": "python3 scripts/serial.py bun scripts/check.ts",
+    "demo": "python3 scripts/serial.py bun scripts/demo.ts",
+    "dev": "next dev --hostname 127.0.0.1"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "viem": "2.56.5"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

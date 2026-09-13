@@ -11,3 +11,7 @@ broadcast/
 *.log
 *.tsbuildinfo
 .run/
+
+# ENS application adapters are source, not vendored Foundry dependencies.
+!ens/lib/
+!ens/lib/**
