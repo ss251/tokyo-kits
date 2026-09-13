@@ -5,5 +5,8 @@ useDefault = true
 description = "Known public ERC20 addresses in token metadata; not credentials"
 regexTarget = "match"
 regexes = [
-  '''(?i)^"?token[01]?"\s*:\s*"0x(?:8f3cf7ad23cd3cadbd9735aff958023239c6a063|7ceb23fd6bc0add59e62ac25578270cff1b9f619|50c5725949a6f0c72e6c4a641f24049a917db0cb|4200000000000000000000000000000000000006)"'''
+  '''(?i)^"?token(?:[01]|In|Out)?"\s*:\s*"0x(?:8f3cf7ad23cd3cadbd9735aff958023239c6a063|7ceb23fd6bc0add59e62ac25578270cff1b9f619|50c5725949a6f0c72e6c4a641f24049a917db0cb|4200000000000000000000000000000000000006|833589fcd6edb6e08f4c7c32d4f71b54bda02913)"''',
+  '''^api-execution\.ts": "afa14b35485a9c1528f08c38154abd634845c8c8806a18dd18138d7b06bab651"''',
+  '''^tokensRecipient": "0x161Ca3C3BFC8b896751772Bf3225c19146E4D575"''',
+  '''^purchased-token claim: `0x712a980ac580ea56d1c7ebbd72a59afd4ccb1b38ef181cf7730f3352cc058849`'''
 ]

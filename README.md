@@ -8,8 +8,8 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 | Kit | Status | Proof |
 | --- | --- | --- |
 | [Aqua](aqua/) | Proven on Polygon and Base | [4 executed paths](aqua/README.md#last-proven), 64 tests |
-| Uniswap | Building sub-track examples | Not yet proven |
-| World | Queued | Not yet proven |
+| [Uniswap](uniswap/) | Four components proven; API access blocked | [Base fork receipts](uniswap/README.md#coverage-and-last-proven), 57 tests |
+| World | Building current MiniKit/IDKit/AgentKit examples | Not yet proven |
 | ENSv2 | Queued | Not yet proven |
 | Sui | Queued | Not yet proven |
 | Curvegrid | Queued | Not yet proven |
@@ -32,12 +32,12 @@ explicitly marked and never delay publication of proven ones.
 | Aqua open app | `aqua/app-open` | Proven |
 | Aqua opcode extension | `aqua/swapvm-opcode` | Proven; includes official-router Extruction |
 | Aqua Continuity | `aqua/continuity-recipe` | Proven SDK pegged strategy |
-| Uniswap stack: v4 hook | `uniswap/v4-hook` | Queued |
-| Uniswap stack: swap API | `uniswap/api-swap` | Queued |
-| Uniswap stack: LP API | `uniswap/lp-api` | Queued |
-| Uniswap stack: v3/v2 pool | `uniswap/v3-or-v2` | Queued |
-| Uniswap stack: CCA | `uniswap/cca` | Queued |
-| Uniswap Continuity | `uniswap/continuity-recipe` | Queued |
+| Uniswap stack: v4 hook | `uniswap/v4-hook` | Proven |
+| Uniswap stack: swap API | `uniswap/api-swap` | NOT PROVEN: API key unavailable |
+| Uniswap stack: LP API | `uniswap/lp-api` | NOT PROVEN: API key unavailable |
+| Uniswap stack: v3/v2 pool | `uniswap/v3-or-v2` | Proven |
+| Uniswap stack: CCA | `uniswap/cca` | Proven |
+| Uniswap Continuity | `uniswap/continuity-recipe` | Proven |
 | ENSv2 new app | `ens/new-app-ensv2` | Queued |
 | ENSv2 existing app / Continuity | `ens/add-to-existing` | Queued |
 | World MiniKit component | `world/minikit-app` | Queued; award details TBD |
