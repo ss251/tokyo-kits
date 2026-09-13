@@ -103,6 +103,8 @@ acceptance separately from server API verification.
 
 ## Blockers and disclosure
 
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
 Missing Portal credentials and human/device proof prevent all four complete
 component receipts. Live Portal setup screenshots are not available without
 that account/session; follow the official links in each component instead of

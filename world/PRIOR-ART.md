@@ -5,7 +5,9 @@ project-specific product logic. Dependency licenses remain in force.
 
 - Public location: https://github.com/ss251/tokyo-kits/tree/main/world
 - Preparation started: 2026-09-14 JST.
-- First public revision/date: pending actual push.
+- First complete starter public revision: `53a149e6a190c781f733e349f8df53638190314e`.
+- GitHub confirmed public push: **2026-09-14 08:40:21 JST** (`2026-09-13T23:40:21Z`).
+- Implementation publication is separate from live proof: all four components remain NOT PROVEN; 59 tests and partial fork wiring are recorded.
 - Components: MiniKit app, World ID 4 server verification and on-chain gate,
   AgentKit human-bound access, and a Continuity integration recipe.
 - Live World ID / World App proof is NOT PROVEN until the documented human
