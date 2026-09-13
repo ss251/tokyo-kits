@@ -50,7 +50,10 @@ flowchart LR
 
 ## Last proven
 
-Pending execution.
+Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
+`0xbfa186f289056342bdb9aec23a4672b9d4b95c0ea95f160d8009378d35d62390`. [Full local-fork receipt](receipts/polygon-latest.json).
+
+Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
 
 ## Disclosure and scope
 

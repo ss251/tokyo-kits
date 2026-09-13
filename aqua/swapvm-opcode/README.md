@@ -45,7 +45,13 @@ the current sponsor criteria for the chosen variant.
 
 ## Last proven
 
-Pending execution of both variants.
+Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
+`0xbf1316ea8c10f64e8ca6ae3dae36d40795721d5ffd89b9035f527969f7e4f512`. [Full local-fork receipt](receipts/polygon-latest.json).
+
+Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
+
+Official-router external-instruction fill:
+`0x321851b69366118a77f1648985be1ebb11d16daffecf50642a64d07efbfd974d`. [Official-router receipt](official-extruction/receipts/polygon-latest.json).
 
 ## Gotchas
 

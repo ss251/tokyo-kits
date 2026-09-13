@@ -42,3 +42,8 @@ Each subfolder: its own README quickstart, `make demo` with receipt, and a one-p
 
 ## Deadline (2026-09-14)
 All kits proven (`make demo` receipt + green tests) and published publicly by **Sep 18 JST**; Sailesh flies Sep 20 and does not work Sep 20–25. If a sub-track cannot be proven by then, ship it as a documented stub marked NOT PROVEN rather than delaying the proven ones.
+
+## Disclosure text (verified 2026-09-14 against ethglobal.com/rules and tokyo2026/info/details)
+- Rules: "You must disclose any pre-existing work in writing to the ETHGlobal team and include full details in your submission." · "Repositories with single commits of large files without proper history will be default assumed to be unqualified unless proven otherwise."
+- Tokyo details: "open-source libraries and starter kits to kickstart your project, but be transparent." · AI: "you must include all spec files, prompts, and planning artifacts in your submission repository."
+- Therefore each kit's `PRIOR-ART.md` states: name, public URL, publish date, licence (MIT), what it contains, and that it is a generic template with no product logic. Keep kit commit history granular (no squash).

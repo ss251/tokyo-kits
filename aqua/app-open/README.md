@@ -45,7 +45,10 @@ is its keccak256 hash. Approval targets differ: maker → Aqua; payer → taker.
 
 ## Last proven
 
-Pending execution. Never infer proof from the existence of a script.
+Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
+`0xe74714e8abb6b14cc179e8a40c48aa05f14199803293a4a760a5156e4dd099b8`. [Full local-fork receipt](receipts/polygon-latest.json).
+
+Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
 
 ## Gotchas
 
