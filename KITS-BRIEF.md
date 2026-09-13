@@ -39,3 +39,6 @@ Each sponsor kit gets one runnable example per published or strongly predicted T
 - **Sui** ("DeFi & Payments"): `sui/payments/` (stablecoin transfer with sponsored gas or zkLogin, receipt object) · `sui/defi/` (escrow/vault Move package; optional DeepBook or Cetus call if a public testnet exists).
 - **Curvegrid** (TBD): `curvegrid/multibaas-basics/` (deploy, link, REST read/write) · `curvegrid/events-webhooks/` (indexing + webhook consumer). Update when the Tokyo page publishes.
 Each subfolder: its own README quickstart, `make demo` with receipt, and a one-paragraph "which idea would use this" note. Record the mapping track → subfolder in the top-level README table.
+
+## Deadline (2026-09-14)
+All kits proven (`make demo` receipt + green tests) and published publicly by **Sep 18 JST**; Sailesh flies Sep 20 and does not work Sep 20–25. If a sub-track cannot be proven by then, ship it as a documented stub marked NOT PROVEN rather than delaying the proven ones.
