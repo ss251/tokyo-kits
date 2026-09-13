@@ -1,0 +1,99 @@
+{
+  "chainId": 11155111,
+  "defaultRpc": "https://ethereum-sepolia.publicnode.com",
+  "explorer": "https://sepolia.etherscan.io",
+  "sourceRepository": "https://github.com/ensdomains/contracts-v2",
+  "sourceCommit": "97a57293f3b4279d94b571e678edb53ce62638f4",
+  "documentation": "https://docs.ens.domains/learn/deployments/",
+  "checkedAt": "2026-09-14",
+  "contracts": {
+    "ETHRegistrar": "0xa88553f454b77203b0d036a05c894d555eaaa2cc",
+    "ETHRegistry": "0xbdc85dd5b15d7ecb354cd7cb6f2c50b4f2c4f0e2",
+    "RootRegistry": "0x8115186e8f2e0b0281e86ab91f0f48ba90364354",
+    "VerifiableFactory": "0x10dc6333cdfe1fcef624c6e0a8221b91804cd7ef",
+    "PermissionedResolverImpl": "0x9eae5c2730a7dd16bdd1dee6421a1b91e3b0365e",
+    "UserRegistryImpl": "0x624a25d67b59d587752ebec8dded8827dae52050",
+    "MockUSDC": "0x768f42455a2d082e23ceef7d51e5787c82d67a39",
+    "StandardRentPriceOracle": "0x8914b66260eb8c4fff795650c3ae8cd335958987",
+    "UpgradableUniversalResolverProxy": "0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe",
+    "UniversalResolverV2": "0x4a1817d13e9cf196f471725176355c1234b63c70"
+  },
+  "artifacts": {
+    "ETHRegistrar": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/ETHRegistrar.json",
+      "sourceSha256": "027bbe930688bf6482122f2d6e09fadf2cb6d2ed40f14c2f9f855429d3efba75",
+      "abiSha256": "bdf7fe69cc0ce6d48def038bf3c0c8129a50ff06009df92c6ba07efd498eda9b",
+      "sourceName": "src/registrar/ETHRegistrar.sol"
+    },
+    "ETHRegistry": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/ETHRegistry.json",
+      "sourceSha256": "6dfcfbd7f1ea6d5da543c5e9a47303ceb759e26502d826a65a6d92229768b02a",
+      "abiSha256": "753f0fb54194754457991f48a386aa98c18e361e5c45ea133fbcc544cf5f513b",
+      "sourceName": "src/registry/PermissionedRegistry.sol"
+    },
+    "RootRegistry": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/RootRegistry.json",
+      "sourceSha256": "7d4f0c4b7b3a9d8e4ef5a5340f8eddfeeccb304c7ca42f5f146815a925bb9a48",
+      "abiSha256": "753f0fb54194754457991f48a386aa98c18e361e5c45ea133fbcc544cf5f513b",
+      "sourceName": "src/registry/PermissionedRegistry.sol"
+    },
+    "VerifiableFactory": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/VerifiableFactory.json",
+      "sourceSha256": "a0525ca2cea49e8f3b60f925ddf5f464db96b05d9105355e10025be9923e56cf",
+      "abiSha256": "04c39365dbc67a1ca586af0f95c4136d974f83cb10c318c61dbebb810beb97e2",
+      "sourceName": "lib/verifiable-factory/src/VerifiableFactory.sol"
+    },
+    "PermissionedResolverImpl": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/PermissionedResolverImpl.json",
+      "sourceSha256": "0c9252e227155e9b409f1d6f980676369ce6120631f12048095f8d0868b8526a",
+      "abiSha256": "79e3cabc3eee2fea2c1988571d34c78c11483ccd983a53ed0d6c27970d54dcf4",
+      "sourceName": "src/resolver/PermissionedResolver.sol"
+    },
+    "UserRegistryImpl": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/UserRegistryImpl.json",
+      "sourceSha256": "e89cdbaa3950c1062495e9c6950955ed56c1bdc658a44da8d3bed6abe60b15e2",
+      "abiSha256": "b7e9dab7af714cb6e525b3d58ae61e2387064027fa34a334dcbe71249ef0bb7b",
+      "sourceName": "src/registry/UserRegistry.sol"
+    },
+    "MockUSDC": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/MockUSDC.json",
+      "sourceSha256": "6de499339e87c471cee0f2d8c84d62ee1ef71e3d3f7ad0a01dc788ed2a6fc15d",
+      "abiSha256": "44343e47c2c9edfcbcc46ed8d2455fd263ca8617447af92f155e68b933c91eac",
+      "sourceName": "test/mocks/MockERC20.sol"
+    },
+    "StandardRentPriceOracle": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/StandardRentPriceOracle.json",
+      "sourceSha256": "ea21474c30c037133265b9b0291a678d5de20e0397946e577640f065d14bbc49",
+      "abiSha256": "a63be57b0faba546b7db6ec578e8e19cc314162da651bc98c7c38eb0cdd29b27",
+      "sourceName": "src/registrar/StandardRentPriceOracle.sol"
+    },
+    "UpgradableUniversalResolverProxy": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/UpgradableUniversalResolverProxy.json",
+      "sourceSha256": "6f87171b2c32cb378e4c6775378c75533dac6d452cb45b50035ab66bed93e2c7",
+      "abiSha256": "918c1290822c845ddcd4f2135ae52417512318c80148d755e210b039edf6454e",
+      "sourceName": "src/universalResolver/UpgradableUniversalResolverProxy.sol"
+    },
+    "UniversalResolverV2": {
+      "source": "https://raw.githubusercontent.com/ensdomains/contracts-v2/97a57293f3b4279d94b571e678edb53ce62638f4/contracts/deployments/sepolia/UniversalResolverV2.json",
+      "sourceSha256": "6777de0bf7860f154dbbab78adfc1db131d0ed51c05a3324ae3137ec9c30d637",
+      "abiSha256": "affdb7bab0da62046aa2c6247ff0afd3d205c6d2201e98a76c02860f250497f4",
+      "sourceName": "src/universalResolver/UniversalResolverV2.sol"
+    }
+  },
+  "readOnlyRpcEvidence": {
+    "observedBlock": "0xb283b2",
+    "chainId": 11155111,
+    "method": "eth_getCode; individual requests with User-Agent tokyo-kits/0.1",
+    "nonemptyCodeBytes": {
+      "ETHRegistrar": 7497,
+      "ETHRegistry": 14730,
+      "RootRegistry": 14730,
+      "VerifiableFactory": 1411,
+      "PermissionedResolverImpl": 17597,
+      "UserRegistryImpl": 17159,
+      "MockUSDC": 4309,
+      "UpgradableUniversalResolverProxy": 2491
+    },
+    "scope": "Code existence only; no state writes or successful registration claimed."
+  }
+}
