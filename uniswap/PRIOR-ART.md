@@ -6,7 +6,9 @@ dependencies retain their own licenses.
 
 - Preparation started: 2026-09-14 JST.
 - Public location: https://github.com/ss251/tokyo-kits/tree/main/uniswap
-- First public revision and publication date: pending the actual push.
+- First public revision: `b3a66767fc67909fc327336aa4086752ce68e3f6`.
+- Publication confirmed: 2026-09-13T23:10:17Z (2026-09-14 08:10:17 JST), GitHub repository `pushed_at`.
+- Proven at publication: v4-hook, v3-or-v2, CCA, Continuity; swap/LP APIs are NOT PROVEN because credentials are unavailable.
 - Contents: v4 hooks/readers/router integration, swap and LP API examples,
   v3 interaction, Continuous Clearing Auction, tests and fork receipts.
 
