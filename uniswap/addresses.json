@@ -1,0 +1,27 @@
+{
+  "verifiedAt": "2026-09-14",
+  "sources": [
+    "https://developers.uniswap.org/docs/protocols/v4/deployments",
+    "https://developers.uniswap.org/deployments.json",
+    "https://developers.uniswap.org/docs/liquidity/liquidity-launchpad/deployments"
+  ],
+  "chainId": 8453,
+  "defaultRpc": "https://mainnet.base.org",
+  "poolManager": "0x498581fF718922c3f8e6A244956aF099B2652b2b",
+  "positionManager": "0x7C5f5A4bBd8fD63184577525326123B519429bDc",
+  "stateView": "0xA3c0c9b65baD0b08107Aa264b0f3dB444b867A71",
+  "v4Quoter": "0x0d5e0F971ED27FBfF6c2837bf31316121532048D",
+  "universalRouter": "0xFdf682F51FE81Aa4898F0AE2163d8A55c127fbC7",
+  "universalRouterLegacy": "0x6ff5693b99212da76ad316178a184ab56d299b43",
+  "universalRouterVersion": "2.1.1",
+  "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+  "v3Factory": "0x33128a8fC17869897dcE68Ed026d694621f6FDfD",
+  "v3SwapRouter": "0x2626664c2603336E57B271c5C0b26F421741e481",
+  "v3Quoter": "0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a",
+  "v3Pool": "0xd0b53D9277642d899DF5C87A3966A349A798F224",
+  "ccaFactory": "0x000000001F26a0044BaA66024e7b6599c61963F8",
+  "ccaFactoryVersion": "2.1.0",
+  "weth": "0x4200000000000000000000000000000000000006",
+  "dai": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+  "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+}
