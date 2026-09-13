@@ -2,9 +2,11 @@ import { strict as assert } from 'node:assert'
 import { command, startFork } from './fork'
 import { runV4 } from './v4'
 import { runV3 } from './v3'
+import { requireApiKey } from '../api-swap/client'
 
 const selected = process.argv[2] ?? 'all'
 assert(['all', 'onchain', 'v4-hook', 'v3-or-v2', 'cca', 'continuity-recipe', 'api-swap', 'lp-api'].includes(selected), 'Unknown demo component')
+if (selected === 'api-swap' || selected === 'lp-api') requireApiKey(selected === 'api-swap' ? 'swap' : 'lp')
 await command(['forge', 'build', '--threads', '1', '--skip', 'test'])
 const fork = await startFork()
 try {

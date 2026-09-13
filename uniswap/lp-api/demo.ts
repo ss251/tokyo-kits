@@ -22,6 +22,6 @@ export async function runLpApi(context: LpDemoContext) {
   tickBounds: { tickLower: -887270, tickUpper: 887270 } }, context);
   const management = { ...shared, ...context.position };
   const increase = await requestIncrease({ ...management, independentToken: context.independentToken }, context);
-  const decrease = await requestDecrease({ ...management, liquidityPercentageToDecrease: 1 }, context);
+  const decrease = await requestDecrease({ ...management, liquidityPercentageToDecrease: 1, withdrawAsWeth: true }, context);
   return { create, increase, decrease };
 }

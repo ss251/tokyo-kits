@@ -55,3 +55,5 @@ Use this component when a hackathon app needs a wallet swap or a swap step befor
 Verified 2026-09-14: [integration guide](https://developers.uniswap.org/docs/trading/swapping-api/start-building/integration-guide), [quote reference](https://developers.uniswap.org/docs/api-reference/aggregator_quote), [swap reference](https://developers.uniswap.org/docs/api-reference/create_swap_transaction), and [public OpenAPI specification](https://trade-api.gateway.uniswap.org/v1/api.json). Only public fields are used; fields marked `x-internal: true` are excluded.
 
 Original starter code is [MIT licensed](../LICENSE). Disclose reuse using [PRIOR-ART.md](../PRIOR-ART.md). Complete the shared [FEEDBACK.md](../FEEDBACK.md) and [Developer Feedback Form](https://developers.uniswap.org/hackathon-feedback) for the Uniswap track.
+
+Credential preflight was executed on 2026-09-14 JST and failed nonzero with `NOT PROVEN: missing UNISWAP_API_KEY`, before compilation or a service request.

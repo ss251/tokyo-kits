@@ -19,7 +19,7 @@ make test
 make demo
 ```
 
-The shared runner serializes work and runs on a managed Base fork. Missing credentials fail nonzero. An unsigned API transaction has status `UNSIGNED_NOT_EXECUTED` and is never treated as a proof receipt.
+The shared runner serializes work and runs on a managed Base fork. Missing credentials fail nonzero. This failure was reproduced before compilation or any API request on 2026-09-14 JST. This executor supports ERC20-only V3 calls and requests `withdrawAsWeth: true`; unsupported selectors or V4 LP execution fail explicitly. An unsigned API transaction has status `UNSIGNED_NOT_EXECUTED` and is never treated as a proof receipt.
 
 ## Request builders and execution interface
 
@@ -39,9 +39,9 @@ The public API reads public-chain state. A position created only on a fork canno
 
 The dedicated LP integration guide specifies `https://liquidity.api.uniswap.org` with no `/v1` prefix. The shared API reference/OpenAPI banner repeats the trading host. This client follows the dedicated LP guide and does not silently switch hosts on failure. Access or schema errors remain explicit blockers until a credentialed run resolves them.
 
-The client validates sender, chain, nonempty calldata, native value, request ID, and response token ordering. The executor must also confirm official destination contracts, fund exact requirements, simulate, submit, and check receipt status and NFT ownership/liquidity changes. API `simulateTransaction: false` permits local fork preparation; it does not constitute execution proof.
+The client validates sender, chain, nonempty calldata, native value, request ID, and response token ordering. The shared executor validates official NFPM calldata recursively, permits only the requested mutation/collection, binds the NFT/pair/range/recipient, enforces quote and request limits, and grants then revokes exact input allowances. It checks actual token deltas and minted NFT metadata as well as liquidity changes. Eight regression tests reject excess spending, unrelated calls, and weaker slippage protection. These checks have passed offline; the live API remains unproven. API `simulateTransaction: false` permits local fork preparation; it does not constitute execution proof.
 
-For each proven endpoint, save the date, fork block, official destination, API request ID, successful transaction receipt, NFT ID, and before/after ownership or liquidity under the parent `receipts/` directory, then link it above. Keep fork-created and pre-existing public NFT IDs distinct. Do not store API keys or permit signatures. A successful create receipt alone leaves increase/decrease NOT PROVEN.
+For each proven endpoint, save the date, fork block, official destination, API request ID, successful transaction receipt, NFT ID, and before/after ownership or liquidity under the parent `receipts/` directory, then link it above. Keep fork-created and pre-existing public NFT IDs distinct. Do not store API keys or private signing material. Public transaction signatures in executed calldata are part of transaction evidence. A successful create receipt alone leaves increase/decrease NOT PROVEN.
 
 ## Which idea would use this?
 
