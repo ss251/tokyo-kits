@@ -1,7 +1,7 @@
 {
   "verifiedAt": "2026-09-14",
   "source": "https://github.com/1inch/aqua/blob/main/README.md",
-  "routerSource": "https://github.com/1inch/swap-vm/blob/be0a9cc840bb63b9f1abf864a39f4393e1a7312e/README.md",
+  "routerSource": "https://github.com/1inch/swap-vm/blob/32c687c2b73101fc26549e48fa1ff8a4d73afbac/README.md",
   "chains": {
     "polygon": {
       "chainId": 137,

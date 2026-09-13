@@ -92,4 +92,9 @@ contract FixedRateExtructionUnitTest is Test {
         vm.expectRevert(FixedRatePricing.InvalidAmount.selector);
         target.extruction(true, 0, _query(true, false), SwapRegisters(1, 100, 1, 0, 0), _args(1, 100), "");
     }
+
+    function testAquaPushCapacityRejectedDuringQuote() public {
+        vm.expectRevert(FixedRatePricing.AquaBalanceCapacityExceeded.selector);
+        target.extruction(true, 0, _query(true, false), SwapRegisters(type(uint248).max, 100, 1, 0, 0), _args(1, 1), "");
+    }
 }

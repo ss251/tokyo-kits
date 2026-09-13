@@ -5,6 +5,7 @@ import {Test} from "forge-std/Test.sol";
 import {IAqua} from "@1inch/aqua/src/interfaces/IAqua.sol";
 import {AquaApp} from "@1inch/aqua/src/AquaApp.sol";
 import {IXYCSwapCallback} from "@1inch/aqua/examples/apps/interfaces/IXYCSwapCallback.sol";
+import {TransientLockLib} from "@1inch/solidity-utils/contracts/libraries/TransientLock.sol";
 import {ConstantProductApp} from "../../src/ConstantProductApp.sol";
 import {CallbackTaker} from "../../src/CallbackTaker.sol";
 import {TestToken} from "./TestToken.sol";
@@ -138,7 +139,7 @@ abstract contract AquaAppTestBase is Test {
 
     function testReentrantFillRevertsAtomically() public {
         ReenteringCallback attacker = new ReenteringCallback();
-        vm.expectRevert();
+        vm.expectRevert(TransientLockLib.UnexpectedLock.selector);
         attacker.fill(app, strategy);
         assertEq(token1.balanceOf(address(attacker)), 0);
         assertEq(token1.balanceOf(maker), RESERVE1);

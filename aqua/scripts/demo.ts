@@ -141,7 +141,7 @@ try {
     await fork.fund(token, fork.maker.account.address, 10_000n * unit)
     await fork.fund(token, fork.taker.account.address, 10_000n * unit)
     const approval = await fork.maker.writeContract({ address: token, abi: erc20Abi, functionName: 'approve', args: [fork.official.aqua, 10_000n * unit] })
-    await fork.receipt(approval, 'maker approves official Aqua fixture budget')
+    fork.setupTransactions.push(await fork.receipt(approval, 'maker approves official Aqua fixture budget'))
   }
   if (selected === 'all' || selected === 'app-open') await customApp(fork)
   if (selected === 'all' || selected === 'swapvm-opcode') {

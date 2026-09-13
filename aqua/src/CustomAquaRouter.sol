@@ -7,9 +7,9 @@ import {FixedRatePricing} from "./FixedRatePricing.sol";
 
 /// @notice A custom app/router extension settling through the official Aqua registry.
 /// @dev This is not the official deployed router. The official-router extruction demo is separate.
-///      The first 33 opcode indexes are preserved from the pinned upstream source.
+///      All 34 opcode indexes are preserved from the pinned upstream v1.0.2 source.
 contract CustomAquaRouter is AquaSwapVMRouter {
-    uint8 public constant FIXED_RATE_OPCODE = 33;
+    uint8 public constant FIXED_RATE_OPCODE = 34;
 
     error UnexpectedUpstreamOpcodeCount();
 
@@ -25,7 +25,7 @@ contract CustomAquaRouter is AquaSwapVMRouter {
     {
         function(Context memory, bytes calldata) internal[] memory upstream = super._opcodes();
         if (upstream.length != FIXED_RATE_OPCODE) revert UnexpectedUpstreamOpcodeCount();
-        result = new function(Context memory, bytes calldata) internal[](upstream.length + 1);
+        result = new function(Context memory, bytes calldata) internal[](FIXED_RATE_OPCODE + 1);
         for (uint256 i; i < upstream.length; ++i) result[i] = upstream[i];
         result[FIXED_RATE_OPCODE] = _fixedRate;
     }

@@ -1,6 +1,7 @@
 import { createServer } from 'node:net'
 import { mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { loadavg } from 'node:os'
 import { strict as assert } from 'node:assert'
 import { createPublicClient, createWalletClient, defineChain, encodeAbiParameters, erc20Abi, http, keccak256, parseAbi, toHex, type Address, type Hex } from 'viem'
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
@@ -9,6 +10,12 @@ import addresses from '../addresses.json'
 export const kitRoot = resolve(import.meta.dir, '..')
 export const json = (value: unknown) => JSON.stringify(value, (_, item) => typeof item === 'bigint' ? item.toString() : item, 2)
 export async function command(args: string[], env: Record<string, string> = {}) {
+  do {
+    await Bun.spawn(['uptime'], { stdout: 'inherit', stderr: 'inherit' }).exited
+    if (loadavg()[0]! <= 25) break
+    console.log('Load > 25; waiting 30 seconds before the next compiler/test run.')
+    await Bun.sleep(30_000)
+  } while (true)
   const process = Bun.spawn(args, { cwd: kitRoot, env: { ...Bun.env, ...env }, stdout: 'inherit', stderr: 'inherit' })
   if (await process.exited !== 0) throw new Error(`${args[0]} failed`)
 }
@@ -66,6 +73,7 @@ export async function startFork() {
     }
     const maker = await wallet(), taker = await wallet()
     const funding: unknown[] = []
+    const setupTransactions: unknown[] = []
     async function balance(token: Address, holder: Address) {
       return client.readContract({ address: token, abi: erc20Abi, functionName: 'balanceOf', args: [holder] })
     }
@@ -90,14 +98,17 @@ export async function startFork() {
       return { label, transaction: await client.getTransaction({ hash }), receipt: result }
     }
     async function save(scenario: string, evidence: Record<string, unknown>) {
-      const record = { schemaVersion: 1, kind: 'local-fork', scenario, provenAt: new Date().toISOString(), sourceChain: name, sourceChainId: config.chainId, forkChainId: 31337, forkBlock: blockNumber, forkBlockHash: block.hash, official, codeHashes, fixtureFunding: funding, ...evidence }
+      const commit = await new Response(Bun.spawn(['git', 'rev-parse', 'HEAD'], { cwd: kitRoot, stdout: 'pipe' }).stdout).text()
+      const status = await new Response(Bun.spawn(['git', 'status', '--porcelain'], { cwd: kitRoot, stdout: 'pipe' }).stdout).text()
+      const dependencies = await Bun.file(resolve(kitRoot, 'solidity-dependencies.json')).json()
+      const record = { schemaVersion: 1, kind: 'local-fork', scenario, provenAt: new Date().toISOString(), sourceCommit: commit.trim(), sourceDirty: status.trim().length > 0, compiler: 'solc 0.8.30; optimizer 200; viaIR; cancun', solidityDependencies: dependencies, sourceChain: name, sourceChainId: config.chainId, forkChainId: 31337, forkBlock: blockNumber, forkBlockHash: localBlock.hash, official, codeHashes, fixtureFunding: funding, setupTransactions, ...evidence }
       await mkdir(resolve(kitRoot, scenario, 'receipts'), { recursive: true })
       const path = resolve(kitRoot, scenario, 'receipts', `${name}-latest.json`)
       await Bun.write(path, json(record) + '\n')
       console.log(`Receipt: ${path}`)
       return record
     }
-    return { name, config, rpcUrl, client, rpc, maker, taker, official, balance, fund, receipt, save, stop }
+    return { name, config, rpcUrl, client, rpc, maker, taker, official, balance, fund, receipt, save, setupTransactions, stop }
   } catch (error) { stop(); throw error }
 }
 

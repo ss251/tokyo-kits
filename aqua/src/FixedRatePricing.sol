@@ -10,6 +10,7 @@ library FixedRatePricing {
     error UnsupportedPair();
     error InvalidAmount();
     error InsufficientLiquidity();
+    error AquaBalanceCapacityExceeded();
 
     function calculate(SwapQuery memory query, SwapRegisters memory swap, bytes calldata args)
         internal
@@ -37,5 +38,8 @@ library FixedRatePricing {
         }
         if (result.amountIn == 0 || result.amountOut == 0) revert InvalidAmount();
         if (result.amountOut > swap.balanceOut) revert InsufficientLiquidity();
+        if (swap.balanceIn > type(uint248).max || result.amountIn > type(uint248).max - swap.balanceIn) {
+            revert AquaBalanceCapacityExceeded();
+        }
     }
 }

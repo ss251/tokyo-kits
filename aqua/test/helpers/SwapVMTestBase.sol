@@ -6,6 +6,7 @@ import {IAqua} from "@1inch/aqua/src/interfaces/IAqua.sol";
 import {ISwapVM} from "@1inch/swap-vm/src/interfaces/ISwapVM.sol";
 import {MakerTraitsLib} from "@1inch/swap-vm/src/libs/MakerTraits.sol";
 import {TakerTraitsLib} from "@1inch/swap-vm/src/libs/TakerTraits.sol";
+import {Controls} from "@1inch/swap-vm/src/instructions/Controls.sol";
 import {FixedRateExtruction} from "../../src/FixedRateExtruction.sol";
 import {CustomAquaRouter} from "../../src/CustomAquaRouter.sol";
 import {TestToken} from "./TestToken.sol";
@@ -52,9 +53,9 @@ abstract contract SwapVMTestBase is Test {
         MakerTraitsLib.Args memory makerArgs;
         makerArgs.maker = maker;
         makerArgs.useAquaInsteadOfSignature = true;
-        // The pinned router's Extruction opcode is 32; custom fixed-rate opcode is 33.
+        // The pinned router's Extruction opcode is 32; custom fixed-rate opcode is 34.
         makerArgs.program = useCustom
-            ? abi.encodePacked(uint8(33), uint8(128), args)
+            ? abi.encodePacked(uint8(34), uint8(128), args)
             : abi.encodePacked(uint8(32), uint8(148), address(target), args);
         return MakerTraitsLib.build(makerArgs);
     }
@@ -104,9 +105,27 @@ abstract contract SwapVMTestBase is Test {
     function testExtructionExactInThroughRouter() public { _checkFill(false, true, false); }
     function testExtructionExactOutThroughRouter() public { _checkFill(false, false, false); }
     function testExtructionReverseThroughRouter() public { _checkFill(false, true, true); }
+    function testExtructionReverseExactOutThroughRouter() public { _checkFill(false, false, true); }
     function testCustomOpcodeExactInThroughRouter() public { _checkFill(true, true, false); }
     function testCustomOpcodeExactOutThroughRouter() public { _checkFill(true, false, false); }
     function testCustomOpcodeReverseThroughRouter() public { _checkFill(true, true, true); }
+    function testCustomOpcodeReverseExactOutThroughRouter() public { _checkFill(true, false, true); }
+
+    function testCustomRouterPreservesUpstreamOpcode33() public {
+        ISwapVM router = ISwapVM(address(customRouter));
+        ISwapVM.Order memory order = _order(true, 1, 1);
+        order.data = bytes.concat(abi.encodePacked(uint8(33), uint8(20), address(token0)), order.data);
+        _ship(router, order);
+        address origin = address(0xF00D);
+        bytes memory takerData = _takerData(true, 1);
+        vm.prank(address(this), origin);
+        vm.expectRevert(abi.encodeWithSelector(Controls.TxOriginTokenBalanceIsZero.selector, origin, address(token0)));
+        router.quote(order, address(token0), address(token1), 10 ether, takerData);
+        token0.mint(origin, 1);
+        vm.prank(address(this), origin);
+        (, uint256 quotedOut,) = router.quote(order, address(token0), address(token1), 10 ether, takerData);
+        assertEq(quotedOut, 10 ether);
+    }
 
     function testDockedVMOrderCannotFill() public {
         ISwapVM.Order memory order = _order(false, 1, 1);

@@ -3,6 +3,7 @@
 import fcntl
 import os
 import pathlib
+import signal
 import subprocess
 import sys
 import tempfile
@@ -20,5 +21,18 @@ with lock.open("w") as handle:
             break
         print("Load > 25; waiting 30 seconds before building/testing.", flush=True)
         time.sleep(30)
-    result = subprocess.run(["nice", "-n", "19", *sys.argv[1:]])
-    raise SystemExit(result.returncode)
+    child = subprocess.Popen(["nice", "-n", "19", *sys.argv[1:]], start_new_session=True)
+    def terminate(signum, _frame):
+        try:
+            os.killpg(child.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        try:
+            child.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            os.killpg(child.pid, signal.SIGKILL)
+            child.wait()
+        raise SystemExit(128 + signum)
+    signal.signal(signal.SIGINT, terminate)
+    signal.signal(signal.SIGTERM, terminate)
+    raise SystemExit(child.wait())

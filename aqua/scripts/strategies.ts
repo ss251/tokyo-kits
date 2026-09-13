@@ -123,11 +123,11 @@ export function buildExtructionOrder(
   return Order.new({ maker: new Address(address(maker)), traits: MakerTraits.default(), program });
 }
 
-/** CustomAquaRouter appends opcode 33 (0x21); the ABI pricing payload is exactly 128 bytes. */
+/** CustomAquaRouter appends opcode 34 (0x22); the ABI pricing payload is exactly 128 bytes. */
 export function buildCustomOpcodeOrder(
   maker: Hex, token0: Hex, token1: Hex, numerator: bigint, denominator: bigint,
 ): Order {
-  const program = new SwapVmProgram(concatHex(['0x2180', encodeFixedRateArgs(token0, token1, numerator, denominator)]));
+  const program = new SwapVmProgram(concatHex(['0x2280', encodeFixedRateArgs(token0, token1, numerator, denominator)]));
   return Order.new({ maker: new Address(address(maker)), traits: MakerTraits.default(), program });
 }
 
@@ -198,11 +198,22 @@ function swapArgs(params: SwapParameters) {
 }
 
 export function encodeQuote(params: SwapParameters, chainId: SupportedChainId = 137) {
-  return new SwapVMContract(new Address(getOfficialDeployments(chainId).router)).quote(swapArgs(params));
+  return encodeQuoteAtRouter(params, getOfficialDeployments(chainId).router, chainId);
+}
+
+/** Explicit custom-router variant; the demo verifies its AQUA() points to the official registry. */
+export function encodeQuoteAtRouter(params: SwapParameters, router: Hex, chainId: SupportedChainId = 137) {
+  getOfficialDeployments(chainId);
+  return new SwapVMContract(new Address(address(router))).quote(swapArgs(params));
 }
 
 /** Takers approve the router. Require explicit slippage protection on every swap. */
 export function encodeSwap(params: SwapParameters, chainId: SupportedChainId = 137) {
+  return encodeSwapAtRouter(params, getOfficialDeployments(chainId).router, chainId);
+}
+
+export function encodeSwapAtRouter(params: SwapParameters, router: Hex, chainId: SupportedChainId = 137) {
+  getOfficialDeployments(chainId);
   if (params.threshold === undefined || params.threshold <= 0n) throw new Error('Swap requires a positive threshold');
-  return new SwapVMContract(new Address(getOfficialDeployments(chainId).router)).swap(swapArgs(params));
+  return new SwapVMContract(new Address(address(router))).swap(swapArgs(params));
 }

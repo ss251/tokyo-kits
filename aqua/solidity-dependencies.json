@@ -6,8 +6,8 @@
   },
   "swap-vm": {
     "repository": "1inch/swap-vm",
-    "commit": "be0a9cc840bb63b9f1abf864a39f4393e1a7312e",
-    "reason": "Official SDK-compatible opcode table with IExtruction; latest main has changed architecture"
+    "commit": "32c687c2b73101fc26549e48fa1ff8a4d73afbac",
+    "reason": "Official v1.0.2: deployed domain version and all 34 SDK opcodes match; latest main has changed architecture"
   },
   "forge-std": {
     "repository": "foundry-rs/forge-std",

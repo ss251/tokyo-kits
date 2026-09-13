@@ -11,5 +11,5 @@ pinned packages before use or redistribution.
 - `@1inch/solidity-utils@6.9.10`: see the installed package's license notices.
 - OpenZeppelin Contracts, viem and forge-std: MIT/Apache notices as distributed.
 
-Source pins are recorded in package.json and bun.lock. No third-party source
+SDK pins are recorded in package.json and bun.lock; Solidity source pins are in solidity-dependencies.json. No third-party source
 tree is copied into the starter's git history.

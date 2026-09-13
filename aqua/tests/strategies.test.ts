@@ -102,6 +102,6 @@ describe('official Aqua strategy calldata', () => {
     expect(args).toEqual([high, low, 7n, 3n]);
     expect(() => buildExtructionOrder(maker, target, high, low, 1n, 0n)).toThrow('Denominator');
     const custom = buildCustomOpcodeOrder(maker, high, low, 7n, 3n);
-    expect(custom.program.toString()).toBe(`0x2180${data.slice(2)}`);
+    expect(custom.program.toString()).toBe(`0x2280${data.slice(2)}`);
   });
 });
