@@ -1,0 +1,45 @@
+{
+  "chainId": 480,
+  "defaultRpc": "https://worldchain-mainnet.g.alchemy.com/public",
+  "explorer": "https://worldscan.org",
+  "agentBook": "0xA23aB2712eA7BBa896930544C7d6636a96b944dA",
+  "worldIdVerifier": {
+    "production": "0x00000000009E00F9FE82CfeeBB4556686da094d7",
+    "staging": "0x703a6316c975DEabF30b637c155edD53e24657DB"
+  },
+  "legacyWorldIdRouter": "0x17B354dD2595411ff79041f930e491A4Df39A278",
+  "legacySepolia": {
+    "chainId": 4801,
+    "defaultRpc": "https://worldchain-sepolia.g.alchemy.com/public",
+    "explorer": "https://sepolia.worldscan.org",
+    "worldIdRouter": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+    "protocolVersion": "3.0",
+    "proofWords": 8
+  },
+  "worldIdV4": {
+    "chainId": 480,
+    "proofWords": 5,
+    "issuerSchemaId": 1,
+    "genesisIssuedAtMin": 0,
+    "sandboxOnchainDeployment": null
+  },
+  "verifiedAt": "2026-09-14",
+  "readOnlyRpcEvidence": {
+    "method": "eth_chainId, eth_blockNumber, eth_getCode",
+    "mainnetObservedBlock": "0x2161814",
+    "sepoliaObservedBlock": "0x20cd950",
+    "nonemptyCodeBytes": {
+      "legacyWorldIdRouter": 177,
+      "worldIdVerifierProduction": 87,
+      "worldIdVerifierStaging": 141,
+      "agentBook": 3569,
+      "legacySepoliaWorldIdRouter": 177
+    },
+    "scope": "Public RPC code-existence checks only. No successful human proof or registration is implied."
+  },
+  "sources": {
+    "network": "https://docs.world.org/world-chain/quick-start/info",
+    "worldIdVerifiers": "https://docs.world.org/world-id/idkit/onchain-verification",
+    "agentBook": "https://github.com/worldcoin/agentkit/blob/1ec70f7d321bc8dedfe2b6ceb347a8e7d39846ce/core/src/agent-book.ts"
+  }
+}
