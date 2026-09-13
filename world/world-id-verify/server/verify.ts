@@ -22,7 +22,7 @@ export interface ServiceOptions {
   /** Production uses World Chain ERC-1271/ERC-6492-capable verification. Override only in tests. */
   verifyWalletSignature?: WalletSignatureVerifier;
   /** Test-only injection point. The production endpoint itself cannot be configured. */
-  fetch?: typeof globalThis.fetch;
+  fetch?: (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
   now?: () => number;
 }
 

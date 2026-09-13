@@ -29,7 +29,7 @@ function setup(options: ServiceOptions = {}, path = ':memory:') {
   const close = () => { if (!closed) { store.close(); closed = true; } }; cleanup.push(close);
   const wallet = privateKeyToAccount(generatePrivateKey());
   const calls: Array<{ url: string; body: unknown }> = [];
-  const fakeFetch: typeof globalThis.fetch = async (input, init) => {
+  const fakeFetch: NonNullable<ServiceOptions['fetch']> = async (input, init) => {
     calls.push({ url: String(input), body: JSON.parse(String(init?.body)) });
     return Response.json({ success: true });
   };
