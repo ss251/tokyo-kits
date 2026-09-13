@@ -10,7 +10,7 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 | [Aqua](aqua/) | Proven on Polygon and Base | [4 executed paths](aqua/README.md#last-proven), 64 tests |
 | [Uniswap](uniswap/) | Four components proven; API access blocked | [Base fork receipts](uniswap/README.md#coverage-and-last-proven), 57 tests |
 | [World](world/) | Implemented; Portal/human/agent credentials blocked | 59 tests; [partial fork wiring](world/README.md#last-proven) |
-| ENSv2 | Building current Sepolia examples | Not yet proven |
+| [ENSv2](ens/) | Both components proven | [Sepolia fork receipts](ens/README.md#last-proven),18 tests |
 | Sui | Queued | Not yet proven |
 | Curvegrid | Queued | Not yet proven |
 | Common | Queued | Not yet proven |
@@ -38,8 +38,8 @@ explicitly marked and never delay publication of proven ones.
 | Uniswap stack: v3/v2 pool | `uniswap/v3-or-v2` | Proven |
 | Uniswap stack: CCA | `uniswap/cca` | Proven |
 | Uniswap Continuity | `uniswap/continuity-recipe` | Proven |
-| ENSv2 new app | `ens/new-app-ensv2` | Queued |
-| ENSv2 existing app / Continuity | `ens/add-to-existing` | Queued |
+| ENSv2 new app | `ens/new-app-ensv2` | Proven on Sepolia fork |
+| ENSv2 existing app / Continuity | `ens/add-to-existing` | Proven on Sepolia fork |
 | World MiniKit component | `world/minikit-app` | NOT PROVEN; credentials/human steps |
 | World ID component | `world/world-id-verify` | NOT PROVEN; credentials/human steps |
 | World AgentKit component | `world/agentkit` | NOT PROVEN; credentials/human steps |

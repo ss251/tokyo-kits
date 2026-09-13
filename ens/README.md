@@ -6,8 +6,8 @@ upstream licenses remain in force.
 
 | Component | Which idea would use it? | State |
 | --- | --- | --- |
-| [New app](new-app-ensv2/) | Owner-managed recipient, enabled state and limits under an issued subname | Validation in progress |
-| [Add to an existing app](add-to-existing/) | Replace literal configuration with resolved records using the same app boundary | Validation in progress |
+| [New app](new-app-ensv2/) | Owner-managed recipient, enabled state and limits under an issued subname | Proven on Sepolia fork |
+| [Add to an existing app](add-to-existing/) | Replace literal configuration with resolved records using the same app boundary | Proven on Sepolia fork |
 
 ## Five-minute quickstart
 
@@ -52,14 +52,20 @@ For a browser view of freshly created fork names, build the UI first, then
 run `KEEP_FORK_ALIVE=true make demo`. Read the name from the receipt and
 RPC from `.run/ui-fork.json`. Start the built Next server with `ENS_RPC_URL`
 set to that local URL and optionally `ENS_DEMO_NAME` set to the receipt name.
-Stop the demo with Ctrl-C when finished. A retained demo owns the shared
+The retained fork stops after five minutes (override `FORK_KEEP_SECONDS`, maximum3600), or use Ctrl-C when finished. A retained demo owns the shared
 build lock, so finish builds before retaining it. No keys are written to that
 state file.
 
 ## Last proven
 
-PENDING validated fork receipts and tests. Each component's `make demo`
-writes its own `receipts/sepolia-latest.json` after all assertions pass.
+**18 tests, strict TypeScript and production Next build pass.** Both components
+execute independently on Sepolia fork block11699245 (2026-09-14 JST). Each
+records13 successful transactions and3 mined permission rejections.
+
+- New app registration: `0x2acff2b2c7ac2dfa6713c594ae3f9cbbe09d069bccaa6d7ab179d032e835c1f9`.
+- Existing app registration: `0x240a820a0330ad57fa42e6e8c98cb58550e57a1d50d21df83bc33d30703f99c4`.
+
+Each component contains its full `receipts/sepolia-latest.json` evidence.
 Local-fork hashes are evidence in those files, not public explorer hashes.
 
 A public live-demo URL and public Sepolia name are separate event submission

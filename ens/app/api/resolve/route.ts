@@ -48,6 +48,8 @@ export async function POST(request: Request) {
     const block = await client.getBlock();
     if (!block.hash || block.number === null) return reply({ error: 'snapshot_unavailable' }, 503);
     const config = await readEnsConfig(client, name, { blockNumber: block.number });
+    const canonical = await client.getBlock({ blockNumber: block.number });
+    if (canonical.hash !== block.hash) return reply({ error: 'snapshot_unavailable' }, 503);
     const result: Resolution = { source: 'ens', config: { label: config.label, recipient: config.recipient, enabled: config.enabled, limit: config.limit },
       evidence: { name: config.name, resolver: config.resolver, universalResolver: ensSepolia.contracts.ensUniversalResolver.address,
         chainId: 11155111, blockNumber: block.number.toString(), blockHash: block.hash,

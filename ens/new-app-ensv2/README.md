@@ -56,7 +56,7 @@ Test USDC used for registration is the official Sepolia test asset from the depl
 
 ## Last proven
 
-**PENDING first validated demo receipt and shared test run.** No successful transaction or public hosting claim is made here yet. The root build task will update this section after the demo completes. A fork transaction hash is verified against the saved fork receipt, not the public Sepolia explorer.
+**PROVEN on a local Sepolia fork**, 2026-09-14 JST, source block **11699245**. Registration: `0x2acff2b2c7ac2dfa6713c594ae3f9cbbe09d069bccaa6d7ab179d032e835c1f9`. [Saved evidence](receipts/sepolia-latest.json) contains 13 successful transactions and 3 mined permission rejections, official code/source hashes, before/after configuration and fork provenance. Shared strict TypeScript,18 tests and production Next.js build pass.
 
 Public live-demo URL: **not deployed**. Tokyo's ENS card separately requires a functioning ENSv2 Sepolia integration, accessible source, and a live-demo link. A local fork receipt alone does not meet that hosted-demo requirement. Before submission, register and configure a public Sepolia name, deploy this interface, verify live reads, and record the actual URL.
 

@@ -56,7 +56,7 @@ The browser action is an explicitly **local preview**. It does not send transact
 
 ## Last proven
 
-**PENDING first validated demo receipt and shared test run.** The intended evidence file is [`receipts/sepolia-latest.json`](receipts/sepolia-latest.json); a successful run records the official deployment snapshot, fork provenance, executed transactions, resolved configuration, and assertions. The root build task will replace this pending status once that evidence exists.
+**PROVEN on a local Sepolia fork**, 2026-09-14 JST, source block **11699245**. Registration: `0x240a820a0330ad57fa42e6e8c98cb58550e57a1d50d21df83bc33d30703f99c4`. [Saved evidence](receipts/sepolia-latest.json) contains 13 successful transactions and 3 mined permission rejections, official code/source hashes, before/after configuration and fork provenance. Shared strict TypeScript,18 tests and production Next.js build pass.
 
 Public live-demo URL: **not deployed**. A name created only on an ephemeral fork disappears when that fork stops. For live judging, configure a public Sepolia name, deploy the interface, and verify it against public state. A fork transaction hash is not a public explorer transaction. To inspect a retained local fork, set `ENS_RPC_URL` on the server to its loopback RPC; the interface displays the actual read block.
 

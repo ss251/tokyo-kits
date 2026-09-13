@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-13T23:56:50.747037+00:00",
+  "kind": "local-browser-and-server",
+  "responses": [
+    {
+      "scenario": "new-app-ensv2",
+      "response": {
+        "source": "ens",
+        "config": {
+          "label": "ENS-controlled starter",
+          "recipient": "0xDE7bD8bEe5Bf198D454a70093C9E4e9aDCe30BB7",
+          "enabled": true,
+          "limit": 7
+        },
+        "evidence": {
+          "name": "app.tokyonew-521edd94970b07e44eacbac5f6bad616.eth",
+          "resolver": "0xd173689D890CC93df0829D1C1df05f04F2293db3",
+          "universalResolver": "0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe",
+          "chainId": 11155111,
+          "blockNumber": "11699279",
+          "blockHash": "0x40ebec34c2988d96d3034b22e38a230a85c54180734207408da2389fb9f1f634",
+          "blockTimestamp": "2026-09-13T23:57:47.000Z",
+          "readAt": "2026-09-13T23:56:50.556Z"
+        }
+      }
+    },
+    {
+      "scenario": "add-to-existing",
+      "response": {
+        "source": "ens",
+        "config": {
+          "label": "ENS-controlled starter",
+          "recipient": "0xDE7bD8bEe5Bf198D454a70093C9E4e9aDCe30BB7",
+          "enabled": true,
+          "limit": 7
+        },
+        "evidence": {
+          "name": "app.tokyoexisting-f2a819b8f2f4289d3002f07cb4662f08.eth",
+          "resolver": "0x6006648BFb658AaE9aE21871E83B2914E8A70981",
+          "universalResolver": "0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe",
+          "chainId": 11155111,
+          "blockNumber": "11699279",
+          "blockHash": "0x40ebec34c2988d96d3034b22e38a230a85c54180734207408da2389fb9f1f634",
+          "blockTimestamp": "2026-09-13T23:57:47.000Z",
+          "readAt": "2026-09-13T23:56:50.570Z"
+        }
+      }
+    }
+  ],
+  "browserChecks": [
+    "Actual forkname resolved through UI",
+    "8 units disabled at ENS limit7;5 units enabled; actual local preview shown",
+    "390px viewport has390px document width"
+  ],
+  "limits": [
+    "Browser action is local preview only",
+    "No public live-demo URL; no public Sepolia name claimed"
+  ]
+}
