@@ -10,3 +10,11 @@ regexes = [
   '''^tokensRecipient": "0x161Ca3C3BFC8b896751772Bf3225c19146E4D575"''',
   '''^purchased-token claim: `0x712a980ac580ea56d1c7ebbd72a59afd4ccb1b38ef181cf7730f3352cc058849`'''
 ]
+
+[[allowlists]]
+description = "Verified World source SHA256 manifest entries; not authentication credentials"
+regexTarget = "match"
+regexes = [
+  '''^wallet-auth\.test\.ts": "dbd798a2177b9cb15b317f0ae9244c6bccff175ee5e5f07656caeb64acb71ce9"''',
+  '''^wallet-auth\.ts": "fc279861b53d3a25f6ef167a2df80b78263fbd2a483bfbaf8c58b4b87c0a5c89"'''
+]
