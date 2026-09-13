@@ -52,7 +52,12 @@ export async function startFork() {
     const maker = createWalletClient({ account, chain, transport: http(rpcUrl) })
     const sourceFilesSha256: Record<string, string> = {}
     const paths = new Set(['package.json', 'bun.lock', 'foundry.toml', 'solidity-dependencies.json', 'addresses.json'])
-    for await (const file of new Bun.Glob('{src,scripts,app,agentkit,world-id-verify/server}/**/*.{ts,tsx,sol,py}').scan({ cwd: kitRoot })) paths.add(file)
+    for (const dir of ['src', 'scripts', 'app', 'agentkit', 'world-id-verify/server']) {
+      for await (const file of new Bun.Glob(`${dir}/**/*`).scan({ cwd: kitRoot, onlyFiles: true })) {
+        if (/\.(ts|tsx|sol|py)$/.test(file)) paths.add(file)
+      }
+    }
+    assert(paths.size > 20, 'Source manifest discovery is incomplete')
     for (const file of paths) sourceFilesSha256[file] = new Bun.CryptoHasher('sha256').update(await Bun.file(resolve(kitRoot, file)).arrayBuffer()).digest('hex')
     async function receipt(hash: Hex, label: string) {
       const result = await client.waitForTransactionReceipt({ hash })

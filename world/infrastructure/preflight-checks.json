@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-13T23:39:12.809820+00:00",
+  "kind": "missing-credential-preflights",
+  "components": [
+    {
+      "component": "minikit-app",
+      "exitCode": 2,
+      "reason": "error: NOT PROVEN: MiniKit needs Developer Portal configuration and a real World App session. Run make dev and follow minikit-app/README.md; make probe verifies fork wiring only."
+    },
+    {
+      "component": "world-id-verify",
+      "exitCode": 2,
+      "reason": "error: NOT PROVEN: configure the World ID Portal, obtain a fresh human proof, and set WORLD_PROOF_FILE plus WORLD_RP_ID. See world-id-verify/README.md"
+    },
+    {
+      "component": "agentkit",
+      "exitCode": 2,
+      "reason": "error: NOT PROVEN: WORLD_AGENT_PRIVATE_KEY must be a World App-registered agent EOA; see agentkit/README.md"
+    },
+    {
+      "component": "continuity-recipe",
+      "exitCode": 2,
+      "reason": "error: NOT PROVEN: configure the World ID Portal, obtain a fresh human proof, and set WORLD_PROOF_FILE plus WORLD_RP_ID. See world-id-verify/README.md"
+    }
+  ]
+}

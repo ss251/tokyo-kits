@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert'
-import { createWalletClient, http, keccak256, parseAbi, parseEventLogs, stringToHex, toHex, type Address, type Hex } from 'viem'
+import { BaseError, ContractFunctionRevertedError, createWalletClient, http, keccak256, parseAbi, parseEventLogs, stringToHex, toHex, type Address, type Hex } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { command } from './command'
 import { deploy, startFork, type Fork } from './fork'
@@ -38,7 +38,7 @@ async function worldId(fork: Fork, scenario: string) {
     const proof = await fork.receipt(hash, 'authentic World ID v4 proof accepted by official verifier through caller-bound gate')
     const calls = await fork.client.readContract({ address: gate.address, abi: gate.abi, functionName: 'verifiedCalls', args: [parsed.wallet] })
     assert.equal(calls, 1n)
-    await assert.rejects(() => fork.client.simulateContract({ account: parsed.wallet, address: gate.address, abi: gate.abi, functionName: 'verifyAndExecute', args: [parsed.nullifier, parsed.nonce, parsed.expiresAtMin, parsed.proof] }))
+    await expectRevert('NullifierAlreadyUsed', () => fork.client.simulateContract({ account: parsed.wallet, address: gate.address, abi: gate.abi, functionName: 'verifyAndExecute', args: [parsed.nullifier, parsed.nonce, parsed.expiresAtMin, parsed.proof] }))
     await fork.save(scenario, { status: 'ONCHAIN_WORLD_ID_PROVEN', apiVerificationIncluded: false, fixture: 'Authentic proof supplied privately; caller impersonation and gas funding only on isolated fork', verifier, gate: gate.address, wallet: parsed.wallet, rpId: parsed.rpId, action: parsed.action, proofFileSha256: new Bun.CryptoHasher('sha256').update(await file.arrayBuffer()).digest('hex'), transactions: [gate.proof, proof] })
     console.log(`World ID gated call: ${hash}`)
   } finally { await fork.rpc('anvil_stopImpersonatingAccount', [parsed.wallet]) }
@@ -67,7 +67,17 @@ async function probe(fork: Fork) {
   const note = keccak256(stringToHex('tokyo-kits-fork-wiring-only'))
   const proof = await fork.receipt(await fork.maker.writeContract({ address: ping.address, abi: ping.abi, functionName: 'ping', args: [note] }), 'generic ping on local World Chain fork')
   const gate = await deploy(fork, 'AgentBookGate', [fork.config.agentBook])
-  await assert.rejects(() => fork.client.simulateContract({ account: fork.maker.account, address: gate.address, abi: gate.abi, functionName: 'record', args: [note] }))
+  await expectRevert('UnregisteredAgent', () => fork.client.simulateContract({ account: fork.maker.account, address: gate.address, abi: gate.abi, functionName: 'record', args: [note] }))
   await fork.save('infrastructure', { status: 'PARTIAL_ONLY_NOT_SPONSOR_E2E', limitations: ['MiniKit/World App transport not exercised', 'No authentic World ID proof available', 'No human-registered agent available'], assertions: ['both official v4 verifiers reject zero-root proof', 'unregistered agent rejected by official AgentBook-backed gate', 'generic ping contract executes'], transactions: [ping.proof, proof, gate.proof] })
   console.log(`Partial fork wiring receipt: ${proof.receipt.transactionHash}; World components remain NOT PROVEN`)
+}
+
+async function expectRevert(name: string, action: () => Promise<unknown>) {
+  try { await action(); assert.fail(`Expected ${name}`) }
+  catch (error) {
+    assert(error instanceof BaseError, 'Expected a decoded contract error, not a transport failure')
+    const revert = error.walk(cause => cause instanceof ContractFunctionRevertedError)
+    assert(revert instanceof ContractFunctionRevertedError)
+    assert.equal(revert.data?.errorName, name)
+  }
 }

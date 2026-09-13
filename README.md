@@ -9,8 +9,8 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 | --- | --- | --- |
 | [Aqua](aqua/) | Proven on Polygon and Base | [4 executed paths](aqua/README.md#last-proven), 64 tests |
 | [Uniswap](uniswap/) | Four components proven; API access blocked | [Base fork receipts](uniswap/README.md#coverage-and-last-proven), 57 tests |
-| World | Building current MiniKit/IDKit/AgentKit examples | Not yet proven |
-| ENSv2 | Queued | Not yet proven |
+| [World](world/) | Implemented; Portal/human/agent credentials blocked | 59 tests; [partial fork wiring](world/README.md#last-proven) |
+| ENSv2 | Building current Sepolia examples | Not yet proven |
 | Sui | Queued | Not yet proven |
 | Curvegrid | Queued | Not yet proven |
 | Common | Queued | Not yet proven |
@@ -40,10 +40,10 @@ explicitly marked and never delay publication of proven ones.
 | Uniswap Continuity | `uniswap/continuity-recipe` | Proven |
 | ENSv2 new app | `ens/new-app-ensv2` | Queued |
 | ENSv2 existing app / Continuity | `ens/add-to-existing` | Queued |
-| World MiniKit component | `world/minikit-app` | Queued; award details TBD |
-| World ID component | `world/world-id-verify` | Queued; award details TBD |
-| World AgentKit component | `world/agentkit` | Queued; award details TBD |
-| World Continuity recipe | `world/continuity-recipe` | Queued; predicted track |
+| World MiniKit component | `world/minikit-app` | NOT PROVEN; credentials/human steps |
+| World ID component | `world/world-id-verify` | NOT PROVEN; credentials/human steps |
+| World AgentKit component | `world/agentkit` | NOT PROVEN; credentials/human steps |
+| World Continuity recipe | `world/continuity-recipe` | NOT PROVEN; credentials/human steps |
 | Sui payments | `sui/payments` | Queued |
 | Sui DeFi | `sui/defi` | Queued |
 | MultiBaas basics | `curvegrid/multibaas-basics` | Queued; award details TBD |
