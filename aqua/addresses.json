@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-09-14",
+  "source": "https://github.com/1inch/aqua/blob/main/README.md",
+  "routerSource": "https://github.com/1inch/swap-vm/blob/be0a9cc840bb63b9f1abf864a39f4393e1a7312e/README.md",
+  "chains": {
+    "polygon": {
+      "chainId": 137,
+      "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+      "router": "0x111111338c5091e8440b67b168bae16a668ac0de",
+      "token0": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+      "token1": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "token0Symbol": "DAI",
+      "token1Symbol": "WETH",
+      "defaultRpc": "https://polygon-bor-rpc.publicnode.com"
+    },
+    "base": {
+      "chainId": 8453,
+      "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+      "router": "0x111111338c5091e8440b67b168bae16a668ac0de",
+      "token0": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      "token1": "0x4200000000000000000000000000000000000006",
+      "token0Symbol": "DAI",
+      "token1Symbol": "WETH",
+      "defaultRpc": "https://mainnet.base.org"
+    }
+  },
+  "notes": [
+    "Both tokens have 18 decimals. Demo amounts are synthetic fork liquidity, not market prices.",
+    "Custom example contracts are deployed only on the fork and recorded in the receipt; they never replace the registry.",
+    "Demo verifies protocol bytecode and router AQUA() at runtime."
+  ]
+}

@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+node_modules/
+lib/
+out/
+cache/
+broadcast/
+.next/
+.DS_Store
+*.log
+*.tsbuildinfo
+.run/
