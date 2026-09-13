@@ -18,3 +18,10 @@ regexes = [
   '''^wallet-auth\.test\.ts": "dbd798a2177b9cb15b317f0ae9244c6bccff175ee5e5f07656caeb64acb71ce9"''',
   '''^wallet-auth\.ts": "fc279861b53d3a25f6ef167a2df80b78263fbd2a483bfbaf8c58b4b87c0a5c89"'''
 ]
+
+[[allowlists]]
+description = "Official ENS Sepolia MockUSDC address in public registration receipts"
+regexTarget = "match"
+regexes = [
+  '''(?i)^paymentToken": "0x768f42455a2d082e23ceef7d51e5787c82d67a39"'''
+]
