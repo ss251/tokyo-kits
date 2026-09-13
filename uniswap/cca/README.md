@@ -43,11 +43,11 @@ The runner checks exact revert reasons for premature bidding/exit/claim and unau
 
 ## Last proven
 
-Pending the parent kit's serialized Base-fork run. No successful execution is claimed until `receipts/base-latest.json` is present and the parent records the run here. The receipt contains local transaction hashes and receipts; these hashes do not appear on a public block explorer.
+Proven 2026-09-14 JST on Base fork block **51275468**. Official-factory creation: `0xd9e619803b3b92a61e2538c0800da12b34733748bf0d04361707db201ed61156`; purchased-token claim: `0x712a980ac580ea56d1c7ebbd72a59afd4ccb1b38ef181cf7730f3352cc058849`. [Full receipt](receipts/base-latest.json) includes all 12 successful transactions, negative boundary probes, inventory/proceeds reconciliation and source hashes. These local hashes do not appear on a public block explorer. Six CCA boundary tests and the parent kit's complete 57-test suite passed.
 
 ## Blockers
 
-None confirmed during implementation. End-to-end execution and tests are awaiting the parent kit's serialized run. A missing official factory at the selected block, RPC failure, or changed protocol behavior fails the demo explicitly.
+None for this implemented lifecycle. A missing official factory at the selected block, RPC failure, or changed protocol behavior fails the demo explicitly.
 
 ## Official sources and license
 
