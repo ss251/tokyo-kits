@@ -7,7 +7,7 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 
 | Kit | Status | Proof |
 | --- | --- | --- |
-| [Aqua](aqua/) | Building: official-registry fork integration | Not yet proven |
+| [Aqua](aqua/) | Proven on Polygon; Base alternate awaiting load gate | [4 executed paths](aqua/README.md#last-proven), 64 tests |
 | Uniswap | Queued | Not yet proven |
 | World | Queued | Not yet proven |
 | ENSv2 | Queued | Not yet proven |
@@ -23,3 +23,31 @@ publication alone does not establish event eligibility.
 
 Never commit credentials. Copy `.env.example` locally. Build/test commands
 check uptime, wait when load exceeds 25, and share a machine-local lock.
+
+Target: all kits proven and public by **Sep 18 JST**. Unproven components remain
+explicitly marked and never delay publication of proven ones.
+
+| Sponsor track / component | Subfolder | State |
+| --- | --- | --- |
+| Aqua open app | `aqua/app-open` | Proven |
+| Aqua opcode extension | `aqua/swapvm-opcode` | Proven; includes official-router Extruction |
+| Aqua Continuity | `aqua/continuity-recipe` | Proven SDK pegged strategy |
+| Uniswap stack: v4 hook | `uniswap/v4-hook` | Queued |
+| Uniswap stack: swap API | `uniswap/api-swap` | Queued |
+| Uniswap stack: LP API | `uniswap/lp-api` | Queued |
+| Uniswap stack: v3/v2 pool | `uniswap/v3-or-v2` | Queued |
+| Uniswap stack: CCA | `uniswap/cca` | Queued |
+| Uniswap Continuity | `uniswap/continuity-recipe` | Queued |
+| ENSv2 new app | `ens/new-app-ensv2` | Queued |
+| ENSv2 existing app / Continuity | `ens/add-to-existing` | Queued |
+| World MiniKit component | `world/minikit-app` | Queued; award details TBD |
+| World ID component | `world/world-id-verify` | Queued; award details TBD |
+| World AgentKit component | `world/agentkit` | Queued; award details TBD |
+| World Continuity recipe | `world/continuity-recipe` | Queued; predicted track |
+| Sui payments | `sui/payments` | Queued |
+| Sui DeFi | `sui/defi` | Queued |
+| MultiBaas basics | `curvegrid/multibaas-basics` | Queued; award details TBD |
+| MultiBaas events/webhooks | `curvegrid/events-webhooks` | Queued; award details TBD |
+
+Components do not imply separate sponsor prize pools. Follow the current
+published card when selecting an award and disclose the reused starter.
