@@ -1,6 +1,6 @@
 # Aqua / SwapVM starter
 
-**Proven on a Polygon fork, 2026-09-14 JST.** Three runnable sub-track examples
+**Proven on Polygon and Base forks, 2026-09-14 JST.** Three runnable sub-track examples
 settle real DAI/WETH transfers through the official Aqua registry. Original
 starter code is MIT; dependencies retain their upstream licenses.
 
@@ -65,6 +65,12 @@ strict TypeScript checks pass. Fuzz tests run 1,000 cases. Assertions cover
 custody, quote/swap equality in both directions, docking, callback auth,
 nonpayment, reentrancy, slippage, exact-output rounding and opcode compatibility.
 
+Base alternate also passed every demo path on block **51274715**
+(2026-09-14 JST): [app](app-open/receipts/base-latest.json),
+[official Extruction](swapvm-opcode/official-extruction/receipts/base-latest.json),
+[custom opcode](swapvm-opcode/receipts/base-latest.json),
+[pegged strategy](continuity-recipe/receipts/base-latest.json).
+
 ## Gotchas and limits
 
 - The upstream starter deploys a fresh registry. This kit verifies the required
@@ -83,9 +89,8 @@ nonpayment, reentrancy, slippage, exact-output rounding and opcode compatibility
 
 ## Blockers
 
-Primary Polygon paths: none. Base alternate execution is awaiting the machine
-load gate; its official code and registry pointer are verified. Final event
-disclosure wording awaits the research handoff.
+None for the implemented Aqua paths. Both fork demos pass. Publication and
+verified reuse-disclosure wording are recorded in PRIOR-ART.md.
 
 ## Official sources
 

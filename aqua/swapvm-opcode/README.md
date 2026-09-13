@@ -65,3 +65,6 @@ Official-router external-instruction fill:
 
 [Official SwapVM](https://github.com/1inch/swap-vm) ·
 [Prior art](../PRIOR-ART.md) · [Addresses](../addresses.json)
+
+Base alternate proven on block **51274715**, first fill:
+`0x49ccc304e581818217eaf0574eef751c41d1c1410c7d2bd02dc51a8ec1b87e46`. [Base receipt](receipts/base-latest.json).

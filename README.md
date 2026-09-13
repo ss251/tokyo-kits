@@ -7,8 +7,8 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 
 | Kit | Status | Proof |
 | --- | --- | --- |
-| [Aqua](aqua/) | Proven on Polygon; Base alternate awaiting load gate | [4 executed paths](aqua/README.md#last-proven), 64 tests |
-| Uniswap | Queued | Not yet proven |
+| [Aqua](aqua/) | Proven on Polygon and Base | [4 executed paths](aqua/README.md#last-proven), 64 tests |
+| Uniswap | Building sub-track examples | Not yet proven |
 | World | Queued | Not yet proven |
 | ENSv2 | Queued | Not yet proven |
 | Sui | Queued | Not yet proven |

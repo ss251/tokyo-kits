@@ -61,3 +61,6 @@ Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript 
 
 [Official Aqua](https://github.com/1inch/aqua) ·
 [Disclosed prior art](../PRIOR-ART.md) · [Addresses](../addresses.json)
+
+Base alternate proven on block **51274715**, first fill:
+`0xec2876a515cd6244e050424f80c275f54a66f3651da0f1ca2639d25ffa142105`. [Base receipt](receipts/base-latest.json).
