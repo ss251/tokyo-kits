@@ -72,23 +72,33 @@ export async function startFork() {
       return createWalletClient({ account, chain, transport: http(rpcUrl) })
     }
     const maker = await wallet(), taker = await wallet()
+    const sourceFiles: Record<string, string> = {}
+    const sourcePaths = new Set(['package.json', 'bun.lock', 'foundry.toml', 'solidity-dependencies.json', 'addresses.json'])
+    for await (const file of new Bun.Glob('{src,scripts,api-swap,lp-api}/**/*.{ts,sol,py}').scan({ cwd: kitRoot })) sourcePaths.add(file)
+    for (const file of sourcePaths) sourceFiles[file] = new Bun.CryptoHasher('sha256').update(await Bun.file(resolve(kitRoot, file)).arrayBuffer()).digest('hex')
     const funding: unknown[] = []
     const setupTransactions: unknown[] = []
     async function balance(token: Address, holder: Address) {
       return client.readContract({ address: token, abi: erc20Abi, functionName: 'balanceOf', args: [holder] })
     }
     async function fund(token: Address, holder: Address, amount: bigint) {
+      if (await balance(token, holder) === amount) {
+        funding.push({ token, holder, amount, method: 'balance-already-sufficient; no mutation' })
+        return
+      }
       // Foundry deal-style fixture: locate the ERC20 balance mapping on this isolated fork.
       // Restore every failed probe. Never writes the registry/router or public upstream.
       for (let slot = 0n; slot < 100n; slot++) {
         const key = keccak256(encodeAbiParameters([{ type: 'address' }, { type: 'uint256' }], [holder, slot]))
         const original = await client.getStorageAt({ address: token, slot: key }) ?? toHex(0n, { size: 32 })
         await rpc('anvil_setStorageAt', [token, key, toHex(amount, { size: 32 })])
-        if (await balance(token, holder) === amount) {
-          funding.push({ token, holder, amount, method: 'anvil_setStorageAt', mappingSlot: slot })
-          return
+        let matched = false
+        try {
+          matched = await balance(token, holder) === amount
+          if (matched) { funding.push({ token, holder, amount, method: 'anvil_setStorageAt', mappingSlot: slot }); return }
+        } finally {
+          if (!matched) await rpc('anvil_setStorageAt', [token, key, original])
         }
-        await rpc('anvil_setStorageAt', [token, key, original])
       }
       throw new Error(`Could not locate balance mapping for ${token}; no fixture funding applied`)
     }
@@ -101,7 +111,7 @@ export async function startFork() {
       const commit = await new Response(Bun.spawn(['git', 'rev-parse', 'HEAD'], { cwd: kitRoot, stdout: 'pipe' }).stdout).text()
       const status = await new Response(Bun.spawn(['git', 'status', '--porcelain'], { cwd: kitRoot, stdout: 'pipe' }).stdout).text()
       const dependencies = await Bun.file(resolve(kitRoot, 'solidity-dependencies.json')).json()
-      const record = { schemaVersion: 1, kind: 'local-fork', scenario, provenAt: new Date().toISOString(), sourceCommit: commit.trim(), sourceDirty: status.trim().length > 0, compiler: 'solc 0.8.30; optimizer 200; viaIR; cancun', solidityDependencies: dependencies, sourceChain: name, sourceChainId: config.chainId, forkChainId: 31337, forkBlock: blockNumber, forkBlockHash: localBlock.hash, official, codeHashes, fixtureFunding: funding, setupTransactions, ...evidence }
+      const record = { schemaVersion: 1, kind: 'local-fork', scenario, provenAt: new Date().toISOString(), sourceCommit: commit.trim(), sourceDirty: status.trim().length > 0, compiler: 'solc 0.8.30; optimizer 200; viaIR; cancun', solidityDependencies: dependencies, sourceFilesSha256: sourceFiles, sourceChain: name, sourceChainId: config.chainId, forkChainId: 31337, forkBlock: blockNumber, forkBlockHash: localBlock.hash, official, codeHashes, fixtureFunding: funding, setupTransactions, ...evidence }
       await mkdir(resolve(kitRoot, scenario, 'receipts'), { recursive: true })
       const path = resolve(kitRoot, scenario, 'receipts', `${name}-latest.json`)
       await Bun.write(path, json(record) + '\n')
@@ -117,7 +127,10 @@ export type ForkWallet = Fork['maker']
 export async function deploy(fork: Fork, contract: string, args: readonly unknown[] = []) {
   const artifact = await Bun.file(resolve(kitRoot, 'out', `${contract}.sol`, `${contract}.json`)).json()
   const hash = await fork.maker.deployContract({ abi: artifact.abi, bytecode: artifact.bytecode.object as Hex, args })
-  const proof = await fork.receipt(hash, `deploy ${contract}`)
-  assert(proof.receipt.contractAddress)
-  return { address: proof.receipt.contractAddress, abi: artifact.abi, proof }
+  const transactionProof = await fork.receipt(hash, `deploy ${contract}`)
+  assert(transactionProof.receipt.contractAddress)
+  const runtime = await fork.client.getCode({ address: transactionProof.receipt.contractAddress })
+  assert(runtime && runtime !== '0x')
+  const proof = { ...transactionProof, artifact: { compilerMetadata: artifact.metadata ?? artifact.rawMetadata, creationCodeHash: keccak256(artifact.bytecode.object as Hex), deployedRuntimeHash: keccak256(runtime) } }
+  return { address: transactionProof.receipt.contractAddress, abi: artifact.abi, proof }
 }

@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert'
-import { erc20Abi, parseAbi, type Address, type Hex } from 'viem'
+import { encodeFunctionData, erc20Abi, parseAbi, type Address } from 'viem'
 import type { Fork } from './fork'
 
 const factoryAbi = parseAbi(['function getPool(address tokenA,address tokenB,uint24 fee) view returns (address)'])
@@ -24,13 +24,15 @@ export async function runV3(fork: Fork, scenario = 'v3-or-v2') {
     transactions.push(await fork.receipt(approval, 'approve exact v3 input'))
     const beforeIn = await fork.balance(tokenIn, taker.account.address), beforeOut = await fork.balance(tokenOut, taker.account.address)
     const simulated = await client.simulateContract({ account: taker.account, address: config.v3SwapRouter as Address, abi: routerAbi, functionName: 'exactInputSingle', args: [{ tokenIn, tokenOut, fee: 500, recipient: taker.account.address, amountIn, amountOutMinimum: minimum, sqrtPriceLimitX96: 0n }] })
-    const hash = await taker.writeContract(simulated.request)
+    const deadline = (await client.getBlock()).timestamp + 300n
+    const swapData = encodeFunctionData({ abi: routerAbi, functionName: 'exactInputSingle', args: [{ tokenIn, tokenOut, fee: 500, recipient: taker.account.address, amountIn, amountOutMinimum: minimum, sqrtPriceLimitX96: 0n }] })
+    const hash = await taker.writeContract({ address: config.v3SwapRouter as Address, abi: routerAbi, functionName: 'multicall', args: [deadline, [swapData]] })
     const proof = await fork.receipt(hash, `v3 swap ${reverse ? 'USDC→WETH' : 'WETH→USDC'}`)
     transactions.push(proof)
     const actualIn = beforeIn - await fork.balance(tokenIn, taker.account.address), actualOut = await fork.balance(tokenOut, taker.account.address) - beforeOut
     assert.equal(actualIn, amountIn); assert.equal(actualOut, quote.result[0]); assert.equal(actualOut, simulated.result)
     console.log(`v3 swap: ${hash}`)
-    fills.push({ reverse, tokenIn, tokenOut, amountIn, minimum, quote: quote.result, actualOut, hash })
+    fills.push({ reverse, tokenIn, tokenOut, amountIn, minimum, deadline, quote: quote.result, actualOut, hash })
   }
   await fork.save(scenario, { pool, router: config.v3SwapRouter, fills, assertions: ['official factory pool verified', 'both directions QuoterV2 == simulated swap == actual balance deltas', 'bounded approvals and positive minimum output'], transactions })
 }

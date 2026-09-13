@@ -89,6 +89,8 @@ Base alternate also passed every demo path on block **51274715**
 
 ## Blockers
 
+Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The license covers original starter code; dependency terms remain in force. See [publication evidence](PRIOR-ART.md).
+
 None for the implemented Aqua paths. Both fork demos pass. Publication and
 verified reuse-disclosure wording are recorded in PRIOR-ART.md.
 

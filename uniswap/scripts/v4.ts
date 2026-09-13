@@ -2,7 +2,7 @@ import { strict as assert } from 'node:assert'
 import { Actions, URVersion, V4Planner } from '@uniswap/v4-sdk'
 import { decodeEventLog, encodeAbiParameters, erc20Abi, getCreate2Address, parseAbi, toHex, type Address, type Hex } from 'viem'
 import { deploy, type Fork } from './fork'
-import { poolTuple, readPool, quoteV4, type PoolKey } from './read'
+import { poolId, poolTuple, readPool, quoteV4, type PoolKey } from './read'
 
 const managerAbi = parseAbi(['struct PoolKey { address currency0; address currency1; uint24 fee; int24 tickSpacing; address hooks; }', 'function initialize(PoolKey key,uint160 sqrtPriceX96) returns (int24 tick)'])
 const positionAbi = parseAbi(['function modifyLiquidities(bytes unlockData,uint256 deadline) payable', 'function nextTokenId() view returns (uint256)', 'function ownerOf(uint256 tokenId) view returns (address)'])
@@ -19,7 +19,7 @@ export function encodeV4Swap(key: PoolKey, zeroForOne: boolean, amount: bigint, 
   return planner.finalize() as Hex
 }
 
-export async function runV4(fork: Fork, scenario = 'v4-hook') {
+export async function runV4(fork: Fork, scenario = 'v4-hook'): Promise<void> {
   const { client, maker, taker, config } = fork
   const transactions: unknown[] = []
   const confirm = async (hash: Hex, label: string) => { const proof = await fork.receipt(hash, label); transactions.push(proof); console.log(`${label}: ${hash}`); return proof }
@@ -56,7 +56,7 @@ export async function runV4(fork: Fork, scenario = 'v4-hook') {
   assert.equal((await client.readContract({ address: config.positionManager as Address, abi: positionAbi, functionName: 'ownerOf', args: [tokenId] })).toLowerCase(), maker.account.address.toLowerCase())
   const initialState = await readPool(client, key)
   assert(initialState.liquidity > 0n)
-  const artifact = await Bun.file(new URL('../out/DirectionalFeeHook.sol/DirectionalFeeHook.json', import.meta.url)).json()
+  const hookAbi = parseAbi(['event SwapObserved(bytes32 indexed poolId,address indexed sender,bool zeroForOne,int256 amountSpecified,int128 amount0,int128 amount1,uint24 feePips)'])
   const fills = []
   for (const zeroForOne of [true, false]) {
     const tokenIn = zeroForOne ? key.currency0 : key.currency1, tokenOut = zeroForOne ? key.currency1 : key.currency0
@@ -71,9 +71,22 @@ export async function runV4(fork: Fork, scenario = 'v4-hook') {
     const proof = await confirm(await taker.writeContract({ address: config.universalRouter as Address, abi: routerAbi, functionName: 'execute', args: ['0x10', [commands], deadline] }), `v4 swap ${zeroForOne ? '0→1' : '1→0'}`)
     const actualIn = beforeIn - await fork.balance(tokenIn, taker.account.address), actualOut = await fork.balance(tokenOut, taker.account.address) - beforeOut
     assert.equal(actualIn, amountIn); assert.equal(actualOut, quote.amountOut)
-    const hookEvents = proof.receipt.logs.filter(log => log.address.toLowerCase() === hookAddress!.toLowerCase()).map(log => decodeEventLog({ abi: artifact.abi, data: log.data, topics: log.topics }))
-    assert(hookEvents.some(event => event.eventName === 'SwapObserved'), 'afterSwap event missing')
-    fills.push({ zeroForOne, quote, amountIn, minimum, actualOut, hash: proof.receipt.transactionHash, hookEvents })
+    const hookEvents: { eventName: string; args: Record<string, unknown> }[] = proof.receipt.logs.filter(log => log.address.toLowerCase() === hookAddress!.toLowerCase()).map(log => decodeEventLog({ abi: hookAbi, data: log.data, topics: log.topics }))
+    const observed = hookEvents.find(event => event.eventName === 'SwapObserved')
+    assert(observed && observed.args && !Array.isArray(observed.args), 'afterSwap event missing')
+    const eventArgs = observed.args as Record<string, unknown>
+    const expectedFee = zeroForOne ? 500 : 3000
+    assert.equal(eventArgs.poolId, poolId(key)); assert.equal(String(eventArgs.sender).toLowerCase(), config.universalRouter.toLowerCase())
+    assert.equal(eventArgs.zeroForOne, zeroForOne); assert.equal(eventArgs.feePips, expectedFee)
+    assert.equal(eventArgs.amountSpecified, -amountIn)
+    assert.equal(eventArgs.amount0, zeroForOne ? -amountIn : actualOut); assert.equal(eventArgs.amount1, zeroForOne ? actualOut : -amountIn)
+    const poolSwapAbi = parseAbi(['event Swap(bytes32 indexed id,address indexed sender,int128 amount0,int128 amount1,uint160 sqrtPriceX96,uint128 liquidity,int24 tick,uint24 fee)'])
+    const poolEvents = proof.receipt.logs.filter(log => log.address.toLowerCase() === config.poolManager.toLowerCase()).flatMap(log => {
+      try { return [decodeEventLog({ abi: poolSwapAbi, data: log.data, topics: log.topics })] } catch { return [] }
+    })
+    const poolSwap = poolEvents.find(event => event.args.id === poolId(key))
+    assert(poolSwap, 'PoolManager Swap event missing'); assert.equal(poolSwap.args.fee, expectedFee)
+    fills.push({ zeroForOne, quote, amountIn, minimum, actualOut, hash: proof.receipt.transactionHash, hookEvents, poolSwap })
   }
   await fork.save(scenario, { key, hookFactory: factory.address, hookAddress, create2Salt: salt, hookFlags: '0x20c0', initCodeHash, tokenId, initialState, finalState: await readPool(client, key), fills, assertions: ['CREATE2 address has exact enabled callback bits', 'NFT minted through official PositionManager', 'StateView slot0/liquidity/tick bitmap read', 'both V4Quoter directions equal actual UniversalRouter 2.1.1 output', 'Permit2 input budgets and positive output minimums', 'afterSwap event emitted'], transactions })
 }
