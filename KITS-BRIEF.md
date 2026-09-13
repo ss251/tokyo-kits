@@ -29,3 +29,13 @@ Sailesh: "for each ethglobal sponsor I need a working demo project for their int
 - Published public repo URL recorded in `~/Developer/tokyo-warroom/astra/STATUS.md` under Kits.
 
 Start with `aqua/` and `uniswap/` (highest prize weight and most contract surface), then `world/`, `ens/`, `sui/`, `curvegrid/`, `common/`.
+
+## Sub-track coverage (added 2026-09-14, Sailesh: "an integration for each sub track wherever applicable")
+Each sponsor kit gets one runnable example per published or strongly predicted Tokyo sub-track, in its own subfolder, sharing the kit's plumbing. Take the track list from `~/Developer/tokyo-warroom/astra/01-*.md` and `astra/17-*.md` when they land; until then use the prize pages fetched 2026-09-14 and the New York / Lisbon 2026 track structure as the prediction.
+- **1inch**: `aqua/app-open/` (custom AquaApp, Path A) · `aqua/swapvm-opcode/` (modified SwapVM router with a custom opcode, the thing judges score higher) · `aqua/continuity-recipe/` (how to bolt Aqua settlement onto an existing app in <1 h, for the $2k Continuity sub-track).
+- **Uniswap Foundation** ("Best Uniswap Stack Contribution", open + Continuity): one example per stack component named on the prize page: `uniswap/v4-hook/`, `uniswap/api-swap/` (Uniswap API /quote + /swap), `uniswap/lp-api/` (/lp/create, increase, decrease), `uniswap/v3-or-v2/` (minimal v3 pool interaction for teams that need a plain pool), `uniswap/cca/` (whatever CCA is per docs), `uniswap/continuity-recipe/`, plus the shared `FEEDBACK.md` template and form link.
+- **ENS**: `ens/new-app-ensv2/` (Best Use of ENSv2) · `ens/add-to-existing/` (Best Integration of ENSv2 into an Existing Project, Continuity): show the smallest non-cosmetic use (names as identity/permissions/config, text records driving app state, subname issuance).
+- **World** (details TBD; predict from NY/Lisbon: AgentKit, World ID / MiniKit mini app, Continuity): `world/minikit-app/`, `world/world-id-verify/` (IDKit + server verify + on-chain gate), `world/agentkit/` (agent acting under a World ID-bound identity, per current docs), `world/continuity-recipe/`. Update the moment the Tokyo World page publishes.
+- **Sui** ("DeFi & Payments"): `sui/payments/` (stablecoin transfer with sponsored gas or zkLogin, receipt object) · `sui/defi/` (escrow/vault Move package; optional DeepBook or Cetus call if a public testnet exists).
+- **Curvegrid** (TBD): `curvegrid/multibaas-basics/` (deploy, link, REST read/write) · `curvegrid/events-webhooks/` (indexing + webhook consumer). Update when the Tokyo page publishes.
+Each subfolder: its own README quickstart, `make demo` with receipt, and a one-paragraph "which idea would use this" note. Record the mapping track → subfolder in the top-level README table.
