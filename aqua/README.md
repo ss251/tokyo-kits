@@ -30,7 +30,7 @@ No key or paid RPC is required. The runner creates ephemeral wallets and
 synthetic balances of real ERC20s on its own loopback-only fork, verifies the
 upstream block and official contracts, and stops Anvil afterward. Copy
 `.env.example` to `.env` to replace public RPCs. `FORK_CHAIN=base make demo`
-selects Base; `FORK_BLOCK_NUMBER=93755673 make demo` replays the Polygon source block.
+selects Base; `FORK_BLOCK_NUMBER=93756903 make demo` replays the Polygon source block.
 
 All build/test commands share one host lock, check uptime before each compiler
 or test child, wait when one-minute load exceeds 25, and run under `nice -n 19`.
@@ -50,22 +50,22 @@ flowchart LR
 
 ## Last proven
 
-2026-09-14 JST (2026-09-13 22:29 UTC), Polygon block **93755673**. These are
+2026-09-14 JST (2026-09-13 22:59–23:00 UTC), Polygon block **93756903**. These are
 local-fork hashes, not public-chain transactions or explorer links.
 
 | Path | First fill transaction | Full evidence |
 | --- | --- | --- |
-| Callback app | `0xe74714e8abb6b14cc179e8a40c48aa05f14199803293a4a760a5156e4dd099b8` | [receipt](app-open/receipts/polygon-latest.json) |
-| Official-router Extruction | `0x321851b69366118a77f1648985be1ebb11d16daffecf50642a64d07efbfd974d` | [receipt](swapvm-opcode/official-extruction/receipts/polygon-latest.json) |
-| Modified-router opcode | `0xbf1316ea8c10f64e8ca6ae3dae36d40795721d5ffd89b9035f527969f7e4f512` | [receipt](swapvm-opcode/receipts/polygon-latest.json) |
-| SDK pegged strategy | `0xbfa186f289056342bdb9aec23a4672b9d4b95c0ea95f160d8009378d35d62390` | [receipt](continuity-recipe/receipts/polygon-latest.json) |
+| Callback app | `0xf3fb2e5524c92f82a48d770733a260e05f1f23bd8047a3e0ac627a93c21e32d2` | [receipt](app-open/receipts/polygon-latest.json) |
+| Official-router Extruction | `0xcde9344dd6ee1c11fe289027cec9fe3daf0871a56a572d8c70194e324ae31544` | [receipt](swapvm-opcode/official-extruction/receipts/polygon-latest.json) |
+| Modified-router opcode | `0xfe170ccba582f5c86f88821f09b9ed93a264e68eff5a85bc8cea2395adb0f2aa` | [receipt](swapvm-opcode/receipts/polygon-latest.json) |
+| SDK pegged strategy | `0x3c0ef651fdb88f10794d508c4f063b21024f6fa205b1458cf983d34f8dc74609` | [receipt](continuity-recipe/receipts/polygon-latest.json) |
 
 `make test`: **35 Solidity unit + 24 official-contract fork + 5 SDK tests**;
 strict TypeScript checks pass. Fuzz tests run 1,000 cases. Assertions cover
 custody, quote/swap equality in both directions, docking, callback auth,
 nonpayment, reentrancy, slippage, exact-output rounding and opcode compatibility.
 
-Base alternate also passed every demo path on block **51274715**
+Base alternate also passed every demo path on block **51275546**
 (2026-09-14 JST): [app](app-open/receipts/base-latest.json),
 [official Extruction](swapvm-opcode/official-extruction/receipts/base-latest.json),
 [custom opcode](swapvm-opcode/receipts/base-latest.json),

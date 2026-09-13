@@ -50,8 +50,8 @@ flowchart LR
 
 ## Last proven
 
-Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
-`0xbfa186f289056342bdb9aec23a4672b9d4b95c0ea95f160d8009378d35d62390`. [Full local-fork receipt](receipts/polygon-latest.json).
+Proven 2026-09-14 JST on Polygon fork block **93756903**. First fill:
+`0x3c0ef651fdb88f10794d508c4f063b21024f6fa205b1458cf983d34f8dc74609`. [Full local-fork receipt](receipts/polygon-latest.json).
 
 Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
 
@@ -66,5 +66,5 @@ with their original tokens when sorting.
 [Official SDKs](https://github.com/1inch/sdks) ·
 [Prior art](../PRIOR-ART.md) · [Addresses](../addresses.json)
 
-Base alternate proven on block **51274715**, first fill:
-`0x58bb276bda366d0254f38db2e33059f90ddffa2104fdef7663424893d55dd2af`. [Base receipt](receipts/base-latest.json).
+Base alternate proven on block **51275546**, first fill:
+`0x5e68d5c45a41aefe39797ad0214e1fc18f8a7520c9210709c1685519675ae6d4`. [Base receipt](receipts/base-latest.json).

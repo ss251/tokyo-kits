@@ -45,13 +45,13 @@ the current sponsor criteria for the chosen variant.
 
 ## Last proven
 
-Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
-`0xbf1316ea8c10f64e8ca6ae3dae36d40795721d5ffd89b9035f527969f7e4f512`. [Full local-fork receipt](receipts/polygon-latest.json).
+Proven 2026-09-14 JST on Polygon fork block **93756903**. First fill:
+`0xfe170ccba582f5c86f88821f09b9ed93a264e68eff5a85bc8cea2395adb0f2aa`. [Full local-fork receipt](receipts/polygon-latest.json).
 
 Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
 
 Official-router external-instruction fill:
-`0x321851b69366118a77f1648985be1ebb11d16daffecf50642a64d07efbfd974d`. [Official-router receipt](official-extruction/receipts/polygon-latest.json).
+`0xcde9344dd6ee1c11fe289027cec9fe3daf0871a56a572d8c70194e324ae31544`. [Official-router receipt](official-extruction/receipts/polygon-latest.json).
 
 ## Gotchas
 
@@ -66,5 +66,5 @@ Official-router external-instruction fill:
 [Official SwapVM](https://github.com/1inch/swap-vm) ·
 [Prior art](../PRIOR-ART.md) · [Addresses](../addresses.json)
 
-Base alternate proven on block **51274715**, first fill:
-`0x49ccc304e581818217eaf0574eef751c41d1c1410c7d2bd02dc51a8ec1b87e46`. [Base receipt](receipts/base-latest.json).
+Base alternate proven on block **51275546**, first fill:
+`0x7e7f315762aca48b2427ca54d5586b939d2865126594ad0e1283169f39556113`. [Base receipt](receipts/base-latest.json).

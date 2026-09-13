@@ -45,8 +45,8 @@ is its keccak256 hash. Approval targets differ: maker → Aqua; payer → taker.
 
 ## Last proven
 
-Proven 2026-09-14 JST on Polygon fork block **93755673**. First fill:
-`0xe74714e8abb6b14cc179e8a40c48aa05f14199803293a4a760a5156e4dd099b8`. [Full local-fork receipt](receipts/polygon-latest.json).
+Proven 2026-09-14 JST on Polygon fork block **93756903**. First fill:
+`0xf3fb2e5524c92f82a48d770733a260e05f1f23bd8047a3e0ac627a93c21e32d2`. [Full local-fork receipt](receipts/polygon-latest.json).
 
 Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript checks.
 
@@ -62,5 +62,5 @@ Shared tests are green: 35 unit + 24 fork + 5 SDK tests, with strict TypeScript 
 [Official Aqua](https://github.com/1inch/aqua) ·
 [Disclosed prior art](../PRIOR-ART.md) · [Addresses](../addresses.json)
 
-Base alternate proven on block **51274715**, first fill:
-`0xec2876a515cd6244e050424f80c275f54a66f3651da0f1ca2639d25ffa142105`. [Base receipt](receipts/base-latest.json).
+Base alternate proven on block **51275546**, first fill:
+`0x68f55012aa7351eabb60ea1eb32435ad25bdb38dd328d7a6c4aa048ff22ccd6c`. [Base receipt](receipts/base-latest.json).
