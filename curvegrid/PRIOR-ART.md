@@ -1,8 +1,8 @@
 # Prior-art disclosure — Curvegrid starter
 
 - Name: Tokyo Kits — Curvegrid MultiBaas integration starter.
-- Intended public location: `https://github.com/ss251/tokyo-kits/tree/main/curvegrid`.
-- Publication: **PUBLIC — see verified record below**. Insert the actual public push timestamp and source commit after publication.
+- Public location: `https://github.com/ss251/tokyo-kits/tree/main/curvegrid`.
+- Publication: **PUBLIC**; verified timestamp and source revision below.
 - Original code license: [MIT](LICENSE). The upstream SDK and other dependencies retain their notices in [THIRD-PARTY.md](THIRD-PARTY.md).
 - MultiBaas execution status: **NOT PROVEN** until a real deployment's REST integration and external authenticated webhook have verifiable receipts. Generic counter tests, local signing tests, synthetic webhook requests, and fork transactions do not establish that proof.
 
@@ -12,9 +12,9 @@ For event reuse, disclose this exact public repository path and the source commi
 
 | Publication record | Value |
 | --- | --- |
-| Confirmed public URL | PENDING |
-| Published at, UTC and JST | PENDING |
-| Source commit | PENDING |
+| Confirmed public URL | https://github.com/ss251/tokyo-kits/tree/main/curvegrid |
+| Published at, UTC and JST | 2026-09-14T00:45:31Z / Sep14 09:45:31 JST |
+| Source commit | `e37e0644fcece6691705236f7ec573344b96be86` |
 | MultiBaas basics receipt | NOT PROVEN |
 | Authenticated webhook receipt | NOT PROVEN |
 
