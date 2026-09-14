@@ -19,3 +19,5 @@ broadcast/
 !sui/lib/
 !sui/lib/**
 sui/move/build/
+__pycache__/
+*.pyc

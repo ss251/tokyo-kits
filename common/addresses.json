@@ -1,0 +1,15 @@
+{
+  "purpose": "Local Anvil fork plumbing; no sponsor contract replacement",
+  "chains": {
+    "polygon": { "chainId": 137, "rpcEnvironment": "POLYGON_RPC_URL", "defaultRpc": "https://polygon-bor-rpc.publicnode.com" },
+    "base": { "chainId": 8453, "rpcEnvironment": "BASE_RPC_URL", "defaultRpc": "https://mainnet.base.org" },
+    "sepolia": { "chainId": 11155111, "rpcEnvironment": "SEPOLIA_RPC_URL", "defaultRpc": "https://ethereum-sepolia.publicnode.com" }
+  },
+  "forkHost": "127.0.0.1",
+  "funding": "Only default synthetic Anvil development balances are used by common canaries",
+  "sources": [
+    "https://getfoundry.sh/anvil/reference/",
+    "https://docs.base.org/base-chain/network-information",
+    "https://docs.polygon.technology/pos/reference/rpc-endpoints/"
+  ]
+}
