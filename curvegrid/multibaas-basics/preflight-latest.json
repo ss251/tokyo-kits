@@ -1,0 +1,6 @@
+{
+  "checkedAt": "2026-09-14T00:43:22.028Z",
+  "status": "NOT_PROVEN",
+  "reason": "NOT PROVEN: Missing MULTIBAAS_URL, MULTIBAAS_ADMIN_API_KEY, MULTIBAAS_API_KEY. Create a Sepolia MultiBaas deployment at https://console.curvegrid.com/ and separate admin/DApp User keys; webhooks additionally require a reachable HTTPS callback.",
+  "chainId": 11155111
+}

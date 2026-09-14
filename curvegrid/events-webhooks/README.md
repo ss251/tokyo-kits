@@ -60,3 +60,8 @@ The wire event has **no chain ID**. Receiver authentication proves possession of
 For another contract, deliberately update the event ABI, schema, scope policy, and tests together. The existing receipt reconciler and decoder are specific to the counter event. `transaction.included` is documented for Cloud Wallet transactions; this locally signed example uses `event.emitted`.
 
 The tests use synthetic protocol fixtures, real SQLite transactions, and a local HTTP server. They cover byte-exact HMAC validation, time boundaries, scope exclusion, decoded/raw-log agreement, persistence, duplicates, conflicting replay rollback, and mixed batches. They are not sponsor end-to-end evidence. The starter is MIT licensed; see [official sources](../SOURCES.md) and [third-party notices](../THIRD-PARTY.md).
+
+
+Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The actual `events-webhooks` demo preflight on 2026-09-14 is [recorded](preflight-latest.json) and fails for missing service configuration. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof.
+
+The bounded demo deletes its temporary remote webhook on exit and preserves any primary failure if cleanup also fails. The saved private config is a record of that demo endpoint. Register an active webhook and use its current ID/secret when running the standalone listener for an ongoing integration.

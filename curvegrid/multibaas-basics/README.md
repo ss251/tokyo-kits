@@ -66,3 +66,6 @@ Run the credentialed demo, retain its SDK and independent RPC receipt, and recor
 Original starter code is MIT licensed. The upstream SDK is MIT; see the root [third-party notices](../THIRD-PARTY-NOTICES.md). Publication status and disclosure are maintained in [PRIOR-ART.md](../PRIOR-ART.md).
 
 Official references: [backend credentials and signing](https://docs.curvegrid.com/multibaas/getting-started/build-a-backend/), [contract APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ContractsApi.md), [chain APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ChainsApi.md), [events](https://docs.curvegrid.com/multibaas/event-indexing/).
+
+
+Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The actual `multibaas-basics` demo preflight on 2026-09-14 is [recorded](preflight-latest.json) and fails for missing service configuration. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof.

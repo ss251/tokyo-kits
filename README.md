@@ -12,7 +12,7 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 | [World](world/) | Implemented; Portal/human/agent credentials blocked | 59 tests; [partial fork wiring](world/README.md#last-proven) |
 | [ENSv2](ens/) | Both components proven | [Sepolia fork receipts](ens/README.md#last-proven),18 tests |
 | [Sui](sui/) | Both components proven on public Testnet | [USDC + escrow receipts](sui/README.md#last-proven), 49 tests |
-| Curvegrid | Queued | Not yet proven |
+| [Curvegrid](curvegrid/) | Implemented; service credentials blocked | 60 tests; [partial fork receipt](curvegrid/README.md#last-proven) |
 | Common | Queued | Not yet proven |
 
 Each kit must pass its tests and execute a fork or testnet demo before it is
@@ -46,8 +46,8 @@ explicitly marked and never delay publication of proven ones.
 | World Continuity recipe | `world/continuity-recipe` | NOT PROVEN; credentials/human steps |
 | Sui payments | `sui/payments` | Proven official USDC and sponsored gas |
 | Sui DeFi | `sui/defi` | Proven approved claim and expired refund |
-| MultiBaas basics | `curvegrid/multibaas-basics` | Queued; award details TBD |
-| MultiBaas events/webhooks | `curvegrid/events-webhooks` | Queued; award details TBD |
+| MultiBaas basics | `curvegrid/multibaas-basics` | NOT PROVEN: MultiBaas credentials unavailable |
+| MultiBaas events/webhooks | `curvegrid/events-webhooks` | NOT PROVEN: service credentials and HTTPS callback |
 
 Components do not imply separate sponsor prize pools. Follow the current
 published card when selecting an award and disclose the reused starter.
