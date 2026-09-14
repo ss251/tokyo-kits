@@ -93,3 +93,5 @@ public deployment.
 See [SOURCES.md](SOURCES.md), [addresses.json](addresses.json), and
 [PRIOR-ART.md](PRIOR-ART.md). This is generic pre-event code; disclose the
 precise reused commit and preserve the new event work separately.
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).

@@ -5,7 +5,8 @@ no project-specific product logic. Upstream dependencies keep their licenses.
 
 - Public location: https://github.com/ss251/tokyo-kits/tree/main/ens
 - Preparation started: 2026-09-14 JST.
-- First complete starter public revision/date: pending actual push.
+- First complete starter public revision: `e7b04d7b579bf0c744d685c14b1a20b1a68c256a`.
+- GitHub confirmed public push: **2026-09-14 08:58:55 JST** (`2026-09-13T23:58:55Z`).
 - Contains: official Sepolia commit/reveal registration, factory proxies,
   linked subnames, scoped record permissions, pinned viem configuration
   adapter, a shared frontend, and a Continuity integration example.

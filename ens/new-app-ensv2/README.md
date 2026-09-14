@@ -68,4 +68,6 @@ Exact runtime pins: viem **2.56.5**, Next **16.3.5**, React **19.3.0**. Reads us
 
 Official references: [ENSv2 application guide](https://docs.ens.domains/ensv2/tutorial-app-developers/), [current deployments](https://docs.ens.domains/learn/deployments/), [contract source snapshot](https://github.com/ensdomains/contracts-v2/tree/97a57293f3b4279d94b571e678edb53ce62638f4), [Tokyo ENS criteria](https://ethglobal.com/events/tokyo2026/prizes/ens).
 
-Original starter code is MIT licensed. Public prior-art publication and its date remain pending the actual repository push. Disclose the reused commit and distinguish new event work; see [`../PRIOR-ART.md`](../PRIOR-ART.md).
+Original starter code is MIT licensed. Public prior-art publication is recorded in the parent disclosure. Disclose the reused commit and distinguish new event work; see [`../PRIOR-ART.md`](../PRIOR-ART.md).
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).

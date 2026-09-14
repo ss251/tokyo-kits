@@ -68,4 +68,6 @@ viem **2.56.5**, Next **16.3.5**, and React **19.3.0** are pinned. The current o
 
 Official references: [application integration](https://docs.ens.domains/ensv2/tutorial-app-developers/), [current deployment table](https://docs.ens.domains/learn/deployments/), [Tokyo ENS criteria](https://ethglobal.com/events/tokyo2026/prizes/ens).
 
-Original code is MIT licensed. Public prior-art publication and its date remain pending the repository push. Disclose the reused commit, earlier project work, and the new event work separately; see [`../PRIOR-ART.md`](../PRIOR-ART.md).
+Original code is MIT licensed. Public prior-art publication is recorded in the parent disclosure. Disclose the reused commit, earlier project work, and the new event work separately; see [`../PRIOR-ART.md`](../PRIOR-ART.md).
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
