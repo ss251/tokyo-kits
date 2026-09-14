@@ -2,9 +2,24 @@
 import { strict as assert } from 'node:assert'
 import { createPublicClient, getAddress, http, keccak256, type Address, type Hex } from 'viem'
 import { sepolia } from 'viem/chains'
-import type { CounterArtifact } from '../multibaas-basics/client'
+import { MultiBaasRequestError, type CounterArtifact, type MultiBaasAdapter } from '../multibaas-basics/client'
+import { NotProvenError } from './config'
 export function createRpc(url: string) {
   return createPublicClient({ chain: sepolia, transport: http(url, { batch: false, timeout: 15_000, retryCount: 1, fetchOptions: { headers: { 'User-Agent': 'tokyo-kits/0.1' } } }) })
+}
+export async function waitForSdkReceipt(mb: Pick<MultiBaasAdapter, 'getReceipt'>, hash: Hex, options: { timeoutMs?: number; intervalMs?: number } = {}) {
+  const timeout = options.timeoutMs ?? 45_000; const interval = options.intervalMs ?? 1500
+  assert(Number.isSafeInteger(timeout) && timeout > 0 && timeout <= 90_000)
+  assert(Number.isSafeInteger(interval) && interval > 0 && interval <= 10_000)
+  const deadline = Date.now() + timeout
+  for (;;) {
+    try { return await mb.getReceipt(hash) }
+    catch (error) {
+      if (!(error instanceof MultiBaasRequestError) || error.status !== 404) throw error
+      if (Date.now() >= deadline) throw new NotProvenError('MultiBaas did not expose the independently confirmed transaction receipt within the bounded wait')
+      await Bun.sleep(Math.min(interval, deadline - Date.now()))
+    }
+  }
 }
 export function maskImmutables(code: Hex, artifact: CounterArtifact) {
   const bytes = Buffer.from(code.slice(2), 'hex')
