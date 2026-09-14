@@ -1,0 +1,12 @@
+{
+  "chainId": 11155111,
+  "network": "sepolia",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "contractKind": "generic kit Counter deployed per run; no MultiBaas replacement",
+  "sdkVersion": "1.1.1",
+  "sdkCommit": "65f28a15e76f6e16feee7059301cb4fcf6b842d3",
+  "sources": [
+    "https://docs.curvegrid.com/multibaas/",
+    "https://assets.multibaas.com/chains.json"
+  ]
+}

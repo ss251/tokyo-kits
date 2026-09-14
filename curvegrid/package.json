@@ -1,0 +1,20 @@
+{
+  "name": "@tokyo-kits/curvegrid",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/serial.py bun scripts/build.ts",
+    "test": "python3 scripts/serial.py bun scripts/check.ts",
+    "demo": "python3 scripts/serial.py bun scripts/demo.ts"
+  },
+  "dependencies": {
+    "@curvegrid/multibaas-sdk": "1.1.1",
+    "viem": "2.56.5"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "@types/bun": "1.4.2"
+  }
+}
