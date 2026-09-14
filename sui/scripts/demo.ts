@@ -48,7 +48,7 @@ for (const role of ['payer', 'sponsor'] as const) {
     console.log(`Requesting official testnet faucet gas for ${role}`)
     let response
     try { response = await requestSuiFromFaucetV2({ host: getFaucetHost('testnet'), recipient: key.toSuiAddress() }) }
-    catch { throw new NotProvenError(`Official testnet faucet failed or rate-limited for ${role} ${key.toSuiAddress()}; fund this testnet address and retry with the same .run account state`) }
+    catch { throw new NotProvenError(`Official testnet faucet API failed or rate-limited for ${role} ${key.toSuiAddress()}; open https://faucet.sui.io, select Testnet, fund this address through the normal browser flow, and retry with the same .run account state`) }
     const deadline = Date.now() + 45_000
     while (await balance(client, key.toSuiAddress()) < 500_000_000n) {
       if (Date.now() > deadline) throw new NotProvenError('Faucet response did not become an adequate spendable gas balance')
