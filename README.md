@@ -11,7 +11,7 @@ Build order: Aqua → Uniswap → World → ENSv2 → Sui → Curvegrid → comm
 | [Uniswap](uniswap/) | Four components proven; API access blocked | [Base fork receipts](uniswap/README.md#coverage-and-last-proven), 57 tests |
 | [World](world/) | Implemented; Portal/human/agent credentials blocked | 59 tests; [partial fork wiring](world/README.md#last-proven) |
 | [ENSv2](ens/) | Both components proven | [Sepolia fork receipts](ens/README.md#last-proven),18 tests |
-| Sui | Queued | Not yet proven |
+| [Sui](sui/) | Both components proven on public Testnet | [USDC + escrow receipts](sui/README.md#last-proven), 49 tests |
 | Curvegrid | Queued | Not yet proven |
 | Common | Queued | Not yet proven |
 
@@ -44,8 +44,8 @@ explicitly marked and never delay publication of proven ones.
 | World ID component | `world/world-id-verify` | NOT PROVEN; credentials/human steps |
 | World AgentKit component | `world/agentkit` | NOT PROVEN; credentials/human steps |
 | World Continuity recipe | `world/continuity-recipe` | NOT PROVEN; credentials/human steps |
-| Sui payments | `sui/payments` | Queued |
-| Sui DeFi | `sui/defi` | Queued |
+| Sui payments | `sui/payments` | Proven official USDC and sponsored gas |
+| Sui DeFi | `sui/defi` | Proven approved claim and expired refund |
 | MultiBaas basics | `curvegrid/multibaas-basics` | Queued; award details TBD |
 | MultiBaas events/webhooks | `curvegrid/events-webhooks` | Queued; award details TBD |
 

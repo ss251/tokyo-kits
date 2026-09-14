@@ -69,7 +69,7 @@ The pinned gRPC SDK also simulates during full transaction construction. Its typ
 
 ## Last proven
 
-**PENDING real testnet execution and shared tests.** No successful claim/refund digest is recorded yet. After a successful runner execution, record the receipt path, package ID, both transaction digests, immutable receipt IDs, timestamp, and network here.
+Executed **2026-09-14T00:25:07.554Z** on public Testnet. [Claim transaction](https://suiscan.xyz/testnet/tx/4moZ8Bkt8a44Z1Ej3xg1isj4aLbXq2Wrk3tqpsXYmV23): `4moZ8Bkt8a44Z1Ej3xg1isj4aLbXq2Wrk3tqpsXYmV23`. [Refund transaction](https://suiscan.xyz/testnet/tx/AJXnY4nZKrtE67en3bsbk6dyXXby1SEsmge8du49VAJw): `AJXnY4nZKrtE67en3bsbk6dyXXby1SEsmge8du49VAJw`. Immutable claim receipt `0xa605dbef1a979d7a8d10560b045105a121f0f0ca0ced8ab7aa6f25caa2e5aba2`; refund receipt `0xf8fead13b816a946f934db63a2f9b0a4b980307c8ad745c8253720c5b1c7c39b`. [Full evidence](receipts/testnet-latest.json) records six successful transactions, seven checked rejection simulations, actual Clock deadlines, exact payouts and 19 source hashes. Strict TypeScript +20 Bun +29 Move tests pass.
 
 The core script requires the pinned Testnet genesis digest `69WiPg3DAQiwdxfncX6wYQ2siKwAe6L9BZthQea3JNMD`; it does not silently switch to Devnet or mainnet. Testnet is preferred because the official stablecoin component uses it too, and Devnet resets would erase evidence. The CLI wallet and global keystore remain outside the scenario's inputs.
 

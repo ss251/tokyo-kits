@@ -1,6 +1,6 @@
 # Sponsored stablecoin payment
 
-**NOT PROVEN until a real Circle testnet USDC transfer produces a verified receipt.** This component transfers one official testnet USDC from a payer to a different recipient. A third address pays gas. The same transaction creates an immutable, typed payment receipt and emits its matching event.
+**PROVEN on public Sui Testnet.** This component transfers one official testnet USDC from a payer to a different recipient. A third address pays gas. The same transaction creates an immutable, typed payment receipt and emits its matching event.
 
 An application that needs a stablecoin payment with gas sponsorship and a receipt object would use this starter. The original Move code is generic over `Coin<T>`; the payment scenario explicitly requires Circle's official USDC type. It does not mint an imitation stablecoin or count native SUI as a stablecoin proof.
 
@@ -61,7 +61,7 @@ The proof requires all of the following: successful transaction effects, exactly
 
 ## Last proven
 
-**PENDING execution and shared tests.** No successful stablecoin payment digest is recorded yet. If Circle faucet funding is unavailable, keep this component **NOT PROVEN** and proceed with the native-SUI escrow component. Once execution succeeds, record the runner's receipt path, transaction digest, receipt object ID, timestamp, and testnet source here.
+Executed **2026-09-14T00:24:34.795Z**. [Public transaction](https://suiscan.xyz/testnet/tx/D1rt8HzpFAfEjkABg5NUZJJkWKcGqihkZ9beuy55YXJY): `D1rt8HzpFAfEjkABg5NUZJJkWKcGqihkZ9beuy55YXJY`. Immutable receipt `0xc70c1dd4ed9ad7a3cdf8ca9e6b6c1b786dbab8cd883200f86947c1d36dd74ab4`. Full [verified evidence](receipts/testnet-latest.json) records official USDC balances, distinct sender/sponsor signatures, package publication and 19 source hashes. Strict TypeScript +20 Bun +29 Move tests pass.
 
 Private keys belong only in ignored `.run/` files with private filesystem permissions or a developer-supplied private environment. Never publish keys, faucet authentication tokens, or raw account-state files. Public receipts contain only chain evidence and nonsecret configuration. Do not put a sender's secret key in a frontend bundle.
 

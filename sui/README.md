@@ -2,7 +2,7 @@
 
 MIT-licensed Move and TypeScript templates for two Sui sponsor components: an official testnet USDC payment with sponsored gas, and an approval/deadline escrow using testnet SUI. Both use the official framework and pinned `@mysten/sui` SDK. They share package publication, account handling, transaction validation, and public receipt capture.
 
-**Live status: NOT PROVEN.** The shared checks pass: strict TypeScript, **20 Bun tests**, and **29 Move tests**. Successful public-testnet demo receipts are still pending; unit fixtures are not end-to-end evidence.
+**Both components are proven on public Sui Testnet.** Strict TypeScript, **20 Bun tests**, and **29 Move tests** pass. Receipts verify real official USDC, gas sponsorship, conditional escrow settlement, and immutable objects.
 
 | Sponsor coverage | Component | Use it for | Run from this directory |
 | --- | --- | --- | --- |
@@ -114,7 +114,7 @@ Successful scenarios write `payments/receipts/testnet-latest.json` or `defi/rece
 | --- | --- |
 | Strict TypeScript + Bun tests | **PASS — 20 tests** |
 | Pinned Move compiler and unit tests | **PASS — two modules, 29 tests** |
-| Official USDC sponsored payment | **NOT PROVEN — public testnet receipt pending** |
-| SUI escrow claim and refund | **NOT PROVEN — public testnet receipts pending** |
+| Official USDC sponsored payment | **PASS — sponsored official USDC payment** |
+| SUI escrow claim and refund | **PASS — approved claim and expired refund** |
 
-No successful live digest is recorded here yet. Publication time, source commit, and actual demo receipts must be inserted only after they exist. [PRIOR-ART.md](PRIOR-ART.md) describes the disclosure boundary. Original kit code is [MIT](LICENSE); upstream licenses are recorded in [THIRD-PARTY.md](THIRD-PARTY.md).
+Executed 2026-09-14T00:25:07.554Z on public Testnet. Package `0xfb86f2c043d066a5fe6462fbe426a0e63dfb2a2a0a0982d2d06797a8c49de865`; publication `DJzzkntZTwU3S8NbjMgvZZzCfMxJdq2RLfDMkG4aA5Wy`. [Payment receipt](payments/receipts/testnet-latest.json): `D1rt8HzpFAfEjkABg5NUZJJkWKcGqihkZ9beuy55YXJY`. [Escrow receipt](defi/receipts/testnet-latest.json): claim `4moZ8Bkt8a44Z1Ej3xg1isj4aLbXq2Wrk3tqpsXYmV23`, refund `AJXnY4nZKrtE67en3bsbk6dyXXby1SEsmge8du49VAJw`. Six executed escrow transactions and seven checked Move-abort simulations pass. Both source manifests contain 19 SHA-256 entries matching this implementation. [PRIOR-ART.md](PRIOR-ART.md) describes the disclosure boundary. Original kit code is [MIT](LICENSE); upstream licenses are recorded in [THIRD-PARTY.md](THIRD-PARTY.md).
