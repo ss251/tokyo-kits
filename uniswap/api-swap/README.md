@@ -44,7 +44,7 @@ The API key is read only from the environment, is never returned, and is sent on
 - API simulations see the public chain, while demo funding and approvals exist on the fork. `/swap` therefore requests `simulateTransaction: false`; the executor must simulate and execute on its own fork. A quote's simulation warning is not an executed failure or success receipt.
 - A fork can drift from the public block used for the quote. Use a fresh fork, bounded slippage, and a recent quote. Re-request after price movement or expiry.
 
-To mark this starter proven, record the date, fork chain/block, official router address, API request IDs, successful transaction hash/receipt, and before/after token balances under the parent `receipts/` directory, then replace “Last proven” above with a link. A fork hash is verifiable by replaying the recorded fork; it will not appear in a public block explorer. Do not save API keys or permit signatures in receipts.
+To mark this starter proven, record the date, fork chain/block, official router address, API request IDs, successful transaction hash/receipt, and before/after token balances in this component's `uniswap/api-swap/receipts/base-latest.json`, then replace “Last proven” above with a link. A fork hash is verifiable by replaying the recorded fork; it will not appear in a public block explorer. Do not save API keys or permit signatures in receipts.
 
 ## Which idea would use this?
 

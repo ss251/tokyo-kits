@@ -13,7 +13,7 @@ bunx @worldcoin/agentkit-cli@0.2.0 register 0xYourAgentAddress
 bunx @worldcoin/agentkit-cli@0.2.0 status 0xYourAgentAddress
 ```
 
-Put `WORLD_AGENT_PRIVATE_KEY` in your local environment, using the registered agent's signing key. Do not commit it. `WORLD_RPC_URL` must resolve World Chain mainnet, chain **480**; its default AgentBook is `0xA23aB2712eA7BBa896930544C7d6636a96b944dA`. AgentBook registration is a real prerequisite; fork gas funding cannot create it.
+Put `WORLD_AGENT_PRIVATE_KEY` in your local environment, using the registered agent's signing key. Do not commit it. The shared demo uses `WORLD_CHAIN_RPC_URL`; the standalone `make server` uses `WORLD_RPC_URL`. Both must resolve World Chain mainnet, chain **480**; the default AgentBook is `0xA23aB2712eA7BBa896930544C7d6636a96b944dA`. AgentBook registration is a real prerequisite; fork gas funding cannot create it.
 
 ```sh
 cd agentkit

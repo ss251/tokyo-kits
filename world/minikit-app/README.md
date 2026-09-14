@@ -68,7 +68,7 @@ Live World App flow: **NOT PROVEN — no live transaction receipt.** Required ev
 
 MiniKit's `userOpHash` means **submitted**, not executed. The server resolves it through the same public endpoint used by the pinned MiniKit React SDK, then independently checks the chain receipt. This SDK lookup currently needs no API key. Lookup failure or a pending receipt remains unconfirmed, with a manual retry button.
 
-`make -C .. probe` records isolated fork infrastructure evidence separately under `world/receipts/`. It cannot complete this component. To close the live blocker, retain the real transaction hash and add its timestamp, target, sender, and environment here. Do not publish wallet signatures, identity proofs, session cookies, or private keys.
+`make -C .. probe` records isolated fork infrastructure evidence separately in [`world/infrastructure/receipts/worldchain-latest.json`](../infrastructure/receipts/worldchain-latest.json). It cannot complete this component. To close the live blocker, retain the real transaction hash and add its timestamp, target, sender, and environment here. Do not publish wallet signatures, identity proofs, session cookies, or private keys.
 
 ## Implementation and gotchas
 
@@ -83,4 +83,4 @@ Exact pins: Next **16.3.5**, React **19.3.0**, `@worldcoin/minikit-js` and `@wor
 
 Official sources: [IDKit in Mini Apps](https://docs.world.org/world-id/idkit/mini-apps), [wallet authentication](https://docs.world.org/mini-apps/commands/wallet-auth), [message signing](https://docs.world.org/mini-apps/commands/sign-message), [transaction submission](https://docs.world.org/mini-apps/commands/send-transaction).
 
-Original starter code is MIT licensed. Public prior-art publication remains pending the repository push and recorded publication timestamp; see [`PRIOR-ART.md`](../PRIOR-ART.md).
+Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The first complete public revision is `53a149e6a190c781f733e349f8df53638190314e`, pushed **2026-09-14 08:40:21 JST** (`2026-09-13T23:40:21Z`); see [`PRIOR-ART.md`](../PRIOR-ART.md). Publication does not change this component's NOT PROVEN status.

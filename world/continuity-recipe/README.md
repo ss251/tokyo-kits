@@ -33,7 +33,7 @@ make -C continuity-recipe demo
 make test
 ```
 
-The demo deploys a gate on an isolated fork of World Chain **480**, uses the configured official v4 staging or production verifier, submits the real proof from its bound wallet, checks the action counter, and rejects a second use. Wallet impersonation and synthetic gas occur only on the local fork; the official verifier and its underlying state are unchanged. The CLI writes a receipt to `world/receipts/` containing the transaction, deployment, verifier, configuration, and private proof file hash, without publishing the proof itself.
+The demo deploys a gate on an isolated fork of World Chain **480**, uses the configured official v4 staging or production verifier, submits the real proof from its bound wallet, checks the action counter, and rejects a second use. Wallet impersonation and synthetic gas occur only on the local fork; the official verifier and its underlying state are unchanged. On success, the CLI writes `world/continuity-recipe/receipts/worldchain-latest.json` containing the transaction, deployment, verifier, configuration, and private proof file hash, without publishing the proof itself.
 
 The exported proof has this shape; its `result` must be the authentic IDKit output:
 
@@ -64,4 +64,6 @@ flowchart LR
 
 Use Node 24+ for the Next.js SQLite server. Keep RP signing keys, agent keys, proof JSON, and databases private. Preserve exact origin checks, wallet binding, RP/action/environment validation, expiry constraints, and atomic nullifier consumption. Staging and production v4 verifier addresses belong to World Chain 480; the legacy Sepolia interface is not a substitute. Portal screenshots remain pending an authenticated Portal session.
 
-Official sources: [IDKit in Mini Apps](https://docs.world.org/world-id/idkit/mini-apps), [World Developer Portal](https://developer.world.org), and the exact deployment and package sources in [`../SOURCES.md`](../SOURCES.md). Original code is MIT licensed. Public prior-art publication remains pending the repository push and recorded timestamp; see [`../PRIOR-ART.md`](../PRIOR-ART.md).
+Official sources: [IDKit in Mini Apps](https://docs.world.org/world-id/idkit/mini-apps), [World Developer Portal](https://developer.world.org), and the exact deployment and package sources in [`../SOURCES.md`](../SOURCES.md).
+
+Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The first complete public revision is `53a149e6a190c781f733e349f8df53638190314e`, pushed **2026-09-14 08:40:21 JST** (`2026-09-13T23:40:21Z`); see [`PRIOR-ART.md`](../PRIOR-ART.md). Publication does not change this component's NOT PROVEN status.

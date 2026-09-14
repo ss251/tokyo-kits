@@ -63,7 +63,7 @@ sequenceDiagram
 
 Run the credentialed demo, retain its SDK and independent RPC receipt, and record the date, network, deployment address and both transaction hashes here after success. Preserve the underlying evidence file and exact source commit.
 
-Original starter code is MIT licensed. The upstream SDK is MIT; see the root [third-party notices](../THIRD-PARTY-NOTICES.md). Publication status and disclosure are maintained in [PRIOR-ART.md](../PRIOR-ART.md).
+Original starter code is MIT licensed. The upstream SDK is MIT; see the root [third-party notices](../THIRD-PARTY.md). Publication status and disclosure are maintained in [PRIOR-ART.md](../PRIOR-ART.md).
 
 Official references: [backend credentials and signing](https://docs.curvegrid.com/multibaas/getting-started/build-a-backend/), [contract APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ContractsApi.md), [chain APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ChainsApi.md), [events](https://docs.curvegrid.com/multibaas/event-indexing/).
 

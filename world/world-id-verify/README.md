@@ -2,9 +2,11 @@
 
 **NOT PROVEN — a successful live World ID proof has not been supplied.** The server and gate can be tested without one, but test fixtures and official-verifier rejection receipts do not establish a successful human verification. This folder is provisional World technology coverage, not a confirmed Tokyo prize sub-track.
 
-> PRIOR-ART — PUBLICATION PENDING: Release disclosure must record the actual publication date: “Public, MIT-licensed starter kit published <date>; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).”
+Use this component when an application needs one action per verified human, with wallet binding and replay protection enforced by a server or contract. It supplies the proof request, verification service, and on-chain gate so an event project can add its own action and eligibility policy. The generic action counter contains no product logic.
 
-Original starter code is MIT; third-party code retains its own license. See [`../SOURCES.md`](../SOURCES.md) for exact pins, official addresses, protocol mapping and current blockers. The repository's public commit history supplies publication timestamp evidence once this code is pushed.
+Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The first complete public revision is `53a149e6a190c781f733e349f8df53638190314e`, pushed **2026-09-14 08:40:21 JST** (`2026-09-13T23:40:21Z`); see [`PRIOR-ART.md`](../PRIOR-ART.md). Publication does not change this component's NOT PROVEN status.
+
+Original starter code is MIT; third-party code retains its own license. See [`../SOURCES.md`](../SOURCES.md) for exact pins, official addresses, protocol mapping and current blockers.
 
 ## Run and configure
 
