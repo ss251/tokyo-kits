@@ -2,7 +2,7 @@
 
 - Name: Tokyo Kits — Curvegrid MultiBaas integration starter.
 - Intended public location: `https://github.com/ss251/tokyo-kits/tree/main/curvegrid`.
-- Publication: **PENDING**. Insert the actual public push timestamp and source commit after publication.
+- Publication: **PUBLIC — see verified record below**. Insert the actual public push timestamp and source commit after publication.
 - Original code license: [MIT](LICENSE). The upstream SDK and other dependencies retain their notices in [THIRD-PARTY.md](THIRD-PARTY.md).
 - MultiBaas execution status: **NOT PROVEN** until a real deployment's REST integration and external authenticated webhook have verifiable receipts. Generic counter tests, local signing tests, synthetic webhook requests, and fork transactions do not establish that proof.
 
@@ -19,3 +19,10 @@ For event reuse, disclose this exact public repository path and the source commi
 | Authenticated webhook receipt | NOT PROVEN |
 
 Any separate counter-only fork receipt must remain labeled as partial local-contract evidence when these records are completed.
+
+
+## Verified public publication
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid . First complete public revision `e37e0644fcece6691705236f7ec573344b96be86`; GitHub pushed_at 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). The two MultiBaas components are implemented and tested locally, with credential preflights explicitly NOT PROVEN. The counter-only fork receipt is partial evidence.

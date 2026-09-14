@@ -69,3 +69,10 @@ Official references: [backend credentials and signing](https://docs.curvegrid.co
 
 
 Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The actual `multibaas-basics` demo preflight on 2026-09-14 is [recorded](preflight-latest.json) and fails for missing service configuration. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof.
+
+
+## Prior art
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components remain explicitly NOT PROVEN pending credentials.

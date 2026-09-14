@@ -120,4 +120,11 @@ Both service components remain **NOT PROVEN**: their executed credential preflig
 
 **60 tests pass** (53 Bun +7 Solidity), with strict TypeScript. [Partial fork evidence](infrastructure/receipts/sepolia-fork-latest.json), recorded 2026-09-14T00:42:07.052Z on Sepolia fork block11699468, contains successful deployment/increment and a mined unauthorized rejection. Increment `0xc4c21fc8c6ae483153799f7add34a455366f2a90326567294e360d1e9571859b`. All26 recorded source hashes match the final implementation. This receipt proves only the generic contract and local plumbing; no MultiBaas API/indexing/webhook success is claimed.
 
-See [SOURCES.md](SOURCES.md) for current official interfaces, [THIRD-PARTY.md](THIRD-PARTY.md) for licenses, and [PRIOR-ART.md](PRIOR-ART.md) for publication and event disclosure. Publication date and commit remain pending the actual public push.
+See [SOURCES.md](SOURCES.md) for current official interfaces, [THIRD-PARTY.md](THIRD-PARTY.md) for licenses, and [PRIOR-ART.md](PRIOR-ART.md) for publication and event disclosure. Published publicly 2026-09-14T00:45:31Z (Sep14 09:45:31 JST), revision `e37e0644fcece6691705236f7ec573344b96be86`.
+
+
+## Prior art
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components remain explicitly NOT PROVEN pending credentials.
