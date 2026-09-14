@@ -64,3 +64,5 @@ explicitly marked and never delay publication of proven ones.
 
 Components do not imply separate sponsor prize pools. Follow the current
 published card when selecting an award and disclose the reused starter.
+
+Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). All seven kit folders were public by **2026-09-14 10:05:04 JST**, revision [`dc49e72`](https://github.com/ss251/tokyo-kits/tree/dc49e728ec8eb35b33b61002605874fcba88218d). Each kit's `PRIOR-ART.md` retains its earlier first-public timestamp.

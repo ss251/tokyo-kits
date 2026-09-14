@@ -1,8 +1,8 @@
 # Prior-art disclosure — common plumbing
 
 - Name: Tokyo Kits — shared validation, fork, credential, and receipt plumbing.
-- Intended public location: `https://github.com/ss251/tokyo-kits/tree/main/common`.
-- Publication status: **PENDING**. Record the actual public push time and source commit after publication.
+- Public location: `https://github.com/ss251/tokyo-kits/tree/main/common`.
+- Publication status: **PUBLIC**; first complete source and receipts pushed 2026-09-14 10:05:04 JST (`2026-09-14T01:05:04Z`).
 - Original code license: MIT; the repository and component license files record the full notice. Upstream tools and dependencies retain their licenses.
 - Execution status: recorded separately in [README.md](README.md) and actual common receipts. Generic fork canaries are infrastructure evidence, not sponsor-integration proof.
 
@@ -14,8 +14,8 @@ Follow the [ETHGlobal rules](https://ethglobal.com/rules) and [Tokyo submission 
 
 | Publication record | Value |
 | --- | --- |
-| Confirmed public URL | PENDING |
-| Published at, UTC and JST | PENDING |
-| Source commit | PENDING |
+| Confirmed public URL | https://github.com/ss251/tokyo-kits/tree/main/common |
+| Published at, UTC and JST | `2026-09-14T01:05:04Z` / 2026-09-14 10:05:04 JST |
+| Source commit | `dc49e728ec8eb35b33b61002605874fcba88218d` |
 | Common check receipt | [341 tests PASS](receipts/check-all-latest.json), 2026-09-14 |
 | Three-chain infrastructure receipts | [Polygon](receipts/polygon-fork-latest.json), [Base](receipts/base-fork-latest.json), [Sepolia](receipts/sepolia-fork-latest.json); 2026-09-14, infrastructure only |
