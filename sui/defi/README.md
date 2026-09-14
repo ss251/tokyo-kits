@@ -83,4 +83,11 @@ Keep private account state in ignored `.run/` with private file permissions. Ret
 
 Official references: [shared objects](https://docs.sui.io/develop/objects/object-ownership/shared), [Sui faucet](https://docs.sui.io/getting-started/onboarding/get-coins), [gRPC SDK](https://sdk.mystenlabs.com/sui/clients/grpc), [transaction signing](https://sdk.mystenlabs.com/sui/transactions/signing-and-execution), [Move package management](https://docs.sui.io/develop/manage-packages/move-package-management).
 
-Public prior-art publication and its date remain pending the actual repository push. Disclose the precise starter commit reused and the new work built during the event.
+Disclose the precise public starter commit reused and new work built during the event.
+
+
+## Prior art
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
+Public repository: https://github.com/ss251/tokyo-kits/tree/main/sui ; first complete public revision `34d34b4d8255673b282cb3659b91b2631bc70d31`, pushed 2026-09-14T00:26:25Z (Sep 14 09:26:25 JST). See [PRIOR-ART.md](../PRIOR-ART.md).

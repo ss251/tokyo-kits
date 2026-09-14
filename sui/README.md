@@ -118,3 +118,10 @@ Successful scenarios write `payments/receipts/testnet-latest.json` or `defi/rece
 | SUI escrow claim and refund | **PASS — approved claim and expired refund** |
 
 Executed 2026-09-14T00:25:07.554Z on public Testnet. Package `0xfb86f2c043d066a5fe6462fbe426a0e63dfb2a2a0a0982d2d06797a8c49de865`; publication `DJzzkntZTwU3S8NbjMgvZZzCfMxJdq2RLfDMkG4aA5Wy`. [Payment receipt](payments/receipts/testnet-latest.json): `D1rt8HzpFAfEjkABg5NUZJJkWKcGqihkZ9beuy55YXJY`. [Escrow receipt](defi/receipts/testnet-latest.json): claim `4moZ8Bkt8a44Z1Ej3xg1isj4aLbXq2Wrk3tqpsXYmV23`, refund `AJXnY4nZKrtE67en3bsbk6dyXXby1SEsmge8du49VAJw`. Six executed escrow transactions and seven checked Move-abort simulations pass. Both source manifests contain 19 SHA-256 entries matching this implementation. [PRIOR-ART.md](PRIOR-ART.md) describes the disclosure boundary. Original kit code is [MIT](LICENSE); upstream licenses are recorded in [THIRD-PARTY.md](THIRD-PARTY.md).
+
+
+## Prior art
+
+Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
+
+Public repository: https://github.com/ss251/tokyo-kits/tree/main/sui ; first complete public revision `34d34b4d8255673b282cb3659b91b2631bc70d31`, pushed 2026-09-14T00:26:25Z (Sep 14 09:26:25 JST). See [PRIOR-ART.md](PRIOR-ART.md).
