@@ -19,3 +19,5 @@ Follow the [ETHGlobal rules](https://ethglobal.com/rules) and [Tokyo submission 
 | Source commit | `dc49e728ec8eb35b33b61002605874fcba88218d` |
 | Common check receipt | [341 tests PASS](receipts/check-all-latest.json), 2026-09-14 |
 | Three-chain infrastructure receipts | [Polygon](receipts/polygon-fork-latest.json), [Base](receipts/base-fork-latest.json), [Sepolia](receipts/sepolia-fork-latest.json); 2026-09-14, infrastructure only |
+
+Additional reproduction evidence: a clean clone of the public revision `b56b842efc4c98ce99ebcfba63cbb277aeb001bb` installed all pinned dependencies and passed all 341 tests on 2026-09-14. [Receipt](receipts/public-clone-latest.json). This does not promote any NOT PROVEN component or reset the first-public timestamp above.

@@ -115,6 +115,20 @@ Sponsor configuration remains in each kit's own ignored `.env`. [CREDENTIALS.md]
 
 The final **`make check-all` passed all 341 tests** across seven kits at `2026-09-14T01:03:35.308195+00:00`: Aqua 64, Uniswap 57, World 59, ENS 18, Sui 49, Curvegrid 60, and common 34. [Aggregate receipt](receipts/check-all-latest.json) records all seven zero exit codes, private-log hashes, and source revision `eab3af2622c556914c2c4ab20ec5e697a196a5a1`. The common suite includes real subprocess cancellation tests. Offline validation matched all recorded sponsor receipts to their source manifests.
 
+### Public-clone reproduction
+
+A fresh temporary clone of public revision [`b56b842`](https://github.com/ss251/tokyo-kits/tree/b56b842efc4c98ce99ebcfba63cbb277aeb001bb) passed `make install-all` followed by `make check-all` on **2026-09-14**, finishing at `2026-09-14T01:13:17.178408+00:00`. All **341 tests** and receipt/source checks passed. Installation left tracked files unchanged; testing changed only its generated aggregate report. No private state or repository dependencies/build outputs were copied. Existing host download caches were allowed; this proves a clean repository checkout on this host, not a brand-new operating-system image.
+
+[Reproduction receipt](receipts/public-clone-latest.json) records the public revision, tool versions, installation/check commands, log hashes, and seven test results. The temporary clone was removed after success. To repeat from a directory outside your working checkout:
+
+```sh
+git clone https://github.com/ss251/tokyo-kits.git tokyo-kits-repro
+cd tokyo-kits-repro
+git checkout --detach b56b842efc4c98ce99ebcfba63cbb277aeb001bb
+make install-all
+make check-all
+```
+
 The sponsor coverage count is separate: Aqua has three proven components, Uniswap four, ENS two, and Sui two. Two Uniswap API components, four World components, and two Curvegrid components remain **NOT PROVEN**. See the [top-level table](../README.md) for the current state and linked receipts.
 
 Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The first complete common revision is `dc49e728ec8eb35b33b61002605874fcba88218d`, pushed **2026-09-14 10:05:04 JST** (`2026-09-14T01:05:04Z`). [PRIOR-ART.md](PRIOR-ART.md) records the public source and execution evidence separately. [AI-USAGE.md](AI-USAGE.md) records the user brief and material build decisions. Event teams must disclose the exact public commit reused and retain their own specification, prompt, and planning artifacts alongside the canonical [KITS-BRIEF.md](../KITS-BRIEF.md).

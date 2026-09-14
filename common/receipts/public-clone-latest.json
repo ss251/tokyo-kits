@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "kind": "public-clean-clone-reproduction",
+  "status": "PASS",
+  "startedAt": "2026-09-14T01:10:04.878522+00:00",
+  "finishedAt": "2026-09-14T01:13:17.178408+00:00",
+  "repository": "https://github.com/ss251/tokyo-kits.git",
+  "sourceCommit": "b56b842efc4c98ce99ebcfba63cbb277aeb001bb",
+  "cloneWasCleanBeforeInstall": true,
+  "trackedFilesUnchangedAfterInstall": true,
+  "copiedPrivateState": false,
+  "copiedRepositoryDependenciesOrBuildOutputs": false,
+  "hostCaches": "Existing host download caches, including Bun, Foundry/Solc and Sui/Move, may be reused. Repository dependencies and the Sui toolchain were installed through the published make install-all; no working-repository node_modules, lib, .run, .env or build output was copied.",
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "tools": {
+    "bun": "1.3.14",
+    "node": "v24.15.0",
+    "python": "Python 3.12.4",
+    "forge": "forge Version: 1.5.1-stable\nCommit SHA: b0a9dd9ceda36f63e2326ce530c10e6916f4b8a2\nBuild Timestamp: 2025-12-22T11:41:09.812070000Z (1766403669)\nBuild Profile: maxperf",
+    "sui": "sui 1.79.0-46f18562f1f5"
+  },
+  "steps": [
+    {
+      "name": "clone",
+      "command": [
+        "nice",
+        "-n",
+        "19",
+        "git",
+        "clone",
+        "--no-checkout",
+        "https://github.com/ss251/tokyo-kits.git",
+        "/var/folders/nc/j5wdfhws2q56jzdcj_jkdvww0000gn/T/tokyo-kits-public-bo_y_gtx/repo"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.209,
+      "logSha256": "ce0fc0d50c44b4147d5b03b554f9dd9a8a42ca32167e8001d02a34d074b88b9c"
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "b56b842efc4c98ce99ebcfba63cbb277aeb001bb"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.059,
+      "logSha256": "7816e4cc76a0478172aacfaba7ec31857480037a26bdd3762873f9f2bc8e0074"
+    },
+    {
+      "name": "install-all",
+      "command": [
+        "nice",
+        "-n",
+        "19",
+        "make",
+        "install-all"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 108.233,
+      "logSha256": "95ca98c18810bc58258e9325cb802868056e3d1cc0d6a1025305dd92e3b9411d"
+    },
+    {
+      "name": "check-all",
+      "command": [
+        "make",
+        "check-all"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 81.578,
+      "logSha256": "866cfd62d0b90c4f122ec5567462d035106f0ee81f5eaf58f23973d440305f78"
+    }
+  ],
+  "checkAll": {
+    "schemaVersion": 1,
+    "kind": "sequential-test-report",
+    "status": "PASS",
+    "startedAt": "2026-09-14T01:11:55.521956+00:00",
+    "finishedAt": "2026-09-14T01:13:17.044249+00:00",
+    "checks": [
+      {
+        "kit": "aqua",
+        "command": [
+          "make",
+          "-C",
+          "aqua",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 25.821,
+        "logSha256": "a836ad643157e3618a71bb87b23a0af8fa75216cf6bf24ce89899d87215cddeb"
+      },
+      {
+        "kit": "uniswap",
+        "command": [
+          "make",
+          "-C",
+          "uniswap",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 30.129,
+        "logSha256": "619505f87c2d7aa3bbccdcb34f4ae12a69d63fbc2b6be15c7eca50c7c5c305e9"
+      },
+      {
+        "kit": "world",
+        "command": [
+          "make",
+          "-C",
+          "world",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 10.789,
+        "logSha256": "3d9556144fe180afecd254feec01b5063f86bdf6f74e8fc44d38e732087f4bac"
+      },
+      {
+        "kit": "ens",
+        "command": [
+          "make",
+          "-C",
+          "ens",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.918,
+        "logSha256": "2e1d08f39fc43e34229ca00c1d63731f0b1507db76270fcc5bdc1604030b9f75"
+      },
+      {
+        "kit": "sui",
+        "command": [
+          "make",
+          "-C",
+          "sui",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 9.509,
+        "logSha256": "49cf0c7f1756a202645926b68e244e6823af2469a1e4cbbff4143968c6c1c2b4"
+      },
+      {
+        "kit": "curvegrid",
+        "command": [
+          "make",
+          "-C",
+          "curvegrid",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 2.677,
+        "logSha256": "7e60df56ae6d24f967c231218252f7a79887b69780a1188a01aae1de59acbe5e"
+      },
+      {
+        "kit": "common",
+        "command": [
+          "make",
+          "-C",
+          "common",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 0.678,
+        "logSha256": "4ac806044b0ed12237e8cf0e71058d5ef0ed6cac7ea1756a8aff36b00228459e"
+      }
+    ],
+    "sourceFilesSha256": {
+      "check-all.py": "55bffa55dce792cea71b27a58d008af59fe673d7101a4b314e7ba6d0424fe575",
+      "demo.py": "7f2eebb32a9e16160335a1bac83b5cb6f9b6f3f79f702c3ae3bbcaa009c96c13",
+      "fork.py": "292d86fc925cbd674ca6356d03f23e9d69fee40d042958c5549ae602c1905b05",
+      "serial.py": "30b509fa6e1aea9fea2bdde392ea18563481dcfe11ebedbf24f1e01edc45623d",
+      "validate_receipts.py": "31b4ab21db5079c5ecd5476e1a3209df2437818e83d2349916625aa2a1338e29",
+      "coverage.json": "c7a747736db11d25a5a6396038f196e4498a2b4cdc88a2f20bc06702097ffd90"
+    },
+    "sourceCommit": "b56b842efc4c98ce99ebcfba63cbb277aeb001bb",
+    "scope": "Tests and offline receipt integrity; missing credentialed demos remain NOT PROVEN"
+  },
+  "scope": "Clean public clone install and all seven test suites; this does not complete the eight credentialed/human integration demos.",
+  "cleanup": "Temporary clone removed after successful proof; private logs retained locally.",
+  "testCounts": {
+    "aqua": 64,
+    "uniswap": 57,
+    "world": 59,
+    "ens": 18,
+    "sui": 49,
+    "curvegrid": 60,
+    "common": 34
+  }
+}
