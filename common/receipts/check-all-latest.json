@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "kind": "sequential-test-report",
+  "status": "PASS",
+  "startedAt": "2026-09-14T01:02:58.622953+00:00",
+  "finishedAt": "2026-09-14T01:03:35.308195+00:00",
+  "checks": [
+    {
+      "kit": "aqua",
+      "command": [
+        "make",
+        "-C",
+        "aqua",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.303,
+      "logSha256": "c84a36259d66835a764b3198cc61a92b959b8caa2e40ab0805119a6a997b1c4b"
+    },
+    {
+      "kit": "uniswap",
+      "command": [
+        "make",
+        "-C",
+        "uniswap",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 14.895,
+      "logSha256": "808defb549f328eb5db3f8afba3fbf06ee6065d1e1807522ded6dedc35c4a529"
+    },
+    {
+      "kit": "world",
+      "command": [
+        "make",
+        "-C",
+        "world",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.367,
+      "logSha256": "e859e78693d67927847c0ef7555598acf82d1235a9d2c46f8512ebf0bcfd2496"
+    },
+    {
+      "kit": "ens",
+      "command": [
+        "make",
+        "-C",
+        "ens",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.872,
+      "logSha256": "1b8b1877617729f5aa345a6509b05d5d46c1c62d2f32ef4c46fbc1161df4084b"
+    },
+    {
+      "kit": "sui",
+      "command": [
+        "make",
+        "-C",
+        "sui",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.716,
+      "logSha256": "9c62017934c56cad05b7cf6f20152905fcda1adf8ad20e9e078412e364a2bb3e"
+    },
+    {
+      "kit": "curvegrid",
+      "command": [
+        "make",
+        "-C",
+        "curvegrid",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.028,
+      "logSha256": "123791c67b31e922c8f3bff69cefa59e64bc9b2ee4c5d923d943e926467be8fb"
+    },
+    {
+      "kit": "common",
+      "command": [
+        "make",
+        "-C",
+        "common",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.503,
+      "logSha256": "1fb628c7987050a803a3edee4c57790adb84b7bcd49d8fdb3f24af0e103ff497"
+    }
+  ],
+  "sourceFilesSha256": {
+    "check-all.py": "55bffa55dce792cea71b27a58d008af59fe673d7101a4b314e7ba6d0424fe575",
+    "demo.py": "7f2eebb32a9e16160335a1bac83b5cb6f9b6f3f79f702c3ae3bbcaa009c96c13",
+    "fork.py": "292d86fc925cbd674ca6356d03f23e9d69fee40d042958c5549ae602c1905b05",
+    "serial.py": "30b509fa6e1aea9fea2bdde392ea18563481dcfe11ebedbf24f1e01edc45623d",
+    "validate_receipts.py": "31b4ab21db5079c5ecd5476e1a3209df2437818e83d2349916625aa2a1338e29",
+    "coverage.json": "c7a747736db11d25a5a6396038f196e4498a2b4cdc88a2f20bc06702097ffd90"
+  },
+  "sourceCommit": "eab3af2622c556914c2c4ab20ec5e697a196a5a1",
+  "scope": "Tests and offline receipt integrity; missing credentialed demos remain NOT PROVEN"
+}

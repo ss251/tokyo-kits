@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-fork",
+  "status": "COMMON_FORK_PLUMBING_PROVEN",
+  "provenAt": "2026-09-14T01:02:25.853250+00:00",
+  "scope": "Anvil network, transaction, balance and receipt plumbing; not sponsor integration evidence",
+  "chain": "base",
+  "source": {
+    "chain_id": 8453,
+    "source_block": 51279197,
+    "source_hash": "0x7ba2f4b231edbc45b4c4820e9032a0e245d0eb136d9376ab044349585661f543"
+  },
+  "funding": "Default Anvil development balances. The 1-wei transfer exists only on the local fork.",
+  "transactionHash": "0xc17e5b7d905426b0ebc69ee00485735b2107380a8f21239b4c419020ddc52a2d",
+  "receipt": {
+    "type": "0x2",
+    "status": "0x1",
+    "cumulativeGasUsed": "0x5208",
+    "logs": [],
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "transactionHash": "0xc17e5b7d905426b0ebc69ee00485735b2107380a8f21239b4c419020ddc52a2d",
+    "transactionIndex": "0x0",
+    "blockHash": "0x27f67289c7a952b0ae0cc965a352a67bd331746fa21f1b4218a201992a2e7174",
+    "blockNumber": "0x30e755e",
+    "gasUsed": "0x5208",
+    "effectiveGasPrice": "0x445726",
+    "blobGasPrice": "0x4",
+    "from": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+    "to": "0xfe66b8bbee1fedd148d9d6fda05af49b525f6f81",
+    "contractAddress": null
+  },
+  "recipientBalanceBefore": "0",
+  "recipientBalanceAfter": "1",
+  "sourceFilesSha256": {
+    "check-all.py": "55bffa55dce792cea71b27a58d008af59fe673d7101a4b314e7ba6d0424fe575",
+    "demo.py": "7f2eebb32a9e16160335a1bac83b5cb6f9b6f3f79f702c3ae3bbcaa009c96c13",
+    "fork.py": "292d86fc925cbd674ca6356d03f23e9d69fee40d042958c5549ae602c1905b05",
+    "serial.py": "30b509fa6e1aea9fea2bdde392ea18563481dcfe11ebedbf24f1e01edc45623d",
+    "tests/test_check_all.py": "6805b0aa4a5e73febef6bc1eb0925860ceb44c1bbcb61597593a13021e5c7cae",
+    "tests/test_fork.py": "e11f4cc214ffd0870bf1d0409f3310227ba0e700caa6541363f077b020c4a55c",
+    "tests/test_receipts.py": "df22bfbbd733641d94cdb7d543a06cb54a8e848709f50cd9ba4e559d80e4298b",
+    "validate_receipts.py": "31b4ab21db5079c5ecd5476e1a3209df2437818e83d2349916625aa2a1338e29"
+  }
+}

@@ -25,3 +25,12 @@ regexTarget = "match"
 regexes = [
   '''(?i)^paymentToken": "0x768f42455a2d082e23ceef7d51e5787c82d67a39"'''
 ]
+
+[[allowlists]]
+description = "Verified refreshed Uniswap source SHA256, auction recipient address, and executed claim transaction hash"
+regexTarget = "match"
+regexes = [
+  '''^api-execution\.ts": "3576bc9f3793fd1313cb5ac84f0aa700d8aae26c0a84acb41846dce452b972e6"''',
+  '''^tokensRecipient": "0x1eFd31F22aB1AC3662146f54986E8567Ac92929c"''',
+  '''^purchased-token claim: `0x16062280cefb3a78d122c9c31e205fbeae23cdf3dd69958e533f5b1e07a9b542`'''
+]
