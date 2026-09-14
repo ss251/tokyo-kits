@@ -4,9 +4,14 @@ A one-hour integration recipe using the kit's plain V3 path. It keeps the existi
 
 ## Last proven
 
-**PROVEN template** — [dedicated continuity receipt](receipts/base-latest.json), **2026-09-14 07:58 JST** (`2026-09-13T22:58:30.755Z`), Base upstream block **51275468**. Both deadline-multicall swaps and their exact-input approvals succeeded. Local hashes are `0xddef852cdf4ab042a20847e1ab1d35dee9cb058cd3fc4583e25f0c8a8633c3a6` (WETH → USDC) and `0xf729c3679f4523cb0bdb9d9796eeba1620f1326815470dc9c49bd0a27f93c340` (USDC → WETH). Quote, simulation, and actual received amounts match in both directions. The receipt includes source-file hashes and disclosed fork funding.
+**PROVEN template** — [dedicated continuity receipt](receipts/base-latest.json), **2026-09-14 09:51 JST** (`2026-09-14T00:51:32.220Z`), Base upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. Both deadline-multicall swaps and their exact-input approvals succeeded. Quote, simulation, and actual received amounts match in both directions. The receipt includes source-file hashes and disclosed fork funding.
 
-The shared validation run passed TypeScript, 19 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. This establishes the reusable template's behavior; an existing application's adaptation still needs its own execution proof. The combined run retained some USDC from the preceding V3 scenario, so the reverse trade uses half of the available balance, as implemented by `runV3`.
+| Direction | Input, atomic units | Output, atomic units | Local transaction hash |
+| --- | --- | --- | --- |
+| WETH → USDC | `1000000000000000` | `2481838` | `0xbe693a5c9cc01c1aca6593bcbb957bedf3d3583d16bc6e7585baa0a8c33a0721` |
+| USDC → WETH | `1861378` | `749249744003835` | `0xb64f600d33e28c239c189bca7f04dffbe5038daf10401fd1d95f187f437a682f` |
+
+The shared validation run passed TypeScript, 27 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. This establishes the reusable template's behavior; an existing application's adaptation still needs its own execution proof. The combined run retained some USDC from the preceding V3 scenario, so the reverse trade uses half of the available balance, as implemented by `runV3`.
 
 ## Run the recipe
 

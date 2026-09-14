@@ -4,14 +4,14 @@ A minimal `BaseHook` with immutable per-direction LP fees and an `afterSwap` eve
 
 ## Last proven
 
-**PROVEN** — [refreshed Base-fork receipt](receipts/base-latest.json): **2026-09-14 07:58 JST** (`2026-09-13T22:58:22.971Z`), upstream block **51275468**. All 14 recorded transactions succeeded. Both V4Quoter results equal the measured output-token balance increases; the hook and official manager events record the expected 500/3000-pip fees.
+**PROVEN** — [refreshed Base-fork receipt](receipts/base-latest.json): **2026-09-14 09:51 JST** (`2026-09-14T00:51:24.795Z`), upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. All 14 recorded transactions succeeded. Both V4Quoter results equal the measured output-token balance increases; the hook and official manager events record the expected 500/3000-pip fees.
 
 | Direction | Input, atomic units | Output, atomic units | Local transaction hash |
 | --- | --- | --- | --- |
-| WETH → DAI | `10000000000000000` | `9994001099590095` | `0x1a5d6265116b24addf9c01ff083a94b67290b4d6f80c29c23370b007f3e985b5` |
-| DAI → WETH | `10000000000000000` | `9970998894649374` | `0x2972b4114de40125c142d0fd8730c142a29258d9215aab599b60163d10ec67b6` |
+| WETH → DAI | `10000000000000000` | `9994001099590095` | `0xd16d79a6599eaa50308ebf310d3549ce634034070396a7e64d8045a744340535` |
+| DAI → WETH | `10000000000000000` | `9970998894649374` | `0x5959026c24b31bf815f7b9e961cb4e1ee257faba0dcaa74679ceee5ed54ac831` |
 
-The refreshed receipt includes decoded PoolManager fee events and exact source-file hashes. It supersedes the earlier initial proof and records the dirty working-tree status honestly. Shared validation passed: TypeScript, 19 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. Local hashes are verified through the saved receipt and fork replay, not a public explorer.
+The refreshed receipt includes decoded PoolManager fee events and exact source-file hashes. It supersedes the earlier initial proof and records the dirty working-tree status honestly. Shared validation passed: TypeScript, 27 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. Local hashes are verified through the saved receipt and fork replay, not a public explorer.
 
 ## Quickstart
 

@@ -4,7 +4,7 @@ Generic MIT starters for the Uniswap Stack and Continuity tracks at ETHGlobal To
 
 ## Coverage and last proven
 
-Status checked **2026-09-14 JST**. The refreshed on-chain run succeeded against Base upstream block **51275468**, hash `0x23298835fd9790510e7614b96b39638c921419fb0fbff07b97b9ca949a55f6fb`.
+Status checked **2026-09-14 09:51 JST** (`00:51 UTC`). The refreshed on-chain run succeeded against Base upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. Component receipts were recorded from `2026-09-14T00:51:24.795Z` through `2026-09-14T00:51:32.220Z`.
 
 | Component | Use it for | Evidence / current status |
 | --- | --- | --- |
@@ -15,7 +15,7 @@ Status checked **2026-09-14 JST**. The refreshed on-chain run succeeded against 
 | [cca](cca/README.md) | Continuous Clearing Auction deployment and settlement | **PROVEN**: [12 successful transactions](cca/receipts/base-latest.json), factory creation through claim and proceeds/inventory sweeps |
 | [continuity-recipe](continuity-recipe/README.md) | Add a bounded V3 swap to an existing app in about one hour | **PROVEN template**: [dedicated 4-transaction receipt](continuity-recipe/receipts/base-latest.json); application-specific adaptation is future work |
 
-Validation passed: strict TypeScript checking, **27 Bun tests**, **15 local Solidity tests**, and **15 tests against the official Base PoolManager**. The four refreshed receipts contain source-file hashes, runtime hashes, fork block provenance, and disclosed fixture funding. They record `sourceDirty: true`, so identify the executed files through `sourceFilesSha256` rather than the commit field alone. A later change to the still-unproven LP demo does not extend this proof to the API paths. API unit fixtures are explicitly synthetic; they are not authenticated service results.
+Validation passed: strict TypeScript checking, **27 Bun tests**, **15 local Solidity tests**, and **15 tests against the official Base PoolManager**. The four refreshed receipts contain source-file hashes, runtime hashes, fork block provenance, and disclosed fixture funding. They record source commit `d1373ca2e00b74231b26fbfa114f0bdbe4bef9b2` with `sourceDirty: true`, so identify the executed files through `sourceFilesSha256` rather than the commit field alone. API unit fixtures are explicitly synthetic; they are not authenticated service results.
 
 ## Five-minute setup
 

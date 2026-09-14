@@ -4,14 +4,14 @@ Quote and swap WETH/USDC in both directions using the official Base V3 factory, 
 
 ## Last proven
 
-**PROVEN** — [refreshed Base-fork receipt](receipts/base-latest.json): **2026-09-14 07:58 JST** (`2026-09-13T22:58:29.084Z`), upstream block **51275468**. All four recorded approval/swap transactions succeeded. In each direction, QuoterV2 output equals router simulation output and the actual received balance delta.
+**PROVEN** — [refreshed Base-fork receipt](receipts/base-latest.json): **2026-09-14 09:51 JST** (`2026-09-14T00:51:30.606Z`), upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. All four recorded approval/swap transactions succeeded. In each direction, QuoterV2 output equals router simulation output and the actual received balance delta.
 
 | Direction | Input, atomic units | Output, atomic units | Local transaction hash |
 | --- | --- | --- | --- |
-| WETH → USDC | `1000000000000000` | `2472429` | `0x22ff3d867842545e340d4348ac2f0477506f8f8dc541aeac7b044a82c0ed3d8c` |
-| USDC → WETH | `1236214` | `499499388903519` | `0x974097947c089ccfc2497a6a3782ad2fe2b4af85d60a056d8dd33849a7354d65` |
+| WETH → USDC | `1000000000000000` | `2481838` | `0x16db49c51996086abbdb9d66caaa5512a03d022b83e5d94ff1ec049ca63c9711` |
+| USDC → WETH | `1240919` | `499499811770890` | `0x7b086a84bc01fb4d3d99c2da3fdd6a7b0d5ed083b4425ebe34924b6ebb4e0e99` |
 
-The refreshed proof executes `multicall(deadline, [swapData])` with a five-minute deadline and contains exact source hashes, superseding the earlier direct-call receipt. Shared validation passed: TypeScript, 19 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. The receipt records a dirty source revision; its file hashes identify the executed code. These are local-fork hashes, not public-chain transactions.
+The refreshed proof executes `multicall(deadline, [swapData])` with a five-minute deadline and contains exact source hashes, superseding the earlier direct-call receipt. Shared validation passed: TypeScript, 27 Bun tests, 15 local Solidity tests, and 15 official-fork Solidity tests. The receipt records a dirty source revision; its file hashes identify the executed code. These are local-fork hashes, not public-chain transactions.
 
 ## Quickstart
 

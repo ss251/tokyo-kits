@@ -43,7 +43,9 @@ The runner checks exact revert reasons for premature bidding/exit/claim and unau
 
 ## Last proven
 
-Proven 2026-09-14 JST on Base fork block **51275468**. Official-factory creation: `0xd9e619803b3b92a61e2538c0800da12b34733748bf0d04361707db201ed61156`; purchased-token claim: `0x712a980ac580ea56d1c7ebbd72a59afd4ccb1b38ef181cf7730f3352cc058849`. [Full receipt](receipts/base-latest.json) includes all 12 successful transactions, negative boundary probes, inventory/proceeds reconciliation and source hashes. These local hashes do not appear on a public block explorer. Six CCA boundary tests and the parent kit's complete 57-test suite passed.
+Proven **2026-09-14 09:51 JST** (`2026-09-14T00:51:31.926Z`) on Base upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. Official-factory creation: `0x18f8b1fe4fdc0c0c116bf98f27874afcf0fd33277ea007909a86929f30d7e132`; purchased-token claim: `0x16062280cefb3a78d122c9c31e205fbeae23cdf3dd69958e533f5b1e07a9b542`. [Full receipt](receipts/base-latest.json) includes all 12 successful transactions, negative boundary probes, inventory/proceeds reconciliation and source hashes. These local hashes do not appear on a public block explorer. Six CCA boundary tests and the parent kit's complete 57-test suite passed.
+
+This run claimed `100000000000000000000` DAI atomic units from a `1000000000000000000000` inventory, returned `899999999999999999999` unsold units, and retained one atomic unit of token dust. The `1000000000000000000`-wei bid became the same amount of creator proceeds; refund, protocol fee, and currency dust were zero in this recorded run.
 
 ## Blockers
 
