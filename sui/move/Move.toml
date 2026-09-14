@@ -1,0 +1,9 @@
+[package]
+name = "TokyoKits"
+edition = "2024"
+license = "MIT"
+
+# The pinned Sui CLI supplies the framework dependencies and generates Move.lock.
+# Build with Sui 1.79.0, source 46f18562f1f5af2438d35828e8b62d5e0b972db7.
+[addresses]
+tokyo_kits = "0x0"

@@ -15,3 +15,7 @@ broadcast/
 # ENS application adapters are source, not vendored Foundry dependencies.
 !ens/lib/
 !ens/lib/**
+
+!sui/lib/
+!sui/lib/**
+sui/move/build/

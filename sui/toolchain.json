@@ -1,0 +1,11 @@
+{
+  "cliVersion": "1.79.0",
+  "tag": "testnet-v1.79.0",
+  "sourceCommit": "46f18562f1f5af2438d35828e8b62d5e0b972db7",
+  "platform": "darwin-arm64",
+  "url": "https://github.com/MystenLabs/sui/releases/download/testnet-v1.79.0/sui-testnet-v1.79.0-macos-arm64.tgz",
+  "archiveSha256": "79900034cb533832a3bf9f10d783c309bfa8259697d6417e6dccdb0758f0f613",
+  "archiveBytes": 381889716,
+  "sdkVersion": "2.31.0",
+  "observedTestnetNode": "sui-node/1.79.0-a496bce0d1d6"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@tokyo-kits/sui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "python3 scripts/serial.py bun scripts/build.ts",
+    "test": "python3 scripts/serial.py bun scripts/check.ts",
+    "demo": "python3 scripts/serial.py bun scripts/demo.ts"
+  },
+  "dependencies": {
+    "@mysten/sui": "2.31.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "7.0.2"
+  }
+}
