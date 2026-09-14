@@ -2,8 +2,8 @@
 // Offline SDK/RPC fixtures only. These tests are not testnet receipts or execution evidence.
 import { describe, expect, spyOn, test } from 'bun:test';
 import { strict as assert } from 'node:assert';
-import type { SuiGrpcClient } from '@mysten/sui/grpc';
-import type { SuiClientTypes } from '@mysten/sui/client';
+import { SuiGrpcClient } from '@mysten/sui/grpc';
+import { SimulationError, type SuiClientTypes } from '@mysten/sui/client';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { Transaction } from '@mysten/sui/transactions';
 import { normalizeStructTag, normalizeSuiAddress } from '@mysten/sui/utils';
@@ -222,5 +222,66 @@ describe('negative simulation classification', () => {
     await expect(simulate({ $kind: 'Unknown', Unknown: null, message: 'offline gas failure fixture' })).rejects.toThrow('did not fail with a Move abort');
     const transportError = new Error('offline unavailable transport');
     await expect(simulate(moveAbort(), transportError)).rejects.toBe(transportError);
+  });
+
+  /** Exercise real Transaction.build and the installed SDK resolver; only RPC services are stubbed. */
+  async function resolveEarly(options: { code?: bigint; packageId?: string; module?: string; transportError?: Error; gasError?: boolean } = {}) {
+    const caller = Ed25519Keypair.generate(); const sponsor = Ed25519Keypair.generate();
+    const client = new SuiGrpcClient({ network: 'testnet', baseUrl: 'https://offline-fixture.invalid' });
+    const tx = new Transaction();
+    tx.moveCall({ target: `${PACKAGE}::escrow::approve`, typeArguments: [SUI_TYPE],
+      arguments: [tx.object(normalizeSuiAddress('0xf00')), tx.object(normalizeSuiAddress('0x6'))] });
+    const genesis = spyOn(client, 'getChainIdentifier').mockResolvedValue({ chainIdentifier: TESTNET_CHAIN });
+    const coins = spyOn(client, 'listCoins').mockResolvedValue({ objects: [coin(DEFAULT_GAS_BUDGET, sponsor.toSuiAddress())], hasNextPage: false, cursor: null });
+    const gasPrice = spyOn(client, 'getReferenceGasPrice').mockResolvedValue({ referenceGasPrice: '1000' });
+    const explicitSimulation = spyOn(client, 'simulateTransaction').mockImplementation(async () => { throw new Error('Resolution must reject before explicit simulation'); });
+    const signer = spyOn(caller, 'signTransaction');
+    type ServiceCall = ReturnType<typeof client.transactionExecutionService.simulateTransaction>;
+    type ServiceResponse = Awaited<ServiceCall>['response'];
+    const resolution = spyOn(client.transactionExecutionService, 'simulateTransaction').mockImplementation(request => {
+      expect(request.checks).toBe(0); // Pinned protobuf enum TransactionChecks.ENABLED = 0.
+      expect(request.doGasSelection).toBe(false);
+      expect(request.transaction?.sender).toBe(caller.toSuiAddress());
+      if (options.transportError) throw options.transportError;
+      const response: ServiceResponse = { commandOutputs: [], transaction: { signatures: [], balanceChanges: [], effects: {
+        dependencies: [], changedObjects: [], unchangedConsensusObjects: [], unchangedLoadedRuntimeObjects: [],
+        status: { success: false, error: options.gasError
+          ? { description: 'offline gas failure', errorDetails: { oneofKind: undefined } }
+          : { description: 'offline Move abort', kind: 13, errorDetails: { oneofKind: 'abort', abort: {
+            abortCode: options.code ?? 5n, location: { package: options.packageId ?? PACKAGE, module: options.module ?? 'escrow' },
+          } } } },
+      } } };
+      // UnaryCall is thenable; the SDK resolver only awaits its external response here.
+      return Promise.resolve({ response }) as unknown as ServiceCall;
+    });
+    const context: ScenarioContext = { client, packageId: PACKAGE, payer: caller, recipient: Ed25519Keypair.generate(), sponsor,
+      execute: async () => { throw new Error('Offline regression never executes'); },
+      save: async () => { throw new Error('Offline regression never writes receipts'); } };
+    try { return await expectMoveAbort(context, tx, caller, 5n, 'offline SDK resolution'); }
+    finally {
+      expect(resolution).toHaveBeenCalledTimes(1); expect(explicitSimulation).not.toHaveBeenCalled(); expect(signer).not.toHaveBeenCalled();
+      genesis.mockRestore(); coins.mockRestore(); gasPrice.mockRestore(); explicitSimulation.mockRestore(); signer.mockRestore(); resolution.mockRestore();
+    }
+  }
+
+  test('recognizes the real SDK early-resolution MoveAbort with normal checks enabled', async () => {
+    const result = await resolveEarly();
+    expect(result.kind).toBe('resolution-simulation-rejection'); expect(result.checksEnabled).toBe(true);
+    expect(result.error.$kind).toBe('MoveAbort'); expect(result.code).toBe('5');
+  });
+  test('early-resolution rejection still requires the exact package, module and abort code', async () => {
+    await expect(resolveEarly({ code: 6n })).rejects.toThrow('wrong abort code');
+    await expect(resolveEarly({ packageId: FOREIGN_PACKAGE })).rejects.toThrow('another package');
+    await expect(resolveEarly({ module: 'payments' })).rejects.toThrow('another module');
+  });
+  test('SDK resolution gas and transport errors cannot become negative proof', async () => {
+    await expect(resolveEarly({ gasError: true })).rejects.toBeInstanceOf(SimulationError);
+    // Text deliberately resembles a Move abort; only the typed executionError may qualify.
+    const transportError = new Error(`Transaction resolution failed: MoveAbort ${PACKAGE}::escrow 5`);
+    try { await resolveEarly({ transportError }); throw new Error('Expected transport refusal'); }
+    catch (error) {
+      expect(error).toBeInstanceOf(SimulationError);
+      expect((error as SimulationError).executionError).toBeUndefined(); expect((error as SimulationError).cause).toBe(transportError);
+    }
   });
 });

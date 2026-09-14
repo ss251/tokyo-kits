@@ -5,6 +5,11 @@
   "framework": "0x2",
   "clock": "0x6",
   "usdcType": "0xa1ec7fc00a6f40db9693ad1415d0c193ad3906494428cf252621037bd7117e29::usdc::USDC",
+  "starterDeployment": {
+    "kind": "generic-kit-package-not-sponsor-contract",
+    "packageId": "0xfb86f2c043d066a5fe6462fbe426a0e63dfb2a2a0a0982d2d06797a8c49de865",
+    "publicationDigest": "DJzzkntZTwU3S8NbjMgvZZzCfMxJdq2RLfDMkG4aA5Wy"
+  },
   "sources": [
     "https://developers.circle.com/stablecoins/usdc-contract-addresses",
     "https://sdk.mystenlabs.com/sui/clients/grpc"

@@ -2,7 +2,7 @@
 
 MIT-licensed Move and TypeScript templates for two Sui sponsor components: an official testnet USDC payment with sponsored gas, and an approval/deadline escrow using testnet SUI. Both use the official framework and pinned `@mysten/sui` SDK. They share package publication, account handling, transaction validation, and public receipt capture.
 
-**Live status: NOT PROVEN.** The shared checks pass: strict TypeScript, **17 Bun tests**, and **29 Move tests**. Successful public-testnet demo receipts are still pending; unit fixtures are not end-to-end evidence.
+**Live status: NOT PROVEN.** The shared checks pass: strict TypeScript, **20 Bun tests**, and **29 Move tests**. Successful public-testnet demo receipts are still pending; unit fixtures are not end-to-end evidence.
 
 | Sponsor coverage | Component | Use it for | Run from this directory |
 | --- | --- | --- | --- |
@@ -112,7 +112,7 @@ Successful scenarios write `payments/receipts/testnet-latest.json` or `defi/rece
 
 | Check | Current result |
 | --- | --- |
-| Strict TypeScript + Bun tests | **PASS — 17 tests** |
+| Strict TypeScript + Bun tests | **PASS — 20 tests** |
 | Pinned Move compiler and unit tests | **PASS — two modules, 29 tests** |
 | Official USDC sponsored payment | **NOT PROVEN — public testnet receipt pending** |
 | SUI escrow claim and refund | **NOT PROVEN — public testnet receipts pending** |

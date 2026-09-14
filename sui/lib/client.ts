@@ -3,7 +3,7 @@ import { strict as assert } from 'node:assert';
 import { SuiGrpcClient } from '@mysten/sui/grpc';
 import { Transaction } from '@mysten/sui/transactions';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
-import type { SuiClientTypes } from '@mysten/sui/client';
+import { SimulationError, type SuiClientTypes } from '@mysten/sui/client';
 import { bcs } from '@mysten/sui/bcs';
 import { isValidSuiAddress, normalizeStructTag, normalizeSuiAddress } from '@mysten/sui/utils';
 
@@ -108,16 +108,28 @@ export async function signAndExecute(client: SuiGrpcClient, label: string, tx: T
   assert.equal(transaction.signatures.length, signatures.length, 'Executed signature count mismatch');
   return { label, digest: transaction.digest, transaction };
 }
-/** Require the intended Move abort; transport, gas, object and signature failures do not pass. */
-export async function expectMoveAbort(ctx: ScenarioContext, tx: Transaction, caller: Ed25519Keypair, code: bigint, label: string) {
-  const bytes = await prepareTransaction(ctx.client, tx, caller, ctx.sponsor);
-  const result = await ctx.client.simulateTransaction({ transaction: bytes, checksEnabled: true, include: { effects: true } });
-  assert.equal(result.$kind, 'FailedTransaction', `${label} unexpectedly succeeded`);
-  const error = result.FailedTransaction!.status.error;
+function requireEscrowAbort(error: SuiClientTypes.ExecutionError | null | undefined, packageId: string, code: bigint, label: string) {
   assert(error && error.$kind === 'MoveAbort', `${label} did not fail with a Move abort`);
   assert.equal(BigInt(error.MoveAbort.abortCode), code, `${label} has the wrong abort code`);
-  assert.equal(normalizeSuiAddress(error.MoveAbort.location?.package ?? '0x0'), address(ctx.packageId), `${label} aborted in another package`);
+  assert.equal(normalizeSuiAddress(error.MoveAbort.location?.package ?? '0x0'), address(packageId), `${label} aborted in another package`);
   assert.equal(error.MoveAbort.location?.module, 'escrow', `${label} aborted in another module`);
+  return error;
+}
+/** Require the intended Move abort; transport, gas, object and signature failures do not pass. */
+export async function expectMoveAbort(ctx: ScenarioContext, tx: Transaction, caller: Ed25519Keypair, code: bigint, label: string) {
+  let bytes: Uint8Array;
+  try {
+    bytes = await prepareTransaction(ctx.client, tx, caller, ctx.sponsor);
+  } catch (failure) {
+    // SDK 2.31.0 gRPC resolution simulates full builds with checks ENABLED. It may
+    // reject before returning bytes; transport failures have no executionError.
+    if (!(failure instanceof SimulationError) || failure.executionError?.$kind !== 'MoveAbort') throw failure;
+    const error = requireEscrowAbort(failure.executionError, ctx.packageId, code, label);
+    return { label, kind: 'resolution-simulation-rejection', checksEnabled: true, code: code.toString(), error };
+  }
+  const result = await ctx.client.simulateTransaction({ transaction: bytes, checksEnabled: true, include: { effects: true } });
+  assert.equal(result.$kind, 'FailedTransaction', `${label} unexpectedly succeeded`);
+  const error = requireEscrowAbort(result.FailedTransaction!.status.error, ctx.packageId, code, label);
   return { label, kind: 'simulation-rejection', checksEnabled: true, code: code.toString(), error };
 }
 export function createdObjectId(proof: RecordedTransaction, expectedType: string) {

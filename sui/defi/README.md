@@ -65,7 +65,7 @@ Seven negative simulations retain normal transaction validation and require the 
 | Approved claim after deadline | 8 |
 | Non-depositor refund | 5 |
 
-A gas error, missing object, bad signature, network failure, or unrelated abort cannot pass a negative assertion. Simulations are recorded separately from executed transaction receipts.
+The pinned gRPC SDK also simulates during full transaction construction. Its typed `SimulationError.executionError` can prove a rejection before the explicit simulation call; the runner records that separately as `resolution-simulation-rejection`, with normal SDK checks enabled. A gas error, missing object, bad signature, network failure, or unrelated abort cannot pass a negative assertion. Simulations are recorded separately from executed transaction receipts.
 
 ## Last proven
 
