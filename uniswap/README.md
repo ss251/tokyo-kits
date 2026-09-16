@@ -1,21 +1,21 @@
 # Uniswap stack integration starters
 
-Generic MIT starters for the Uniswap Stack and Continuity tracks at ETHGlobal Tokyo 2026. They share pinned dependencies, official Base deployments, and a serial fork runner. Four on-chain components are proven; two credentialed API components remain blocked.
+Generic MIT starters for the Uniswap Stack and Continuity tracks at ETHGlobal Tokyo 2026. They share pinned dependencies, official Base deployments, and a serial fork runner. All six components are proven: four on-chain paths and, since 2026-09-17, both credentialed API paths.
 
 ## Coverage and last proven
 
-Status checked **2026-09-14 09:51 JST** (`00:51 UTC`). The refreshed on-chain run succeeded against Base upstream block **51278859**, hash `0xad90d215f7294e61e0fa78a62ba75881a25d40ebcf524f2e9e3786db740df3f3`. Component receipts were recorded from `2026-09-14T00:51:24.795Z` through `2026-09-14T00:51:32.220Z`.
+Status checked **2026-09-17 05:55 JST** (`2026-09-16 20:55 UTC`). The refreshed on-chain run succeeded against Base upstream block **51401387**, hash `0x6b662f6de4496fec24aac9ea53d32789db1ebfd13d8d6a18cc7884ad8512271a`; its four receipts were recorded from `2026-09-16T20:55:36.200Z` through `2026-09-16T20:55:41.561Z`. The API receipts were recorded at `2026-09-16T20:53:54.254Z` (swap, fork block 51401337) and `2026-09-16T20:54:25.920Z` (LP, fork block 51401344).
 
 | Component | Use it for | Evidence / current status |
 | --- | --- | --- |
 | [v4-hook](v4-hook/README.md) | Hook callbacks, directional fees, StateView, V4Quoter, Permit2, Universal Router | **PROVEN**: [14 successful transactions](v4-hook/receipts/base-latest.json), both swap directions and actual manager fee events |
-| [api-swap](api-swap/README.md) | Authenticated `/quote` → `/swap` integration | **NOT PROVEN**: API credential absent |
-| [lp-api](lp-api/README.md) | Create, increase, decrease a V3/V4 LP position | **NOT PROVEN**: API credential absent; management requires a public-chain NFT |
+| [api-swap](api-swap/README.md) | Authenticated `/quote` → `/swap` integration | **PROVEN**: [authenticated payload executed on the fork](api-swap/receipts/base-latest.json), 0.001 WETH → 2.407071 USDC through Universal Router 2.1.1 |
+| [lp-api](lp-api/README.md) | Create, increase, decrease a V3/V4 LP position | **PROVEN**: [19 successful transactions](lp-api/receipts/base-latest.json), authenticated create of a new position plus increase and decrease of public position 6013357 with fork-only owner impersonation |
 | [v3-or-v2](v3-or-v2/README.md) | A plain V3 pool swap with minimal dependencies | **PROVEN**: [4 successful transactions](v3-or-v2/receipts/base-latest.json), quotes equal balance deltas with deadline multicalls |
 | [cca](cca/README.md) | Continuous Clearing Auction deployment and settlement | **PROVEN**: [12 successful transactions](cca/receipts/base-latest.json), factory creation through claim and proceeds/inventory sweeps |
 | [continuity-recipe](continuity-recipe/README.md) | Add a bounded V3 swap to an existing app in about one hour | **PROVEN template**: [dedicated 4-transaction receipt](continuity-recipe/receipts/base-latest.json); application-specific adaptation is future work |
 
-Validation passed: strict TypeScript checking, **27 Bun tests**, **15 local Solidity tests**, and **15 tests against the official Base PoolManager**. The four refreshed receipts contain source-file hashes, runtime hashes, fork block provenance, and disclosed fixture funding. They record source commit `d1373ca2e00b74231b26fbfa114f0bdbe4bef9b2` with `sourceDirty: true`, so identify the executed files through `sourceFilesSha256` rather than the commit field alone. API unit fixtures are explicitly synthetic; they are not authenticated service results.
+Validation passed: strict TypeScript checking, **29 Bun tests**, **15 local Solidity tests**, and **15 tests against the official Base PoolManager**. All six receipts contain source-file hashes, runtime hashes, fork block provenance, and disclosed fixture funding. They record source commit `47783ebd` with `sourceDirty: true` (documentation was still being edited), so identify the executed files through `sourceFilesSha256` rather than the commit field alone. API unit fixtures are explicitly synthetic; the authenticated service results live only in the two API receipts.
 
 ## Five-minute setup
 

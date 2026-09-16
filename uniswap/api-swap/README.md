@@ -1,6 +1,6 @@
 # Uniswap API swap starter
 
-**Last proven: NOT PROVEN (2026-09-14).** No Uniswap API credential is available in this build environment. There is no authenticated `/quote` or `/swap` result and no executed API transaction receipt. Offline unit fixtures do not establish integration success.
+**Last proven: 2026-09-17 05:53 JST (2026-09-16T20:53:54Z)** — [receipt](receipts/base-latest.json). An authenticated `/quote` → `/swap` payload for 0.001 WETH → USDC was executed on a Base fork pinned at upstream block 51401337 through the official Universal Router 2.1.1: transaction `0x9ddd47ad9f92609cd7ea0976886a621ee25386079d6ab35cc7060edc9690441e`, 1000000000000000 wei WETH in, 2407071 USDC units out against a 2395035 minimum, after one Permit2 approval. The API key stays in the ignored `.env`; the receipt records request IDs, fork provenance, and source-file hashes only.
 
 This generic MIT template prepares a same-chain swap through Uniswap's public `/quote` and `/swap` endpoints. It defaults to 0.001 WETH → USDC on Base, 0.5% slippage, V3/V4 pools, and Universal Router 2.1.1. Shared contract addresses and exact SDK pins are in [addresses.json](../addresses.json) and [package.json](../package.json).
 
@@ -44,7 +44,7 @@ The API key is read only from the environment, is never returned, and is sent on
 - API simulations see the public chain, while demo funding and approvals exist on the fork. `/swap` therefore requests `simulateTransaction: false`; the executor must simulate and execute on its own fork. A quote's simulation warning is not an executed failure or success receipt.
 - A fork can drift from the public block used for the quote. Use a fresh fork, bounded slippage, and a recent quote. Re-request after price movement or expiry.
 
-To mark this starter proven, record the date, fork chain/block, official router address, API request IDs, successful transaction hash/receipt, and before/after token balances in this component's `uniswap/api-swap/receipts/base-latest.json`, then replace “Last proven” above with a link. A fork hash is verifiable by replaying the recorded fork; it will not appear in a public block explorer. Do not save API keys or permit signatures in receipts.
+The receipt above records the date, fork chain/block, official router address, API request IDs, the successful transaction receipt, and before/after token balances. A fork hash is verifiable by replaying the recorded fork; it will not appear in a public block explorer. API keys and permit signatures are never saved in receipts. Rerunning `make demo` refreshes the receipt against a new fork block and a fresh quote.
 
 ## Which idea would use this?
 
@@ -56,4 +56,4 @@ Verified 2026-09-14: [integration guide](https://developers.uniswap.org/docs/tra
 
 Original starter code is [MIT licensed](../LICENSE). Disclose reuse using [PRIOR-ART.md](../PRIOR-ART.md). Complete the shared [FEEDBACK.md](../FEEDBACK.md) and [Developer Feedback Form](https://developers.uniswap.org/hackathon-feedback) for the Uniswap track.
 
-Credential preflight was executed on 2026-09-14 JST and failed nonzero with `NOT PROVEN: missing UNISWAP_API_KEY`, before compilation or a service request.
+Credential preflight was executed on 2026-09-14 JST and failed nonzero with `NOT PROVEN: missing UNISWAP_API_KEY`, before compilation or a service request. With a Developer Platform key in place the same command completed end to end on 2026-09-17 JST; see the receipt linked above.

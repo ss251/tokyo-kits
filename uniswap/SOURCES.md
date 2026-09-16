@@ -1,6 +1,6 @@
 # Uniswap source and deployment record
 
-Verified from official sources on **2026-09-14**. The refreshed V4, V3, CCA, and Continuity receipts prove their recorded source on Base upstream block **51275468** and include source-file hashes. The two credentialed API paths remain NOT PROVEN.
+Verified from official sources on **2026-09-14**; API paths executed on **2026-09-17**. All six receipts prove their recorded source on Base forks and include source-file hashes.
 
 ## Exact package pins
 
@@ -70,7 +70,7 @@ The [public OpenAPI](https://trade-api.gateway.uniswap.org/v1/api.json) supplies
 
 The LP guide explicitly specifies a separate host with no version prefix, while the shared reference banner repeats the trading host. This kit follows the dedicated guide and leaves credentialed verification pending. `/lp/create` uses `batchPermitData`; `/lp/increase` uses `v4BatchPermitData`. The LP guide describes new-pool `initialPrice` as `sqrtRatioX96`; the schema description is less precise. These discrepancies are documented instead of silently substituted.
 
-Both API components remain **NOT PROVEN** without authenticated requests followed by execution of their returned transactions. An unsigned payload, API request ID, or offline fixture is not a transaction receipt. See the per-component READMEs for the public-NFT restriction on LP fork demos.
+Both API components were **proven on 2026-09-17** with authenticated requests followed by execution of their returned transactions on Base forks; an unsigned payload, API request ID, or offline fixture is never treated as a transaction receipt. Live observations recorded in the code: the LP host above accepted the same dashboard key as the trading host, a full-range `/lp/create` returns `adjustedMinPrice` `"0"`, and LP minimums follow the official V3 SDK's price-based slippage. See the per-component READMEs for the public-NFT restriction on LP fork demos.
 
 ## License and event context
 
