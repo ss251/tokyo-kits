@@ -75,23 +75,37 @@ export async function runApiExecution(fork: Fork, kind: 'api-swap' | 'lp-api') {
   // position, then impersonate its PUBLIC owner only on the verified local fork.
   // No owner's private key is requested, loaded, or used; no upstream tx is sent.
   const manager = config.v3PositionManager as Address
+  const poolAbi = parseAbi(['function fee() view returns (uint24)', 'function slot0() view returns (uint160 sqrtPriceX96,int24 tick,uint16,uint16,uint16,uint8,bool)', 'function liquidity() view returns (uint128)'])
+  const factoryAbi = parseAbi(['function getPool(address,address,uint24) view returns (address)'])
+  // The API quotes against the public chain a few blocks after the fork was pinned. A position whose
+  // range barely contains the current tick can leave range in that gap and make the official
+  // manager's slippage check revert, so management targets a position with 100 ticks (about 1%) of
+  // margin on both sides of the fork's current tick.
+  const RANGE_MARGIN_TICKS = 100
+  const inRangeWithMargin = async (position: Position) => {
+    const pool = await client.readContract({ address: config.v3Factory as Address, abi: factoryAbi, functionName: 'getPool', args: [config.weth as Address, config.usdc as Address, position[4]] })
+    if (BigInt(pool) === 0n) return false
+    const slot0 = await client.readContract({ address: pool, abi: poolAbi, functionName: 'slot0' })
+    return position[5] + RANGE_MARGIN_TICKS <= slot0[1] && slot0[1] <= position[6] - RANGE_MARGIN_TICKS
+  }
   let tokenId = Bun.env.UNISWAP_LP_POSITION_ID ? BigInt(Bun.env.UNISWAP_LP_POSITION_ID) : undefined
   if (tokenId === undefined) {
     const supply = await client.readContract({ address: manager, abi: positionAbi, functionName: 'totalSupply' })
     for (let offset = 1n; offset <= 100n && offset <= supply; offset++) {
       const candidate = await client.readContract({ address: manager, abi: positionAbi, functionName: 'tokenByIndex', args: [supply - offset] })
       const position = await client.readContract({ address: manager, abi: positionAbi, functionName: 'positions', args: [candidate] })
-      if (position[2].toLowerCase() === config.weth.toLowerCase() && position[3].toLowerCase() === config.usdc.toLowerCase() && position[7] > 0n) { tokenId = candidate; break }
+      if (position[2].toLowerCase() === config.weth.toLowerCase() && position[3].toLowerCase() === config.usdc.toLowerCase() && position[7] > 0n && await inRangeWithMargin(position)) { tokenId = candidate; break }
     }
   }
-  assert(tokenId !== undefined, 'NOT PROVEN: no recent public WETH/USDC position found; set UNISWAP_LP_POSITION_ID')
+  assert(tokenId !== undefined, 'NOT PROVEN: no recent public WETH/USDC position is in range with margin; set UNISWAP_LP_POSITION_ID')
   const initialPosition = await client.readContract({ address: manager, abi: positionAbi, functionName: 'positions', args: [tokenId] })
   assert.equal(initialPosition[2].toLowerCase(), config.weth.toLowerCase()); assert.equal(initialPosition[3].toLowerCase(), config.usdc.toLowerCase()); assert(initialPosition[7] > 0n)
+  assert(await inRangeWithMargin(initialPosition), 'NOT PROVEN: the selected public position is not in range with margin at the fork block')
+  console.log(`public LP position ${tokenId}: fee ${initialPosition[4]}, ticks ${initialPosition[5]}..${initialPosition[6]}, liquidity ${initialPosition[7]}`)
   const owner = await client.readContract({ address: manager, abi: positionAbi, functionName: 'ownerOf', args: [tokenId] })
   const prepared = await runLpApi({ walletAddress: owner, position: { protocol: 'V3', nftTokenId: String(tokenId), token0Address: config.weth as Address, token1Address: config.usdc as Address }, independentToken: { tokenAddress: config.weth as Address, amount: '1000000000000000' } })
-  const poolAbi = parseAbi(['function fee() view returns (uint24)', 'function slot0() view returns (uint160 sqrtPriceX96,int24 tick,uint16,uint16,uint16,uint8,bool)', 'function liquidity() view returns (uint128)'])
   const createPoolFee = await client.readContract({ address: config.v3Pool as Address, abi: poolAbi, functionName: 'fee' })
-  const positionPool = await client.readContract({ address: config.v3Factory as Address, abi: parseAbi(['function getPool(address,address,uint24) view returns (address)']), functionName: 'getPool', args: [config.weth as Address, config.usdc as Address, initialPosition[4]] })
+  const positionPool = await client.readContract({ address: config.v3Factory as Address, abi: factoryAbi, functionName: 'getPool', args: [config.weth as Address, config.usdc as Address, initialPosition[4]] })
   assert(BigInt(positionPool) !== 0n, 'Official factory has no pool for the public position fee tier')
   const decimals = await Promise.all([config.weth, config.usdc].map(token => client.readContract({ address: token as Address, abi: erc20Abi, functionName: 'decimals' }))) as [number, number]
   // Pool state is re-read on the fork before every action because each executed action changes it.
