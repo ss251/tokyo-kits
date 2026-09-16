@@ -52,17 +52,22 @@ export async function pollCounterEvent(
   while (Date.now() < deadline) {
     const status = await mb.indexingStatus(expected.address, expected.label);
     assert(BigInt(status.startBlockNumber) <= expected.blockNumber, 'Indexer starts after the expected event');
-    if (BigInt(status.latestBlockNumber) >= expected.blockNumber) {
-      const found: unknown[] = [];
-      for (let offset = 0; offset <= 1000; offset += 100) {
-        const page = await mb.listCounterEvents(expected.address, expected.label, expected.hash, offset); found.push(...page);
-        if (page.length < 100) break;
-        assert(offset < 1000, 'Indexed event pagination exceeded the bound');
-      }
-      if (found.length) {
-        assert.equal(found.length, 1, 'Expected exactly one indexed counter event');
-        return { ...validateIndexedCounterEvent(found[0], expected), indexingStatus: status };
-      }
+    // The per-contract indexing status describes the historical backfill window; on a live deployment
+    // (2026-09-17) its latest block stayed at the link block while new events were already listed.
+    // Live indexing is therefore established by listing the event's block and matching the exact hash.
+    const found: unknown[] = [];
+    for (let offset = 0; offset <= 1000; offset += 100) {
+      const page = await mb.listCounterEvents(expected.address, expected.label, expected.blockNumber, offset);
+      found.push(...page.filter(item => {
+        const transaction = (item as { transaction?: { txHash?: unknown } })?.transaction;
+        return typeof transaction?.txHash === 'string' && transaction.txHash.toLowerCase() === expected.hash.toLowerCase();
+      }));
+      if (page.length < 100) break;
+      assert(offset < 1000, 'Indexed event pagination exceeded the bound');
+    }
+    if (found.length) {
+      assert.equal(found.length, 1, 'Expected exactly one indexed counter event');
+      return { ...validateIndexedCounterEvent(found[0], expected), indexingStatus: status };
     }
     await new Promise(resolve => setTimeout(resolve, Math.min(interval, Math.max(0, deadline - Date.now()))));
   }

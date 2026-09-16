@@ -117,6 +117,9 @@ describe('indexed event reconciliation', () => {
     const mb = { indexingStatus: async () => status, listCounterEvents: async () => [indexed()] };
     expect((await pollCounterEvent(mb, EXPECTED, { timeoutMs: 100, intervalMs: 1 })).transactionHash).toBe(HASH);
     await expect(pollCounterEvent({ ...mb, listCounterEvents: async () => [indexed(), indexed()] }, EXPECTED)).rejects.toThrow('exactly one');
+    const other = indexed(); other.transaction.txHash = BLOCK_HASH;
+    expect((await pollCounterEvent({ ...mb, listCounterEvents: async () => [other, indexed()] }, EXPECTED, { timeoutMs: 100, intervalMs: 1 })).transactionHash).toBe(HASH);
+    await expect(pollCounterEvent({ ...mb, indexingStatus: async () => ({ ...status, latestBlockNumber: 100 }), listCounterEvents: async () => [indexed()] }, EXPECTED, { timeoutMs: 100, intervalMs: 1 })).resolves.toBeTruthy();
     await expect(pollCounterEvent({ ...mb, listCounterEvents: async () => [] }, EXPECTED, { timeoutMs: 5, intervalMs: 1 })).rejects.toThrow('NOT PROVEN');
     await expect(pollCounterEvent({ ...mb, indexingStatus: async () => ({ ...status, startBlockNumber: 124 }) }, EXPECTED)).rejects.toThrow('starts after');
   });

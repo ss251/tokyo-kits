@@ -121,14 +121,18 @@ export function createMultiBaasAdapter(config: MultiBaasConfig, http?: SdkHttp) 
       return validateSdkReceipt(await responseResult(chains.getTransactionReceipt(expected, GetTransactionReceiptIncludeEnum.Contract), 'get receipt'), expected);
     },
     async indexingStatus(address: Address, contractLabel: string) {
-      const result = record(await responseResult(contracts.getEventIndexingStatus(evmAddress(address, 'counter address'), label(contractLabel)), 'indexing status'), 'indexing status');
+      // Observed 2026-09-17: a DApp User key receives HTTP 403 on indexing status; it is an administrator observability call.
+      const result = record(await responseResult(admin.getEventIndexingStatus(evmAddress(address, 'counter address'), label(contractLabel)), 'indexing status'), 'indexing status');
       assert(typeof result.isProcessingPastLogs === 'boolean', 'Invalid indexing status');
       return { latestBlockNumber: safeInteger(result.latestBlockNumber, 'indexed block'), latestBlockHash: hash(result.latestBlockHash, 'indexed block hash'),
         startBlockNumber: safeInteger(result.startBlockNumber, 'index start block'), isProcessingPastLogs: result.isProcessingPastLogs };
     },
-    async listCounterEvents(address: Address, contractLabel: string, transactionHash: Hex, offset = 0) {
+    // Observed 2026-09-17 against a live deployment: the SDK 1.1.1 `tx_hash` filter returned no rows for an
+    // already indexed event, while the block-number filter returned it. The caller matches the hash itself.
+    async listCounterEvents(address: Address, contractLabel: string, blockNumber: bigint, offset = 0) {
       assert(safeInteger(offset, 'event offset') <= 1000, 'Event pagination exceeds starter bound');
-      const result = await responseResult(events.listEvents(undefined, undefined, undefined, undefined, hash(transactionHash, 'transaction hash'), false,
+      const block = safeInteger(Number(blockNumber), 'event block number');
+      const result = await responseResult(events.listEvents(undefined, block, undefined, undefined, undefined, false,
         evmAddress(address, 'counter address'), label(contractLabel), COUNTER_EVENT, 100, offset), 'list counter events');
       assert(Array.isArray(result) && result.length <= 100, 'Invalid event page'); return result as unknown[];
     },

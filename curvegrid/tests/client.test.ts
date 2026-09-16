@@ -97,18 +97,19 @@ describe('current official SDK request flow', () => {
     await expect(createMultiBaasAdapter(CONFIG, collision.http).linkCounter(ADDRESS, 'kit-alias', 'kit-counter', '1.0.0', 123n)).rejects.toThrow('unrelated address alias');
     expect(collision.requests.every(request => request.method === 'GET')).toBe(true);
   });
-  test('SDK reads request lossless integers and event queries filter the exact transaction', async () => {
+  test('SDK reads request lossless integers and event queries filter the exact block', async () => {
     const fixture = transport(request => {
       if (request.path.endsWith('/methods/value')) {
         expect(request.data).toEqual({ args: [], formatInts: 'as_strings', contractOverride: false }); return { kind: 'MethodCallResponse', output: '9007199254740993' };
       }
       expect(request.path).toBe('/api/v0/events');
-      expect(request.url.searchParams.get('tx_hash')).toBe(HASH); expect(request.url.searchParams.get('contract_address')).toBe(ADDRESS);
+      expect(request.url.searchParams.get('block_number')).toBe('123'); expect(request.url.searchParams.has('tx_hash')).toBe(false);
+      expect(request.url.searchParams.get('contract_address')).toBe(ADDRESS);
       expect(request.url.searchParams.get('event_signature')).toBe('Incremented(address,uint256)');
       expect(request.url.searchParams.get('offset')).toBe('100'); return [];
     });
     const mb = createMultiBaasAdapter(CONFIG, fixture.http);
-    expect(await mb.readCounter(ADDRESS, 'kit-counter')).toBe(9_007_199_254_740_993n); await mb.listCounterEvents(ADDRESS, 'kit-counter', HASH, 100);
+    expect(await mb.readCounter(ADDRESS, 'kit-counter')).toBe(9_007_199_254_740_993n); await mb.listCounterEvents(ADDRESS, 'kit-counter', 123n, 100);
   });
   test('SDK submission must return the locally computed signed transaction hash', async () => {
     const account = privateKeyToAccount(generatePrivateKey()); // Ephemeral offline key; never funded, printed, or saved.
