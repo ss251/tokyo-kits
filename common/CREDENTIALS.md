@@ -2,7 +2,7 @@
 
 Copy a kit's own `.env.example` to an ignored `.env` in that kit. The names below match those examples; this document is a reference, not a shared secrets file. RPC configuration, public identifiers, private API credentials, and human verification are different prerequisites.
 
-At the current handoff, **11 of 19 components have complete receipts**. The remaining eight are two Uniswap API components, four World components, and two Curvegrid components. Missing prerequisites stay **NOT PROVEN** even when local tests pass. The [top-level coverage table](../README.md) and component READMEs hold the current execution status.
+As of 2026-09-17 JST, **15 of 19 components have complete receipts**. The remaining four are the World components; the Uniswap API and Curvegrid credentials were created on 2026-09-17 and live only in the ignored kit `.env` files on the build machine. Missing prerequisites stay **NOT PROVEN** even when local tests pass. The [top-level coverage table](../README.md) and component READMEs hold the current execution status.
 
 ## Aqua, Uniswap contract paths, and ENSv2
 
@@ -20,7 +20,7 @@ Fork demos create or impersonate accounts only inside their controlled local cha
 
 The shared launcher reads `POLYGON_RPC_URL`, `BASE_RPC_URL`, `SEPOLIA_RPC_URL`, and the compatible `ENS_RPC_URL` fallback from ignored `common/.env`. A nonempty `SEPOLIA_RPC_URL` takes precedence over `ENS_RPC_URL`; exported environment values are never overwritten by the file. Copy [common's example](.env.example) for public defaults. No signing key is required. See the [launcher instructions](README.md#environment-and-private-state) for URL rules and replay settings.
 
-## Uniswap API access — two blocked components
+## Uniswap API access — proven 2026-09-17
 
 Obtain credentials through the [official Uniswap Developer Platform](https://developers.uniswap.org/dashboard). Follow the [swap integration guide](https://developers.uniswap.org/docs/trading/swapping-api/start-building/integration-guide) and [LP integration guide](https://developers.uniswap.org/docs/liquidity/liquidity-provisioning-api/integration-guide) for the relevant entitlement.
 
@@ -30,9 +30,9 @@ Obtain credentials through the [official Uniswap Developer Platform](https://dev
 | `UNISWAP_LP_API_KEY` | Private LP API credential; the client falls back to `UNISWAP_API_KEY` if that key has LP access |
 | `UNISWAP_LP_POSITION_ID` | Optional public Base WETH/USDC V3 NFT ID for the existing-position scenario |
 
-Swap and LP access may require different entitlements. Successful key creation alone is not proof that both products accept the credential. LP management additionally needs an independently verified public-chain NFT; a fork-created NFT cannot be discovered by the public API. Its owner is impersonated only on the local fork. No production signing key is required for these demos.
+Swap and LP access may require different entitlements; on 2026-09-17 one dashboard key (the default 6-requests-per-second key) was accepted by both the Trading API and the LP API, so `UNISWAP_LP_API_KEY` could be left equal to `UNISWAP_API_KEY`. Successful key creation alone is not proof that both products accept the credential. LP management additionally needs an independently verified public-chain NFT; a fork-created NFT cannot be discovered by the public API. The executor selects a recent public WETH/USDC position whose range holds the current tick with margin, and its owner is impersonated only on the local fork. No production signing key is required for these demos.
 
-## World Portal and human verification — four blocked components
+## World Portal and human verification — four components still blocked on human steps
 
 Use the [official World Developer Portal](https://developer.world.org). Mini Apps and World ID can have different app IDs. Follow the [MiniKit setup](../world/minikit-app/README.md), [World ID service](../world/world-id-verify/README.md), and [AgentKit guide](../world/agentkit/README.md); server keys must never become `NEXT_PUBLIC_*` values.
 
@@ -79,7 +79,7 @@ Fund the payer with official **USDC on Sui Testnet** through the [Circle faucet]
 
 The SDK requests native SUI for payer and sponsor through the official faucet. If that API is rate-limited, submit both addresses to the [official SUI browser faucet](https://faucet.sui.io), selecting Testnet. No wallet connection or account was needed in the observed browser flow; its normal proof-of-work wait succeeded while the API was blocked. Faucet conditions can change. These funding steps do not themselves prove a payment or escrow; the successful scenario receipts in [Sui's README](../sui/README.md#last-proven) do.
 
-## Curvegrid — two blocked components
+## Curvegrid — proven 2026-09-17
 
 Create an account and a **Sepolia** MultiBaas deployment through the [official Curvegrid Console](https://console.curvegrid.com/). The [first-steps guide](https://docs.curvegrid.com/multibaas/getting-started/account-and-deployment/) describes free-plan provisioning. The deployment is bound to a fixed network.
 
@@ -94,9 +94,9 @@ Create an account and a **Sepolia** MultiBaas deployment through the [official C
 | `MULTIBAAS_WEBHOOK_URL` | Public HTTPS callback ending exactly in `/webhook`, forwarded to the demo consumer |
 | `MULTIBAAS_WEBHOOK_CONFIG` | Optional standalone private config path; default `.run/webhook-config.json` |
 
-Use [API-key setup](https://docs.curvegrid.com/multibaas/api-keys/) and [role documentation](https://docs.curvegrid.com/multibaas/users-rbac/) to configure the two keys. Fund the generated signer with Sepolia test ETH; MultiBaas permissions do not grant signing authority or gas. A Curvegrid Testnet public Web3 key is not the required Sepolia deployment API key.
+Use [API-key setup](https://docs.curvegrid.com/multibaas/api-keys/) and [role documentation](https://docs.curvegrid.com/multibaas/users-rbac/) to configure the two keys. On 2026-09-17 a free deployment was ready within a minute of creation; the Administrators key was needed for the event indexing status endpoint, which returns HTTP 403 to a DApp User key. Fund the generated signer with Sepolia test ETH (the [Google Cloud faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia) sent 0.05 ETH on request); MultiBaas permissions do not grant signing authority or gas. A Curvegrid Testnet public Web3 key is not the required Sepolia deployment API key.
 
-The events demo manages its own local consumer and creates an ephemeral webhook. Prepare external HTTPS forwarding before running it. It deletes that webhook on cleanup; the retained private config is a record, not an active subscription. Ongoing standalone use needs a separately registered active webhook and its actual secret/ID.
+The events demo manages its own local consumer and creates an ephemeral webhook. Prepare external HTTPS forwarding before running it; `cloudflared tunnel --url http://127.0.0.1:8787` prints a temporary public origin that needs no account, and `MULTIBAAS_WEBHOOK_URL` is that origin plus `/webhook` for as long as the tunnel process runs. It deletes that webhook on cleanup; the retained private config is a record, not an active subscription. Ongoing standalone use needs a separately registered active webhook and its actual secret/ID.
 
 Standalone receiver alternatives from the kit's example are `CONTRACT_ADDRESS`, `MULTIBAAS_WEBHOOK_SECRET`, `MULTIBAAS_DEPLOYMENT_ID`, and `MULTIBAAS_WEBHOOK_ID`, together with `CHAIN_ID`. `WEBHOOK_HOST` and `WEBHOOK_PORT` are optional. The callback secret is generated by MultiBaas and stays in private config, not public receipts. See the [complete Curvegrid instructions](../curvegrid/README.md).
 

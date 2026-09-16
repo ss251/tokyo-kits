@@ -3,7 +3,7 @@
 Generic integration starters prepared before ETHGlobal Tokyo 2026. Original
 starter code is MIT licensed; dependencies retain their own licenses.
 
-Public repository: [ss251/tokyo-kits](https://github.com/ss251/tokyo-kits). **11 of 19 sponsor components are proven**; the other eight have runnable implementations, tests, and explicit missing-prerequisite records.
+Public repository: [ss251/tokyo-kits](https://github.com/ss251/tokyo-kits). **15 of 19 sponsor components are proven**; the four World components have runnable implementations, tests, and an explicit list of the human steps that remain.
 
 **Latest validation: 341 tests passed**, plus three common fork canaries. [Check report](common/receipts/check-all-latest.json).
 The same 341 tests passed after installing from a clean public clone on
@@ -19,21 +19,21 @@ quickstart. The Tokyo column links to the official sponsor prize card; these
 | A programmable pricing instruction | [Aqua opcode](aqua/swapvm-opcode/) | [1inch: Aqua][prize-aqua] | Proven: custom opcode + official-router Extruction |
 | Pegged settlement in an existing app | [Aqua Continuity](aqua/continuity-recipe/) | [1inch: Aqua, Continuity][prize-aqua] | Proven: SDK pegged strategy |
 | Pool-specific fees and swap events | [Uniswap v4 hook](uniswap/v4-hook/) | [Uniswap: stack contribution][prize-uniswap] | Proven: Base fork |
-| An API-powered quote-and-swap screen | [Uniswap swap API](uniswap/api-swap/) | [Uniswap: stack contribution][prize-uniswap] | NOT PROVEN: API key |
-| Creating and managing liquidity positions | [Uniswap LP API](uniswap/lp-api/) | [Uniswap: stack contribution][prize-uniswap] | NOT PROVEN: API key |
+| An API-powered quote-and-swap screen | [Uniswap swap API](uniswap/api-swap/) | [Uniswap: stack contribution][prize-uniswap] | Proven: authenticated `/quote` + `/swap`, executed on Base fork |
+| Creating and managing liquidity positions | [Uniswap LP API](uniswap/lp-api/) | [Uniswap: stack contribution][prize-uniswap] | Proven: authenticated create/increase/decrease, executed on Base fork |
 | A swap through an existing pool | [Uniswap v3/v2](uniswap/v3-or-v2/) | [Uniswap: stack contribution][prize-uniswap] | Proven: v3 on Base fork |
 | A continuous token auction | [Uniswap CCA](uniswap/cca/) | [Uniswap: stack contribution][prize-uniswap] | Proven: Base fork |
 | Routed swaps in an existing product | [Uniswap Continuity](uniswap/continuity-recipe/) | [Uniswap: stack, Continuity][prize-uniswap] | Proven: Base fork |
 | Names, subnames, and app configuration | [ENSv2 new app](ens/new-app-ensv2/) | [ENS: Best Use of ENSv2][prize-ens] | Proven: Sepolia fork |
 | ENS records replacing address-only configuration | [ENSv2 existing app](ens/add-to-existing/) | [ENS: ENSv2, Continuity][prize-ens] | Proven: Sepolia fork |
-| An authenticated mini app inside World App | [World MiniKit](world/minikit-app/) | [World: details TBD][prize-world] | NOT PROVEN: Portal + human steps |
-| A unique-human gate for an on-chain action | [World ID](world/world-id-verify/) | [World: details TBD][prize-world] | NOT PROVEN: Portal + human proof |
-| Access for a human-registered agent | [World AgentKit](world/agentkit/) | [World: details TBD][prize-world] | NOT PROVEN: registered agent |
-| Human verification in an existing app | [World Continuity recipe](world/continuity-recipe/) | [World: details TBD][prize-world] | NOT PROVEN: Portal + human proof |
+| An authenticated mini app inside World App | [World MiniKit](world/minikit-app/) | [World: details TBD][prize-world] | NOT PROVEN: World App sign-in, public `WorldPing`, phone session ([steps](world/README.md#remaining-human-steps-checked-2026-09-17)) |
+| A unique-human gate for an on-chain action | [World ID](world/world-id-verify/) | [World: details TBD][prize-world] | NOT PROVEN: Portal RP credentials + authentic human proof ([steps](world/README.md#remaining-human-steps-checked-2026-09-17)) |
+| Access for a human-registered agent | [World AgentKit](world/agentkit/) | [World: details TBD][prize-world] | NOT PROVEN: agent registration confirmed in World App ([steps](world/README.md#remaining-human-steps-checked-2026-09-17)) |
+| Human verification in an existing app | [World Continuity recipe](world/continuity-recipe/) | [World: details TBD][prize-world] | NOT PROVEN: same Portal credentials + human proof ([steps](world/README.md#remaining-human-steps-checked-2026-09-17)) |
 | Stablecoin checkout with sponsored gas | [Sui payments](sui/payments/) | [Sui: DeFi & Payments][prize-sui] | Proven: official USDC, public Testnet |
 | Escrow with approved release and timed refund | [Sui DeFi](sui/defi/) | [Sui: DeFi & Payments][prize-sui] | Proven: SUI, public Testnet |
-| Contract deployment and read/write through an API | [MultiBaas basics](curvegrid/multibaas-basics/) | [Curvegrid: details TBD][prize-curvegrid] | NOT PROVEN: service credentials |
-| Indexed contract events delivered to a backend | [MultiBaas webhooks](curvegrid/events-webhooks/) | [Curvegrid: details TBD][prize-curvegrid] | NOT PROVEN: credentials + HTTPS callback |
+| Contract deployment and read/write through an API | [MultiBaas basics](curvegrid/multibaas-basics/) | [Curvegrid: details TBD][prize-curvegrid] | Proven: hosted MultiBaas deploy/link/read/write, public Sepolia |
+| Indexed contract events delivered to a backend | [MultiBaas webhooks](curvegrid/events-webhooks/) | [Curvegrid: details TBD][prize-curvegrid] | Proven: indexed event + authenticated webhook, public Sepolia |
 
 In the official-page snapshot captured on 2026-09-14, World and Curvegrid
 have not published prize categories or qualification details. Their rows describe technology components; no award split or

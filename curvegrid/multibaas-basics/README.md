@@ -59,7 +59,7 @@ sequenceDiagram
 
 ## Last proven
 
-**NOT PROVEN — MultiBaas deployment URL and administrator/DApp credentials are absent.** No live MultiBaas deployment, indexed-event result, or webhook delivery is claimed. The checked-in tests use explicitly labeled offline fixtures. Root runner receipts, if present, distinguish a local contract fork from this credentialed integration.
+**Proven 2026-09-17 05:53 JST (2026-09-16T20:53:30Z)** — [receipt](receipts/sepolia-latest.json). Against the hosted free-plan deployment on public Ethereum Sepolia, the SDK uploaded and linked the counter, composed its deployment `0xe2d18f4239ab133d28bfdc694ec7204cf719819d04626cb049c1aa3147e1fd20` (block 11719197, counter `0xaC52F893591fe0Fb7a2Dc9285D63ae81E857bFA2`, label `tokyokits-431b51f4d093`), composed the owner increment `0xb7cfd74373e04296b3774537fad3a158c007189182a2c7879b74d6b45236557c` (block 11719198), read the value 0 → 1 back through the REST API, and every step was reconciled with an independent Sepolia RPC. The checked-in tests still use explicitly labeled offline fixtures. Root runner receipts distinguish a local contract fork from this credentialed integration.
 
 Run the credentialed demo, retain its SDK and independent RPC receipt, and record the date, network, deployment address and both transaction hashes here after success. Preserve the underlying evidence file and exact source commit.
 
@@ -68,11 +68,11 @@ Original starter code is MIT licensed. The upstream SDK is MIT; see the root [th
 Official references: [backend credentials and signing](https://docs.curvegrid.com/multibaas/getting-started/build-a-backend/), [contract APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ContractsApi.md), [chain APIs](https://github.com/curvegrid/multibaas-sdk-typescript/blob/65f28a15e76f6e16feee7059301cb4fcf6b842d3/docs/ChainsApi.md), [events](https://docs.curvegrid.com/multibaas/event-indexing/).
 
 
-Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The actual `multibaas-basics` demo preflight on 2026-09-14 is [recorded](preflight-latest.json) and fails for missing service configuration. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof.
+Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The `multibaas-basics` demo preflight failed for missing service configuration on 2026-09-14 and the full demo passed on 2026-09-17. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof. One live finding is folded into the code: the event indexing status endpoint returns HTTP 403 to a DApp User key, so the adapter reads it with the administrator key.
 
 
 ## Prior art
 
 Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
 
-Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components remain explicitly NOT PROVEN pending credentials.
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components were NOT PROVEN at that revision and were proven on 2026-09-17 JST.

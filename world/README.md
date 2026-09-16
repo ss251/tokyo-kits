@@ -75,6 +75,45 @@ cannot call the AgentBook-backed gate. Its status is
 `PARTIAL_ONLY_NOT_SPONSOR_E2E`. Unit tests use explicitly named verifier/Book
 fixtures for acceptance paths; they do not demonstrate human verification.
 
+## Remaining human steps, checked 2026-09-17
+
+Everything below was attempted or inspected on 2026-09-17 JST from this build
+environment. None of it can be completed by an unattended runner; each step
+needs a person with a verified World App account.
+
+1. **Developer Portal sign-in needs World App.** `developer.world.org` → *Sign in*
+   redirects to `id.worldcoin.org`, whose only option is "Scan with World App to
+   sign in to World Developer Portal". There is no email, password or OAuth
+   route, so no Mini App ID, World ID app ID, RP ID or RP signing key could be
+   created here. After signing in on a phone, fill `WORLD_MINIKIT_APP_ID`,
+   `WORLD_ID_APP_ID`, `WORLD_RP_ID`, `WORLD_RP_SIGNING_KEY` and
+   `WORLD_ID_ACTION` in the ignored `.env`.
+2. **`WorldPing` must exist on public World Chain 480.** No wallet available
+   here holds any ETH on World Chain, and the free faucets used for Sepolia do
+   not serve chain 480. Deploy `src/WorldPing.sol` from a funded wallet
+   (`forge create --rpc-url $WORLD_CHAIN_RPC_URL --private-key … src/WorldPing.sol:WorldPing`),
+   allowlist the address in the Mini App's Portal settings, then set
+   `WORLD_PING_ADDRESS` and `WORLD_PING_ALLOWLIST_CONFIRMED=true`.
+3. **MiniKit app:** expose `make dev` through an HTTPS tunnel, set that origin
+   as the Mini App URL and `WORLD_APP_ORIGIN`, open the Mini App inside World
+   App and approve *Authenticate*, *Verify with World ID* and *Send zero-value
+   ping*. The UI shows the Worldscan link only after the server has matched the
+   receipt; then run `make -C minikit-app demo`.
+4. **World ID verification and Continuity recipe:** from that same UI, export
+   the fresh authentic proof to `.run/world-id-private-proof.json`
+   (`WORLD_PROOF_FILE`), then run `make -C world-id-verify demo` and
+   `make -C continuity-recipe demo` within the proof's validity window.
+5. **AgentKit:** generate an agent key, run
+   `bunx @worldcoin/agentkit-cli@0.2.0 register 0xAgent`, confirm the
+   registration in World App, verify with `… status 0xAgent`, put the key in
+   `WORLD_AGENT_PRIVATE_KEY`, and run `make -C agentkit demo`.
+
+With a verified account already on the phone, steps 1–5 take roughly thirty
+minutes; the demos then write the receipts described above and the four
+component READMEs can drop their NOT PROVEN labels. Until then every World
+component stays **NOT PROVEN**, and the infrastructure receipt above remains
+partial evidence only.
+
 The proof runner writes full local transactions/receipts, official code hashes,
 source manifests and upstream block/hash provenance. Local-fork hashes do not
 appear in public explorers. Proof downloads belong in ignored `.run/`; keys

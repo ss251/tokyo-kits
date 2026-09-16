@@ -1,6 +1,6 @@
 # Official sources and interface pins
 
-This starter targets an actual Curvegrid MultiBaas deployment connected to Ethereum Sepolia. Official service access and authenticated callback delivery remain **NOT PROVEN** until the corresponding receipts exist. The generic counter and local fixtures do not replace those services.
+This starter targets an actual Curvegrid MultiBaas deployment connected to Ethereum Sepolia. Official service access and authenticated callback delivery were **proven on 2026-09-17** against a hosted free-plan deployment; see the receipts linked from [README.md](README.md#last-proven). The generic counter and local fixtures do not replace those services.
 
 ## Pinned dependencies
 

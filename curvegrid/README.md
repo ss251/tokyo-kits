@@ -2,7 +2,7 @@
 
 Generic MIT templates for MultiBaas contract deployment, REST read/write calls, event indexing, and authenticated webhooks. The Solidity target is an owner-only counter with no product logic. The integration uses Curvegrid's official SDK and an actual MultiBaas deployment.
 
-**MultiBaas status: NOT PROVEN.** Deployment credentials and an externally reachable webhook are required for end-to-end receipts. A successful local counter test or fork transaction demonstrates only the counter; it cannot prove MultiBaas access, indexing, or delivery.
+**MultiBaas status: PROVEN on public Ethereum Sepolia, 2026-09-17 JST.** Both components ran against a hosted free-plan MultiBaas deployment with separate administrator and DApp User keys and an externally reachable HTTPS webhook; see [Last proven](#last-proven). A local counter test or fork transaction still demonstrates only the counter.
 
 | Component | Example use | Command from this directory |
 | --- | --- | --- |
@@ -109,16 +109,21 @@ SQLite transactions deduplicate both delivery IDs and blockchain logs within the
 | Counter unit tests | Solidity owner checks, state, event, and boundary behavior | **PASS — 7 Solidity tests** |
 | Separate counter fork receipt | The generic contract executes on forked chain state | **PASS — 7 Solidity tests and a partial Sepolia fork receipt**; partial evidence only |
 | SDK adapter and webhook unit fixtures | Request/response validation and consumer policy under local fixtures | **PASS — 53 Bun tests, strict TypeScript** |
-| Actual MultiBaas basics receipt | Hosted service upload/deploy/link/read/write plus matching Sepolia evidence | **NOT PROVEN — credentials required** |
-| Actual MultiBaas callback receipt | Indexed event and externally delivered authenticated webhook matching the chain log | **NOT PROVEN — credentials and reachable HTTPS receiver required** |
+| Actual MultiBaas basics receipt | Hosted service upload/deploy/link/read/write plus matching Sepolia evidence | **PASS — [sepolia-latest.json](multibaas-basics/receipts/sepolia-latest.json), 2026-09-17** |
+| Actual MultiBaas callback receipt | Indexed event and externally delivered authenticated webhook matching the chain log | **PASS — [sepolia-latest.json](events-webhooks/receipts/sepolia-latest.json), 2026-09-17** |
 
 A simulated HTTP server, locally generated HMAC request, counter-only fork transaction, or generic RPC read cannot satisfy either MultiBaas proof row. Missing permissions, credentials, indexing support, gas, or callback reachability remain documented blockers until resolved.
 
 ## Last proven
 
-Both service components remain **NOT PROVEN**: their executed credential preflights fail before API requests because the deployment URL, administrator/runtime keys, and webhook URL are absent. See the per-component `preflight-latest.json` files.
+Both service components are **PROVEN** against the hosted deployment `vqnz4g54bje7lou6yfz37hjqa4.multibaas.com` (Ethereum Sepolia, free plan) on 2026-09-17 JST, source revision `47783eb` plus the receipt-time working tree recorded through source hashes:
 
-**60 tests pass** (53 Bun +7 Solidity), with strict TypeScript. [Partial fork evidence](infrastructure/receipts/sepolia-fork-latest.json), recorded 2026-09-14T00:42:07.052Z on Sepolia fork block11699468, contains successful deployment/increment and a mined unauthorized rejection. Increment `0xc4c21fc8c6ae483153799f7add34a455366f2a90326567294e360d1e9571859b`. All26 recorded source hashes match the final implementation. This receipt proves only the generic contract and local plumbing; no MultiBaas API/indexing/webhook success is claimed.
+- **multibaas-basics** ([receipt](multibaas-basics/receipts/sepolia-latest.json), recorded 2026-09-16T20:53:30Z): SDK-composed deployment `0xe2d18f4239ab133d28bfdc694ec7204cf719819d04626cb049c1aa3147e1fd20` (block 11719197) created counter `0xaC52F893591fe0Fb7a2Dc9285D63ae81E857bFA2` under label `tokyokits-431b51f4d093`; SDK-composed owner increment `0xb7cfd74373e04296b3774537fad3a158c007189182a2c7879b74d6b45236557c` (block 11719198) moved the value 0 → 1, read back through the REST API and reconciled with an independent Sepolia RPC.
+- **events-webhooks** ([receipt](events-webhooks/receipts/sepolia-latest.json), recorded 2026-09-16T20:53:38Z): write `0x546287cd67476fa92fac343fcaae1f266be3437b30c762b94c07fbc545d10dbf` (block 11719199, log index 141) was indexed by MultiBaas and delivered by an authenticated `event.emitted` webhook (subscription 6) through a temporary `cloudflared` tunnel to the local consumer, then reconciled with the canonical receipt.
+
+These are public-chain transactions and appear on a Sepolia explorer. Live service behaviours found and handled during proving: a DApp User key receives HTTP 403 on the event indexing status endpoint (the administrator key is used there), the events endpoint rejects `limit` above 50, its `tx_hash` filter returned no rows for an indexed event (events are listed by block and matched by hash), and the per-contract indexing status head stays at the link block while new events are already listed.
+
+**60 tests pass** (53 Bun +7 Solidity), with strict TypeScript. [Partial fork evidence](infrastructure/receipts/sepolia-fork-latest.json), refreshed 2026-09-16T20:55:22.219Z on Sepolia fork block 11719207, contains successful deployment/increment and a mined unauthorized rejection. Increment `0xb4f90ffe23ff95cf90a3b6e49e5673d36a2eaab580057a196a6d4fb0cf73c402`. All 26 recorded source hashes match the final implementation. This receipt proves only the generic contract and local plumbing; the MultiBaas API/indexing/webhook proof is the pair of hosted-service receipts above.
 
 See [SOURCES.md](SOURCES.md) for current official interfaces, [THIRD-PARTY.md](THIRD-PARTY.md) for licenses, and [PRIOR-ART.md](PRIOR-ART.md) for publication and event disclosure. Published publicly 2026-09-14T00:45:31Z (Sep14 09:45:31 JST), revision `e37e0644fcece6691705236f7ec573344b96be86`.
 
@@ -127,4 +132,4 @@ See [SOURCES.md](SOURCES.md) for current official interfaces, [THIRD-PARTY.md](T
 
 Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
 
-Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components remain explicitly NOT PROVEN pending credentials.
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components were NOT PROVEN at first publication and were proven on 2026-09-17 JST.

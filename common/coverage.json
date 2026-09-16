@@ -7,8 +7,8 @@
     {"id":"aqua/swapvm-opcode","sponsor":"aqua","status":"PROVEN","receipt":{"path":"aqua/swapvm-opcode/receipts/polygon-latest.json","kind":"local-fork","sourceChainId":137},"blockers":[]},
     {"id":"aqua/continuity-recipe","sponsor":"aqua","status":"PROVEN","receipt":{"path":"aqua/continuity-recipe/receipts/polygon-latest.json","kind":"local-fork","sourceChainId":137},"blockers":[]},
     {"id":"uniswap/v4-hook","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/v4-hook/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
-    {"id":"uniswap/api-swap","sponsor":"uniswap","status":"NOT_PROVEN","receipt":null,"blockers":["A live Uniswap Trading API key and successful quote/swap execution are required."]},
-    {"id":"uniswap/lp-api","sponsor":"uniswap","status":"NOT_PROVEN","receipt":null,"blockers":["A live Uniswap Trading API key and successful liquidity API execution are required."]},
+    {"id":"uniswap/api-swap","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/api-swap/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
+    {"id":"uniswap/lp-api","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/lp-api/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
     {"id":"uniswap/v3-or-v2","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/v3-or-v2/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
     {"id":"uniswap/cca","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/cca/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
     {"id":"uniswap/continuity-recipe","sponsor":"uniswap","status":"PROVEN","receipt":{"path":"uniswap/continuity-recipe/receipts/base-latest.json","kind":"local-fork","sourceChainId":8453},"blockers":[]},
@@ -20,8 +20,8 @@
     {"id":"ens/add-to-existing","sponsor":"ens","status":"PROVEN","receipt":{"path":"ens/add-to-existing/receipts/sepolia-latest.json","kind":"local-fork","sourceChainId":11155111},"blockers":[]},
     {"id":"sui/payments","sponsor":"sui","status":"PROVEN","receipt":{"path":"sui/payments/receipts/testnet-latest.json","kind":"public-testnet","chainIdentifier":"69WiPg3DAQiwdxfncX6wYQ2siKwAe6L9BZthQea3JNMD"},"blockers":[]},
     {"id":"sui/defi","sponsor":"sui","status":"PROVEN","receipt":{"path":"sui/defi/receipts/testnet-latest.json","kind":"public-testnet","chainIdentifier":"69WiPg3DAQiwdxfncX6wYQ2siKwAe6L9BZthQea3JNMD"},"blockers":[]},
-    {"id":"curvegrid/multibaas-basics","sponsor":"curvegrid","status":"NOT_PROVEN","receipt":null,"blockers":["A Sepolia MultiBaas deployment, separate admin/runtime API keys, and a funded testnet signer are required."]},
-    {"id":"curvegrid/events-webhooks","sponsor":"curvegrid","status":"NOT_PROVEN","receipt":null,"blockers":["MultiBaas credentials, actual indexed events, and an externally reachable HTTPS callback with authenticated delivery are required."]}
+    {"id":"curvegrid/multibaas-basics","sponsor":"curvegrid","status":"PROVEN","receipt":{"path":"curvegrid/multibaas-basics/receipts/sepolia-latest.json","kind":"public-testnet","chainId":11155111},"blockers":[]},
+    {"id":"curvegrid/events-webhooks","sponsor":"curvegrid","status":"PROVEN","receipt":{"path":"curvegrid/events-webhooks/receipts/sepolia-latest.json","kind":"public-testnet","chainId":11155111},"blockers":[]}
   ],
   "partialReceipts": [
     {"sponsor":"world","path":"world/infrastructure/receipts/worldchain-latest.json","kind":"local-fork","sourceChainId":480},

@@ -1,6 +1,6 @@
 # MultiBaas indexing and authenticated webhooks
 
-**Last proven: NOT PROVEN.** The live path needs a MultiBaas Sepolia deployment, private setup/runtime API keys, a funded testnet signer, and an externally reachable HTTPS callback. Local protocol fixtures and counter-only fork transactions do not prove MultiBaas indexing or delivery. Public publication status is recorded in [PRIOR-ART.md](../PRIOR-ART.md).
+**Last proven: 2026-09-17 05:53 JST (2026-09-16T20:53:38Z)** — [receipt](receipts/sepolia-latest.json). On public Ethereum Sepolia, the SDK-composed write `0x546287cd67476fa92fac343fcaae1f266be3437b30c762b94c07fbc545d10dbf` (block 11719199, log index 141) was indexed by the hosted MultiBaas deployment and delivered through an authenticated `event.emitted` webhook (subscription 6, HTTPS tunnel to the local consumer), then reconciled with the canonical RPC receipt. Local protocol fixtures and counter-only fork transactions do not prove MultiBaas indexing or delivery. Publication status is recorded in [PRIOR-ART.md](../PRIOR-ART.md).
 
 Use this starter when an off-chain service must react to an indexed contract event: for example, refreshing a dashboard or queuing a receipt notification. The example consumes the generic counter's `Incremented(address,uint256)` event without adding product logic.
 
@@ -62,7 +62,7 @@ For another contract, deliberately update the event ABI, schema, scope policy, a
 The tests use synthetic protocol fixtures, real SQLite transactions, and a local HTTP server. They cover byte-exact HMAC validation, time boundaries, scope exclusion, decoded/raw-log agreement, persistence, duplicates, conflicting replay rollback, and mixed batches. They are not sponsor end-to-end evidence. The starter is MIT licensed; see [official sources](../SOURCES.md) and [third-party notices](../THIRD-PARTY.md).
 
 
-Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The actual `events-webhooks` demo preflight on 2026-09-14 is [recorded](preflight-latest.json) and fails for missing service configuration. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof.
+Current validation: **60 tests pass** (53 Bun +7 Solidity), strict TypeScript. The `events-webhooks` demo preflight failed for missing service configuration on 2026-09-14 and the full demo passed on 2026-09-17 once a deployment, keys, a funded signer, and a `cloudflared` tunnel were in place. A [separate counter fork receipt](../infrastructure/receipts/sepolia-fork-latest.json) is **partial only**, never sponsor integration proof. Live findings folded into the code: the events endpoint accepts at most 50 rows per page, its `tx_hash` filter returned nothing for an indexed event so events are listed by block and matched by hash, and the per-contract indexing status head stays at the link block, so live indexing is established by the listed event rather than that head.
 
 The bounded demo deletes its temporary remote webhook on exit and preserves any primary failure if cleanup also fails. The saved private config is a record of that demo endpoint. Register an active webhook and use its current ID/secret when running the standalone listener for an ongoing integration.
 
@@ -71,4 +71,4 @@ The bounded demo deletes its temporary remote webhook on exit and preserves any 
 
 Public, MIT-licensed starter kit published 2026-09-14; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency).
 
-Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components remain explicitly NOT PROVEN pending credentials.
+Public URL: https://github.com/ss251/tokyo-kits/tree/main/curvegrid ; first complete revision `e37e0644fcece6691705236f7ec573344b96be86`, pushed 2026-09-14T00:45:31Z (Sep14 09:45:31 JST). Both service components were NOT PROVEN at that revision and were proven on 2026-09-17 JST.

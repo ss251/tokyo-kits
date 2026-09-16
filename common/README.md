@@ -2,7 +2,7 @@
 
 Common scripts run the sponsor checks in order, validate saved receipt structure and source hashes, and exercise local Polygon, Base, and Sepolia fork infrastructure. They also document credential handling and prior-art disclosure. Original code is [MIT licensed](LICENSE).
 
-The coverage manifest currently records **11 of 19 components proven** and **8 NOT PROVEN**. Those eight require Uniswap API access, World Portal/human/agent prerequisites, or Curvegrid credentials and HTTPS delivery. A passing shared check does not supply those prerequisites or change their status. See [coverage.json](coverage.json) and [CREDENTIALS.md](CREDENTIALS.md).
+The coverage manifest currently records **15 of 19 components proven** and **4 NOT PROVEN**. Those four are the World components, which require Developer Portal access through World App, a public `WorldPing` deployment, an authentic human proof, and a registered agent. A passing shared check does not supply those prerequisites or change their status. See [coverage.json](coverage.json) and [CREDENTIALS.md](CREDENTIALS.md).
 
 ## Quickstart
 
@@ -129,6 +129,6 @@ make install-all
 make check-all
 ```
 
-The sponsor coverage count is separate: Aqua has three proven components, Uniswap four, ENS two, and Sui two. Two Uniswap API components, four World components, and two Curvegrid components remain **NOT PROVEN**. See the [top-level table](../README.md) for the current state and linked receipts.
+The sponsor coverage count is separate: Aqua has three proven components, Uniswap six, ENS two, Sui two, and Curvegrid two. The four World components remain **NOT PROVEN**. See the [top-level table](../README.md) for the current state and linked receipts.
 
 Public, MIT-licensed starter kit published 2026-09-14 JST; used as a disclosed library per ETHGlobal Tokyo rules (info/details: starter kits allowed with transparency). The first complete common revision is `dc49e728ec8eb35b33b61002605874fcba88218d`, pushed **2026-09-14 10:05:04 JST** (`2026-09-14T01:05:04Z`). [PRIOR-ART.md](PRIOR-ART.md) records the public source and execution evidence separately. [AI-USAGE.md](AI-USAGE.md) records the user brief and material build decisions. Event teams must disclose the exact public commit reused and retain their own specification, prompt, and planning artifacts alongside the canonical [KITS-BRIEF.md](../KITS-BRIEF.md).

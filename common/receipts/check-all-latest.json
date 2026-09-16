@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "kind": "sequential-test-report",
   "status": "PASS",
-  "startedAt": "2026-09-14T01:02:58.622953+00:00",
-  "finishedAt": "2026-09-14T01:03:35.308195+00:00",
+  "startedAt": "2026-09-16T20:57:09.062611+00:00",
+  "finishedAt": "2026-09-16T20:57:39.931203+00:00",
   "checks": [
     {
       "kit": "aqua",
@@ -14,8 +14,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 9.303,
-      "logSha256": "c84a36259d66835a764b3198cc61a92b959b8caa2e40ab0805119a6a997b1c4b"
+      "elapsedSeconds": 9.356,
+      "logSha256": "7d67dbddf67b0ff8d9334d05f45998aba43eddaf2111eaa85dbc748b7fa44888"
     },
     {
       "kit": "uniswap",
@@ -26,8 +26,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 14.895,
-      "logSha256": "808defb549f328eb5db3f8afba3fbf06ee6065d1e1807522ded6dedc35c4a529"
+      "elapsedSeconds": 10.236,
+      "logSha256": "d03518c16ffea76e862e17c210c79d4b227d042603cb23e7c36deaf9c6c27029"
     },
     {
       "kit": "world",
@@ -38,8 +38,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 5.367,
-      "logSha256": "e859e78693d67927847c0ef7555598acf82d1235a9d2c46f8512ebf0bcfd2496"
+      "elapsedSeconds": 5.062,
+      "logSha256": "2e33c0e7e1d6c0b53c109c199c1f1a51568e196782e819dd9ded62eb018464b4"
     },
     {
       "kit": "ens",
@@ -50,8 +50,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 0.872,
-      "logSha256": "1b8b1877617729f5aa345a6509b05d5d46c1c62d2f32ef4c46fbc1161df4084b"
+      "elapsedSeconds": 0.669,
+      "logSha256": "2e05405cf2b3db7dd6094dd18519bb555576ad3cfe803309a132de0f98b05bab"
     },
     {
       "kit": "sui",
@@ -62,8 +62,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 4.716,
-      "logSha256": "9c62017934c56cad05b7cf6f20152905fcda1adf8ad20e9e078412e364a2bb3e"
+      "elapsedSeconds": 4.078,
+      "logSha256": "4d1e9be24da2e36a6b8d84342adcf2653bc0392dc8804dace924a3184d7e3c8c"
     },
     {
       "kit": "curvegrid",
@@ -74,8 +74,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 1.028,
-      "logSha256": "123791c67b31e922c8f3bff69cefa59e64bc9b2ee4c5d923d943e926467be8fb"
+      "elapsedSeconds": 0.975,
+      "logSha256": "51e9f57a732ec55675168a9d0524612b01c50e25b04127a07af259c8f86710b9"
     },
     {
       "kit": "common",
@@ -86,8 +86,8 @@
         "test"
       ],
       "exitCode": 0,
-      "elapsedSeconds": 0.503,
-      "logSha256": "1fb628c7987050a803a3edee4c57790adb84b7bcd49d8fdb3f24af0e103ff497"
+      "elapsedSeconds": 0.489,
+      "logSha256": "b6c307919a8486d2d0aef94d84462ae8695e3c01fdb16c102cda121283952974"
     }
   ],
   "sourceFilesSha256": {
@@ -95,9 +95,9 @@
     "demo.py": "7f2eebb32a9e16160335a1bac83b5cb6f9b6f3f79f702c3ae3bbcaa009c96c13",
     "fork.py": "292d86fc925cbd674ca6356d03f23e9d69fee40d042958c5549ae602c1905b05",
     "serial.py": "30b509fa6e1aea9fea2bdde392ea18563481dcfe11ebedbf24f1e01edc45623d",
-    "validate_receipts.py": "31b4ab21db5079c5ecd5476e1a3209df2437818e83d2349916625aa2a1338e29",
-    "coverage.json": "c7a747736db11d25a5a6396038f196e4498a2b4cdc88a2f20bc06702097ffd90"
+    "validate_receipts.py": "d20bb7cd38ab2f987e48e17f749bb3c18d631ab2f2e977ea492d4cd79390957f",
+    "coverage.json": "89a059b9e27674a75a2f25a9ba3a459d6e8aec81c4d175b1b7cceb7f30c704fc"
   },
-  "sourceCommit": "eab3af2622c556914c2c4ab20ec5e697a196a5a1",
+  "sourceCommit": "47783ebd390c25a1d32d9b391ce4af18a4e6baf8",
   "scope": "Tests and offline receipt integrity; missing credentialed demos remain NOT PROVEN"
 }
