@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { strict as assert } from 'node:assert';
 import { NotProvenError } from '../scripts/config';
-import { COUNTER_EVENT, type MultiBaasAdapter } from '../multibaas-basics/client';
+import { COUNTER_EVENT, EVENT_PAGE_SIZE, type MultiBaasAdapter } from '../multibaas-basics/client';
 import { evmAddress, hash, hexBytes, quantity, record, safeInteger, type RpcLog } from '../multibaas-basics/validation';
 import type { Address, Hex } from 'viem';
 
@@ -56,13 +56,13 @@ export async function pollCounterEvent(
     // (2026-09-17) its latest block stayed at the link block while new events were already listed.
     // Live indexing is therefore established by listing the event's block and matching the exact hash.
     const found: unknown[] = [];
-    for (let offset = 0; offset <= 1000; offset += 100) {
+    for (let offset = 0; offset <= 1000; offset += EVENT_PAGE_SIZE) {
       const page = await mb.listCounterEvents(expected.address, expected.label, expected.blockNumber, offset);
       found.push(...page.filter(item => {
         const transaction = (item as { transaction?: { txHash?: unknown } })?.transaction;
         return typeof transaction?.txHash === 'string' && transaction.txHash.toLowerCase() === expected.hash.toLowerCase();
       }));
-      if (page.length < 100) break;
+      if (page.length < EVENT_PAGE_SIZE) break;
       assert(offset < 1000, 'Indexed event pagination exceeded the bound');
     }
     if (found.length) {

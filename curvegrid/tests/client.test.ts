@@ -106,7 +106,7 @@ describe('current official SDK request flow', () => {
       expect(request.url.searchParams.get('block_number')).toBe('123'); expect(request.url.searchParams.has('tx_hash')).toBe(false);
       expect(request.url.searchParams.get('contract_address')).toBe(ADDRESS);
       expect(request.url.searchParams.get('event_signature')).toBe('Incremented(address,uint256)');
-      expect(request.url.searchParams.get('offset')).toBe('100'); return [];
+      expect(request.url.searchParams.get('limit')).toBe('50'); expect(request.url.searchParams.get('offset')).toBe('100'); return [];
     });
     const mb = createMultiBaasAdapter(CONFIG, fixture.http);
     expect(await mb.readCounter(ADDRESS, 'kit-counter')).toBe(9_007_199_254_740_993n); await mb.listCounterEvents(ADDRESS, 'kit-counter', 123n, 100);

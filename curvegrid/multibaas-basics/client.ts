@@ -12,6 +12,8 @@ export interface CounterArtifact {
   abi: Abi; bytecode: Hex; deployedBytecode: Hex;
   immutableReferences: Record<string, Array<{ start: number; length: number }>>;
 }
+/** Largest page the live MultiBaas events endpoint accepted on 2026-09-17; 51 and 100 returned HTTP 400. */
+export const EVENT_PAGE_SIZE = 50;
 export interface MultiBaasConfig { baseUrl: string; adminApiKey: string; dappApiKey: string }
 export type SdkHttp = NonNullable<ConstructorParameters<typeof ContractsApi>[2]>;
 export class MultiBaasRequestError extends Error {
@@ -127,14 +129,14 @@ export function createMultiBaasAdapter(config: MultiBaasConfig, http?: SdkHttp) 
       return { latestBlockNumber: safeInteger(result.latestBlockNumber, 'indexed block'), latestBlockHash: hash(result.latestBlockHash, 'indexed block hash'),
         startBlockNumber: safeInteger(result.startBlockNumber, 'index start block'), isProcessingPastLogs: result.isProcessingPastLogs };
     },
-    // Observed 2026-09-17 against a live deployment: the SDK 1.1.1 `tx_hash` filter returned no rows for an
+    // Observed 2026-09-17 against a live deployment: `limit` above 50 is rejected with HTTP 400, and the SDK 1.1.1 `tx_hash` filter returned no rows for an
     // already indexed event, while the block-number filter returned it. The caller matches the hash itself.
     async listCounterEvents(address: Address, contractLabel: string, blockNumber: bigint, offset = 0) {
       assert(safeInteger(offset, 'event offset') <= 1000, 'Event pagination exceeds starter bound');
       const block = safeInteger(Number(blockNumber), 'event block number');
       const result = await responseResult(events.listEvents(undefined, block, undefined, undefined, undefined, false,
-        evmAddress(address, 'counter address'), label(contractLabel), COUNTER_EVENT, 100, offset), 'list counter events');
-      assert(Array.isArray(result) && result.length <= 100, 'Invalid event page'); return result as unknown[];
+        evmAddress(address, 'counter address'), label(contractLabel), COUNTER_EVENT, EVENT_PAGE_SIZE, offset), 'list counter events');
+      assert(Array.isArray(result) && result.length <= EVENT_PAGE_SIZE, 'Invalid event page'); return result as unknown[];
     },
   };
 }
