@@ -257,6 +257,49 @@ def validate_sui(receipt: dict, config: dict, scenario: str) -> list[str]:
     return identifiers
 
 
+SEPOLIA_CHAIN_ID = 11155111
+CURVEGRID_STATUSES = {'multibaas-basics': 'MULTIBAAS_BASICS_PROVEN', 'events-webhooks': 'MULTIBAAS_INDEXING_AND_WEBHOOK_PROVEN'}
+
+
+def validate_curvegrid(receipt: dict, scenario: str) -> list[str]:
+    """Hosted MultiBaas evidence: every SDK-composed transaction has a canonical Sepolia receipt that agrees with the SDK's own receipt."""
+    require(receipt.get('status') == CURVEGRID_STATUSES.get(scenario), 'wrong MultiBaas integration status')
+    runtimes = receipt.get('runtimes')
+    require(isinstance(runtimes, list) and bool(runtimes), 'missing deployed runtime code hashes')
+    for item in runtimes:
+        runtime = object_value(item, 'runtime record')
+        hex32(runtime.get('runtimeCodeHash'), 'runtime code hash'); address(runtime.get('owner'), 'runtime owner')
+    execution = receipt.get('execution')
+    require(isinstance(execution, list) and bool(execution), 'missing MultiBaas execution records')
+    identifiers = []
+    for item in execution:
+        entry = object_value(item, 'execution record')
+        tx = object_value(entry.get('transaction'), 'executed transaction')
+        outcome = object_value(entry.get('receipt'), 'canonical receipt')
+        sdk = object_value(entry.get('sdkReceipt'), 'SDK receipt')
+        require(outcome.get('status') == 'success' and sdk.get('status') in ('success', True, 1), 'MultiBaas transaction was not successful')
+        tx_hash = validate_evm_receipt(outcome, 0)
+        require(hex32(entry.get('hash'), 'execution hash') == tx_hash == hex32(tx.get('hash'), 'transaction hash') == hex32(sdk.get('transactionHash'), 'SDK receipt hash'), 'execution/transaction/receipt hash mismatch')
+        require(hex32(tx.get('blockHash'), 'transaction block hash') == outcome['blockHash'].lower() == hex32(sdk.get('blockHash'), 'SDK block hash'), 'transaction/receipt block mismatch')
+        require(nonnegative(tx.get('blockNumber'), 'transaction block') == nonnegative(outcome['blockNumber'], 'receipt block') == nonnegative(sdk.get('blockNumber'), 'SDK block'), 'transaction/receipt height mismatch')
+        require(nonnegative(tx.get('chainId'), 'transaction chain') == SEPOLIA_CHAIN_ID, 'transaction chain mismatch')
+        require(address(tx.get('from'), 'transaction sender') == address(outcome.get('from'), 'receipt sender'), 'transaction/receipt sender mismatch')
+        identifiers.append(tx_hash)
+    require(len(set(identifiers)) == len(identifiers), 'duplicate MultiBaas transaction identifier')
+    if scenario == 'events-webhooks':
+        indexed = object_value(receipt.get('indexed'), 'indexed event')
+        delivered = object_value(receipt.get('delivered'), 'delivered webhook')
+        require(hex32(indexed.get('transactionHash'), 'indexed hash') == identifiers[-1], 'indexed event is not the final MultiBaas write')
+        require(delivered.get('authenticated') is True, 'webhook delivery was not authenticated')
+        event = object_value(delivered.get('event'), 'delivered event')
+        require(hex32(event.get('transactionHash'), 'delivered hash') == identifiers[-1], 'delivered event is not the final MultiBaas write')
+        require(nonnegative(event.get('logIndex'), 'delivered log index') == nonnegative(indexed.get('logIndex'), 'indexed log index'), 'delivered log does not match the indexed log')
+    else:
+        deployment = object_value(receipt.get('deployment'), 'deployment receipt')
+        require(address(receipt.get('address'), 'counter address') == address(deployment.get('contractAddress'), 'deployed address'), 'counter address mismatch')
+    return identifiers
+
+
 def validate_receipt(root: Path, sponsor: str, spec: dict, scenario: str | None = None, partial: bool = False) -> dict:
     result: dict = {'path': spec.get('path'), 'partial': partial, 'sourceHashesChecked': 0, 'transactionIdentifiers': [], 'errors': []}
     try:
@@ -281,7 +324,8 @@ def validate_receipt(root: Path, sponsor: str, spec: dict, scenario: str | None 
         else:
             require(receipt.get('scenario') == scenario, 'receipt scenario mismatch')
             require(receipt.get('status') != PARTIAL_STATUS and not any(word in str(receipt.get('status', '')).upper() for word in ('PARTIAL', 'NOT_PROVEN', 'NOT PROVEN', 'FIXTURE', 'SIMULATION')), 'partial or fixture receipt cannot prove a subtrack')
-            require(sponsor not in ('world', 'curvegrid'), 'full World/Curvegrid receipts require a dedicated integration schema; infrastructure never qualifies')
+            require(sponsor != 'world', 'full World receipts require a dedicated integration schema; infrastructure never qualifies')
+            require(sponsor != 'curvegrid' or spec.get('kind') == 'public-testnet', 'a full Curvegrid receipt must come from the hosted service on Sepolia, never the local fork')
         kit = root.resolve() / sponsor
         require(kit.resolve().is_relative_to(root.resolve()), 'sponsor source path escapes repository')
         checked, errors = validate_sources(kit, receipt)
@@ -294,6 +338,10 @@ def validate_receipt(root: Path, sponsor: str, spec: dict, scenario: str | None 
             if not partial and sponsor == 'ens':
                 require(receipt.get('status') == 'PROVEN_ON_LOCAL_FORK', 'ENS scenario not proven on fork')
             result['transactionIdentifiers'] = validate_evm_transactions(receipt, sponsor, block)
+        elif sponsor == 'curvegrid':
+            require(not partial, 'partial Curvegrid evidence must stay a local-fork infrastructure receipt')
+            require(spec.get('chainId') == SEPOLIA_CHAIN_ID and receipt.get('chainId') == SEPOLIA_CHAIN_ID, 'Curvegrid receipt must record Ethereum Sepolia')
+            result['transactionIdentifiers'] = validate_curvegrid(receipt, scenario or '')
         else:
             require(sponsor == 'sui' and not partial, 'unsupported public-testnet receipt schema')
             require(spec.get('chainIdentifier') == receipt.get('chainIdentifier'), 'inventory chain identifier mismatch')

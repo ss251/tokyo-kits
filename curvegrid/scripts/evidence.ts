@@ -16,6 +16,6 @@ export async function saveEvidence(component: string, name: string, evidence: Re
   const directory = resolve(kitRoot, component, 'receipts')
   await mkdir(directory, { recursive: true })
   const path = resolve(directory, name)
-  await writeFile(path, json({ schemaVersion: 1, recordedAt: new Date().toISOString(), sourceCommit, sourceDirty, sourceFilesSha256, ...evidence }) + '\n')
+  await writeFile(path, json({ schemaVersion: 1, scenario: component, recordedAt: new Date().toISOString(), sourceCommit, sourceDirty, sourceFilesSha256, ...evidence }) + '\n')
   console.log(`Evidence: ${path}`)
 }
