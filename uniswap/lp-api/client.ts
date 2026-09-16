@@ -64,15 +64,16 @@ function ticks(lower: unknown, upper: unknown): { tickLower: number; tickUpper: 
   if (tickUpper > 887272 || tickLower >= tickUpper) throw new Error('Invalid ordered tick range');
   return { tickLower, tickUpper };
 }
-function prices(lower: unknown, upper: unknown): { minPrice: string; maxPrice: string } {
-  const parse = (value: unknown, label: string) => {
-    if (typeof value !== 'string' || !/^\d+(?:\.\d+)?$/.test(value)) throw new Error(`${label} must be a positive decimal string`);
+/** Request price bounds must be positive. A full-range response legitimately reports adjustedMinPrice "0" (observed live 2026-09-17), so response validation only requires min < max. */
+function prices(lower: unknown, upper: unknown, allowZeroMin = false): { minPrice: string; maxPrice: string } {
+  const parse = (value: unknown, label: string, allowZero: boolean) => {
+    if (typeof value !== 'string' || !/^\d+(?:\.\d+)?$/.test(value)) throw new Error(`${label} must be a ${allowZero ? 'nonnegative' : 'positive'} decimal string`);
     const [whole = '0', fraction = ''] = value.split('.');
     const numerator = BigInt(whole + fraction);
-    if (numerator === 0n) throw new Error(`${label} must be positive`);
+    if (numerator === 0n && !allowZero) throw new Error(`${label} must be positive`);
     return { value, numerator, denominator: 10n ** BigInt(fraction.length) };
   };
-  const min = parse(lower, 'minPrice'); const max = parse(upper, 'maxPrice');
+  const min = parse(lower, 'minPrice', allowZeroMin); const max = parse(upper, 'maxPrice', false);
   if (min.numerator * max.denominator >= max.numerator * min.denominator) throw new Error('minPrice must be below maxPrice');
   return { minPrice: min.value, maxPrice: max.value };
 }
@@ -145,7 +146,7 @@ export async function requestCreate(input: CreateRequest, options: ApiOptions = 
   const response: CreateResponse = { ...responseFields(raw, request.existingPool ?? request.newPool!),
     ...ticks(raw.tickLower, raw.tickUpper),
     adjustedMinPrice: textField(raw.adjustedMinPrice, 'adjustedMinPrice'), adjustedMaxPrice: textField(raw.adjustedMaxPrice, 'adjustedMaxPrice') };
-  prices(response.adjustedMinPrice, response.adjustedMaxPrice);
+  prices(response.adjustedMinPrice, response.adjustedMaxPrice, true);
   return { kind: 'create', status: 'UNSIGNED_NOT_EXECUTED', requestIds: [response.requestId], request, response,
     transaction: validateTransaction(raw.create, request) };
 }

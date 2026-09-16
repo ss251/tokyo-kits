@@ -146,6 +146,13 @@ describe('Uniswap API clients — offline unit fixtures, no live proof', () => {
     const response = lpResponse('increase'); response.token1.tokenAddress = weth;
     await expect(requestIncrease(increaseInput(), offlineFetch([response]))).rejects.toThrow('token order');
   });
+  test('full-range create responses may report adjustedMinPrice "0"; request bounds and ordering stay strict', async () => {
+    const prepared = await requestCreate(createInput(), offlineFetch([{ ...lpResponse('create'), adjustedMinPrice: '0' }]));
+    expect(prepared.response.adjustedMinPrice).toBe('0');
+    await expect(requestCreate(createInput(), offlineFetch([{ ...lpResponse('create'), adjustedMinPrice: '1.1', adjustedMaxPrice: '0.9' }]))).rejects.toThrow('below maxPrice');
+    const { tickBounds: _tickBounds, ...base } = createInput();
+    expect(() => buildCreateRequest({ ...base, priceBounds: { minPrice: '0', maxPrice: '1' } })).toThrow('must be positive');
+  });
   test('HTTP errors are failures and do not echo a response body that could contain secrets', async () => {
     const fetch: FetchLike = async () => new Response('reflected-secret-key', { status: 401 });
     await expect(prepareSwap(input(), { fetch })).rejects.toThrow('HTTP 401; no transaction was executed');

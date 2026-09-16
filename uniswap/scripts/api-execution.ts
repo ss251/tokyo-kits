@@ -89,7 +89,16 @@ export async function runApiExecution(fork: Fork, kind: 'api-swap' | 'lp-api') {
   assert.equal(initialPosition[2].toLowerCase(), config.weth.toLowerCase()); assert.equal(initialPosition[3].toLowerCase(), config.usdc.toLowerCase()); assert(initialPosition[7] > 0n)
   const owner = await client.readContract({ address: manager, abi: positionAbi, functionName: 'ownerOf', args: [tokenId] })
   const prepared = await runLpApi({ walletAddress: owner, position: { protocol: 'V3', nftTokenId: String(tokenId), token0Address: config.weth as Address, token1Address: config.usdc as Address }, independentToken: { tokenAddress: config.weth as Address, amount: '1000000000000000' } })
-  const createPoolFee = await client.readContract({ address: config.v3Pool as Address, abi: parseAbi(['function fee() view returns (uint24)']), functionName: 'fee' })
+  const poolAbi = parseAbi(['function fee() view returns (uint24)', 'function slot0() view returns (uint160 sqrtPriceX96,int24 tick,uint16,uint16,uint16,uint8,bool)', 'function liquidity() view returns (uint128)'])
+  const createPoolFee = await client.readContract({ address: config.v3Pool as Address, abi: poolAbi, functionName: 'fee' })
+  const positionPool = await client.readContract({ address: config.v3Factory as Address, abi: parseAbi(['function getPool(address,address,uint24) view returns (address)']), functionName: 'getPool', args: [config.weth as Address, config.usdc as Address, initialPosition[4]] })
+  assert(BigInt(positionPool) !== 0n, 'Official factory has no pool for the public position fee tier')
+  const decimals = await Promise.all([config.weth, config.usdc].map(token => client.readContract({ address: token as Address, abi: erc20Abi, functionName: 'decimals' }))) as [number, number]
+  // Pool state is re-read on the fork before every action because each executed action changes it.
+  const poolState = async (pool: Address) => {
+    const [slot0, liquidity] = await Promise.all([client.readContract({ address: pool, abi: poolAbi, functionName: 'slot0' }), client.readContract({ address: pool, abi: poolAbi, functionName: 'liquidity' })])
+    return { sqrtPriceX96: slot0[0], tick: slot0[1], liquidity }
+  }
   await fork.rpc('anvil_impersonateAccount', [owner])
   await fork.rpc('anvil_setBalance', [owner, '0x56bc75e2d63100000'])
   const wallet = createWalletClient({ account: owner, chain: taker.chain, transport: http(fork.rpcUrl) })
@@ -98,8 +107,9 @@ export async function runApiExecution(fork: Fork, kind: 'api-swap' | 'lp-api') {
     for (const [action, payload] of Object.entries(prepared)) {
       assert.equal(action, payload.kind)
       const context: LpExecutionContext = {
-        kind: payload.kind, owner, token0: config.weth as Address, token1: config.usdc as Address,
+        kind: payload.kind, owner, chainId: config.chainId, token0: config.weth as Address, token1: config.usdc as Address, decimals,
         fee: payload.kind === 'create' ? createPoolFee : initialPosition[4],
+        pool: await poolState(payload.kind === 'create' ? config.v3Pool as Address : positionPool),
         tickLower: payload.kind === 'create' ? payload.response.tickLower : initialPosition[5],
         tickUpper: payload.kind === 'create' ? payload.response.tickUpper : initialPosition[6],
         tokenId, liquidityAtQuote: initialPosition[7],

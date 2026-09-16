@@ -1,5 +1,7 @@
 import { strict as assert } from 'node:assert'
 import { decodeFunctionData, parseAbi, type Address, type Hex } from 'viem'
+import { Pool, Position } from '@uniswap/v3-sdk'
+import { Percent, Token } from '@uniswap/sdk-core'
 
 // Official v3-periphery INonfungiblePositionManager and IMulticall interfaces.
 export const nfpmExecutionAbi = parseAbi([
@@ -10,14 +12,20 @@ export const nfpmExecutionAbi = parseAbi([
   'function collect((uint256 tokenId,address recipient,uint128 amount0Max,uint128 amount1Max) params) payable returns (uint256,uint256)',
 ])
 
+/** Pool state read from the pinned fork immediately before each action. */
+export interface LpPoolState { sqrtPriceX96: bigint; tick: number; liquidity: bigint }
+
 export interface LpExecutionContext {
   kind: 'create' | 'increase' | 'decrease'
   owner: Address
+  chainId: number
   token0: Address
   token1: Address
+  decimals: readonly [number, number]
   fee: number
   tickLower: number
   tickUpper: number
+  pool: LpPoolState
   tokenId: bigint
   liquidityAtQuote: bigint
   decreasePercentage?: number
@@ -27,12 +35,50 @@ export interface LpExecutionContext {
   now: bigint
 }
 
+/**
+ * The LP API applies slippageTolerance to the pool price exactly as the official
+ * V3 SDK does (Position.mintAmountsWithSlippage / burnAmountsWithSlippage), not
+ * to token amounts. For a narrow range a 0.5% price move shifts amounts by
+ * several percent, so the expected minimums are recomputed with the pinned SDK
+ * from the fork's pool state. The API quotes a few blocks before the pinned
+ * fork block; the observed live drift on 2026-09-17 was a few parts per million,
+ * so a 5 bps allowance absorbs it while still rejecting materially weaker guards.
+ */
+export const LP_DRIFT_BPS = 5n
+
+const toBigInt = (value: { toString(): string }) => BigInt(value.toString())
+const withDrift = (value: bigint) => value * (10_000n - LP_DRIFT_BPS) / 10_000n
+
+function sdkPool(context: LpExecutionContext): Pool {
+  const token0 = new Token(context.chainId, context.token0, context.decimals[0])
+  const token1 = new Token(context.chainId, context.token1, context.decimals[1])
+  assert(token0.sortsBefore(token1), 'LP context token0 must sort before token1')
+  return new Pool(token0, token1, context.fee, context.pool.sqrtPriceX96.toString(), context.pool.liquidity.toString(), context.pool.tick)
+}
+function tolerance(context: LpExecutionContext): Percent {
+  const bps = Math.round(context.slippagePercent * 100)
+  assert(Number.isSafeInteger(bps) && bps > 0 && bps <= 100, 'LP example slippage must be positive and at most 1%')
+  return new Percent(bps, 10_000)
+}
+/** Lowest acceptable mint/increase minimums for the desired amounts, per the official SDK. */
+export function expectedMintMinimums(context: LpExecutionContext, amount0: bigint, amount1: bigint): readonly [bigint, bigint] {
+  const position = Position.fromAmounts({ pool: sdkPool(context), tickLower: context.tickLower, tickUpper: context.tickUpper,
+    amount0: amount0.toString(), amount1: amount1.toString(), useFullPrecision: true })
+  const minimums = position.mintAmountsWithSlippage(tolerance(context))
+  return [withDrift(toBigInt(minimums.amount0)), withDrift(toBigInt(minimums.amount1))]
+}
+/** Lowest acceptable decrease minimums for the removed liquidity, per the official SDK. */
+export function expectedBurnMinimums(context: LpExecutionContext, liquidity: bigint): readonly [bigint, bigint] {
+  const position = new Position({ pool: sdkPool(context), tickLower: context.tickLower, tickUpper: context.tickUpper, liquidity: liquidity.toString() })
+  const minimums = position.burnAmountsWithSlippage(tolerance(context))
+  return [withDrift(toBigInt(minimums.amount0)), withDrift(toBigInt(minimums.amount1))]
+}
+
 export function validateLpCalldata(data: Hex, context: LpExecutionContext) {
   const same = (actual: Address, expected: Address, label: string) => assert.equal(actual.toLowerCase(), expected.toLowerCase(), label)
   const bps = Math.round(context.slippagePercent * 100)
   assert(Number.isSafeInteger(bps) && bps > 0 && bps <= 100, 'LP example slippage must be positive and at most 1%')
   assert(context.quoteAmounts.every(amount => amount >= 0n), 'Negative LP quote')
-  const minima = context.quoteAmounts.map(amount => amount * BigInt(10_000 - bps) / 10_000n)
   const limits = context.quoteAmounts.map(amount => (amount * BigInt(10_000 + bps) + 9_999n) / 10_000n)
   if (context.kind !== 'decrease') {
     assert(context.independentToken, 'Missing requested independent-token budget')
@@ -47,11 +93,10 @@ export function validateLpCalldata(data: Hex, context: LpExecutionContext) {
   let actionMinima: readonly [bigint, bigint] = [0n, 0n]
   const checkAmounts = (amount0: bigint, amount1: bigint, minimum0: bigint, minimum1: bigint) => {
     const amounts = [amount0, amount1], minimums = [minimum0, minimum1]
-    for (let i = 0; i < 2; i++) {
-      assert(amounts[i]! <= limits[i]!, 'LP calldata desired amount exceeds bounded quote/request')
-      assert(minimums[i]! >= minima[i]! && minimums[i]! <= amounts[i]!, 'LP calldata weakens slippage minimum')
-    }
+    for (let i = 0; i < 2; i++) assert(amounts[i]! <= limits[i]!, 'LP calldata desired amount exceeds bounded quote/request')
     assert(amount0 > 0n || amount1 > 0n, 'LP deposit is empty')
+    const expected = expectedMintMinimums(context, amount0, amount1)
+    for (let i = 0; i < 2; i++) assert(minimums[i]! >= expected[i]! && minimums[i]! <= amounts[i]!, 'LP calldata weakens slippage minimum')
     desired = [amount0, amount1]
     actionMinima = [minimum0, minimum1]
   }
@@ -97,7 +142,8 @@ export function validateLpCalldata(data: Hex, context: LpExecutionContext) {
       assert(percentage !== undefined && Number.isInteger(percentage) && percentage >= 1 && percentage <= 100)
       const expected = context.liquidityAtQuote * BigInt(percentage)
       assert(params.liquidity > 0n && params.liquidity >= expected / 100n && params.liquidity <= (expected + 99n) / 100n, 'Decrease exceeds requested public-position percentage')
-      assert(params.amount0Min >= minima[0]! && params.amount1Min >= minima[1]!, 'Decrease weakens quoted withdrawal minimum')
+      const minimums = expectedBurnMinimums(context, params.liquidity)
+      assert(params.amount0Min >= minimums[0] && params.amount1Min >= minimums[1], 'Decrease weakens quoted withdrawal minimum')
       liquidityRemoved = params.liquidity
       actionMinima = [params.amount0Min, params.amount1Min]
     }
